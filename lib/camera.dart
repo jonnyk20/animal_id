@@ -39,8 +39,6 @@ class _CameraState extends State<Camera> {
     if (!controller.value.isInitialized) {
       return Container();
     }
-    return AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller));
+    return CameraPreview(controller);
   }
 }

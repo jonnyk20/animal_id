@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
-import 'package:animal_id/screens/home.dart';
-import 'package:animal_id/screens/detection.dart';
 import 'package:tflite/tflite.dart';
+import 'package:redux/redux.dart';
+import 'package:animal_id/app.dart';
+import 'package:animal_id/models/app_state.dart';
+import 'package:animal_id/reducers/reducers.dart';
 
 List<CameraDescription> cameras;
 
@@ -21,21 +23,7 @@ Future<void> main() async {
   ]);
   cameras = await availableCameras();
   await loadModel();
-  runApp(App());
-}
-
-class App extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'animal id',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-      routes: {
-        '/': (context) => Home(),
-        '/detection': (context) => Detection(cameras[0])
-      },
-    );
-  }
+  final store = new Store<AppState>(appReducers,
+      initialState: AppState.initial, middleware: []);
+  runApp(App(store, cameras[0]));
 }

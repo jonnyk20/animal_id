@@ -1,9 +1,10 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:animal_id/detector.dart';
 import 'package:animal_id/info_box.dart';
 import 'package:animal_id/bounding_box.dart';
-import 'dart:math' as math;
+import 'package:animal_id/target.dart';
 
 class Detection extends StatefulWidget {
   final CameraDescription camera;
@@ -67,14 +68,19 @@ class _DetectionState extends State<Detection> {
             right: 0,
             child: InfoBox(_selectedClass),
           ),
+          Target(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        foregroundColor: Colors.blue,
-        backgroundColor: Colors.white,
-        onPressed: () => Navigator.pop(context),
-        child: Icon(Icons.arrow_back),
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(top: 150.0),
+        child: FloatingActionButton(
+          foregroundColor: Colors.blue,
+          backgroundColor: Colors.white,
+          onPressed: () => Navigator.pop(context),
+          child: Icon(Icons.arrow_back),
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

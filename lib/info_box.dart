@@ -29,10 +29,7 @@ class InfoBox extends StatelessWidget {
         ),
         color: Colors.blue,
         padding: new EdgeInsets.all(40.0),
-        constraints: BoxConstraints(
-          maxHeight: 300.0,
-          minHeight: 300.0,
-        ),
+        height: 200.0,
       );
     });
   }

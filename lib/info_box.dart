@@ -10,8 +10,8 @@ class InfoBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Map>(converter: (store) {
       return {
-        'clearDetections': () => store.dispatch(ClearTrackedDetections()),
-        'detectionsCount': store.state.trackedDetections.length
+        'clearDetections': () => store.dispatch(ReduceObjecDetectionCounts()),
+        'cups': store.state.detectedObjects["cup"]
       };
     }, builder: (context, props) {
       return Container(
@@ -20,7 +20,8 @@ class InfoBox extends StatelessWidget {
             selectedClass.isEmpty
                 ? Text('No selected classes')
                 : Text('Selected: $selectedClass'),
-            Text('Total Detections: ${props["detectionsCount"]}'),
+            Text(
+                'Cup Detection Score: ${props["cups"] == null ? "none" : props["cups"].count}'),
             RaisedButton(
               child: Text('Test Action'),
               onPressed: props["clearDetections"],

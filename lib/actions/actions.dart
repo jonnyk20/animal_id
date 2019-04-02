@@ -10,4 +10,6 @@ class AddTrackedDetections {
   AddTrackedDetections(this.detections);
 }
 
-class ClearTrackedDetections {}
+class ReduceObjecDetectionCounts {}
+
+class ReduceTrackedDetectionCounts {}

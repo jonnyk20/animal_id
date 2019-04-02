@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:animal_id/screens/home.dart';
-import 'package:animal_id/screens/detection.dart';
+import 'package:animal_id/screens/home_screen.dart';
+import 'package:animal_id/screens/detection_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:animal_id/models/app_state.dart';
+import 'package:animal_id/models/app_state_model.dart';
 import 'package:camera/camera.dart';
 
 class App extends StatelessWidget {

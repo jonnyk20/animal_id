@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:animal_id/models/detection.dart';
+import 'package:animal_id/models/detection_model.dart';
 
 class BoundingBox extends StatelessWidget {
   final List<Detection> results;

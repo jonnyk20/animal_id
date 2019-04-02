@@ -1,8 +1,13 @@
-import 'package:animal_id/models/detection.dart';
+import 'package:animal_id/models/detection_model.dart';
 
-class AddDetections {
+class SetCurrentDetections {
   final List<Detection> detections;
-  AddDetections(this.detections);
+  SetCurrentDetections(this.detections);
 }
 
-class ClearDetections {}
+class AddTrackedDetections {
+  final List<Detection> detections;
+  AddTrackedDetections(this.detections);
+}
+
+class ClearTrackedDetections {}

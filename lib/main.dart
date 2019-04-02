@@ -5,7 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:redux/redux.dart';
 import 'package:animal_id/app.dart';
-import 'package:animal_id/models/app_state.dart';
+import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/reducers/reducers.dart';
 
 List<CameraDescription> cameras;

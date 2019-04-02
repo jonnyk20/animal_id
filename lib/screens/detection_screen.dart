@@ -5,40 +5,13 @@ import 'package:animal_id/info_box.dart';
 import 'package:animal_id/bounding_box.dart';
 import 'package:animal_id/target.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:animal_id/models/app_state.dart';
-import 'package:animal_id/models/detection.dart';
+import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
-class DetectionScreen extends StatefulWidget {
+class DetectionScreen extends StatelessWidget {
   final CameraDescription camera;
 
   DetectionScreen(this.camera);
-
-  _DetectionScreenState createState() => _DetectionScreenState(camera);
-}
-
-class _DetectionScreenState extends State<DetectionScreen> {
-  final CameraDescription camera;
-  List<Detection> _recognitions = [];
-  String _selectedClass = "";
-
-  _DetectionScreenState(this.camera);
-
-  setRecognitions(List<Detection> recognitions) {
-    var cups = [];
-
-    if (this.mounted) {
-      setState(() {
-        _recognitions = cups;
-      });
-    }
-  }
-
-  selectClass(selectedClass) {
-    setState(() {
-      _selectedClass = selectedClass;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +19,11 @@ class _DetectionScreenState extends State<DetectionScreen> {
 
     return StoreConnector<AppState, Map>(converter: (store) {
       return {
-        'addDetections': (detections) =>
-            store.dispatch(AddDetections(detections)),
-        'detections': store.state.detections
+        'addDetections': (detections) {
+          store.dispatch(SetCurrentDetections(detections));
+          store.dispatch(AddTrackedDetections(detections));
+        },
+        'currentDetections': store.state.currentDetections,
       };
     }, builder: (context, props) {
       return Scaffold(
@@ -61,14 +36,14 @@ class _DetectionScreenState extends State<DetectionScreen> {
               screen.width,
             ),
             BoundingBox(
-              props["detections"],
-              selectClass,
+              props["currentDetections"],
+              (selectedClass) => print('SELECTED CLASS: $selectedClass'),
             ),
             Positioned(
               bottom: 0,
               left: 0,
               right: 0,
-              child: InfoBox(_selectedClass),
+              child: InfoBox("[Selected Class]"),
             ),
             Target(),
           ],

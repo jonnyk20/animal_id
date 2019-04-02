@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:animal_id/models/app_state.dart';
+import 'package:animal_id/models/app_state_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/actions/actions.dart';
 
@@ -10,9 +10,8 @@ class InfoBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Map>(converter: (store) {
       return {
-        'detections': store.state.detections,
-        'clearDetections': () => store.dispatch(ClearDetections()),
-        'detectionsCount': store.state.detections.length
+        'clearDetections': () => store.dispatch(ClearTrackedDetections()),
+        'detectionsCount': store.state.trackedDetections.length
       };
     }, builder: (context, props) {
       return Container(

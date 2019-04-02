@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:animal_id/models/detection.dart';
+import 'package:animal_id/models/detection_model.dart';
 
 formatDetections(
   detections,

@@ -47,6 +47,17 @@ class BoundingBox extends StatelessWidget {
           h = _h * scaleH;
           if (_y < difH / 2) h -= (difH / 2 - _y) * scaleH;
         }
+        var screenWHalf = screenW / 2;
+        var screenH40P = screenH * 0.4;
+        var targetWidth = 50;
+        var targetHeight = 50;
+        var hitsTargetHorzontally = (x + w > screenWHalf - targetWidth) &&
+            (x < screenWHalf + targetWidth);
+        var hitsTargetVertically = (y + h > screenH40P - targetHeight) &&
+            (y < screenH40P + targetHeight);
+        var isHot = hitsTargetHorzontally && hitsTargetVertically;
+
+        var color = isHot ? Colors.green : Color.fromRGBO(37, 213, 253, 1.0);
 
         return Positioned(
             left: math.max(0, x),
@@ -61,14 +72,14 @@ class BoundingBox extends StatelessWidget {
                 padding: EdgeInsets.only(top: 5.0, left: 5.0),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color.fromRGBO(37, 213, 253, 1.0),
+                    color: color,
                     width: 3.0,
                   ),
                 ),
                 child: Text(
                   "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
                   style: TextStyle(
-                    color: Color.fromRGBO(37, 213, 253, 1.0),
+                    color: color,
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                   ),

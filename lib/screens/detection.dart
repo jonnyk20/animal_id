@@ -5,6 +5,7 @@ import 'package:animal_id/detector.dart';
 import 'package:animal_id/info_box.dart';
 import 'package:animal_id/bounding_box.dart';
 import 'package:animal_id/target.dart';
+import 'package:animal_id/services/format_detections.dart';
 
 class Detection extends StatefulWidget {
   final CameraDescription camera;
@@ -16,7 +17,7 @@ class Detection extends StatefulWidget {
 
 class _DetectionState extends State<Detection> {
   final CameraDescription camera;
-  List<dynamic> _recognitions;
+  List<dynamic> _recognitions = [];
   int _imageHeight = 0;
   int _imageWidth = 0;
   String _selectedClass = "";
@@ -24,15 +25,10 @@ class _DetectionState extends State<Detection> {
   _DetectionState(this.camera);
 
   setRecognitions(List recognitions, imageHeight, imageWidth) {
-    var cups;
-    if (recognitions.where((re) {
-          return re["detectedClass"] == "cup";
-        }).length >
-        0) {
-      cups = recognitions.where((re) {
-        return re["detectedClass"] == "cup";
-      }).toList();
-    }
+    var cups = [];
+    cups = recognitions.where((re) {
+      return re["detectedClass"] == "cup";
+    }).toList();
     if (this.mounted) {
       setState(() {
         _recognitions = cups;
@@ -51,17 +47,20 @@ class _DetectionState extends State<Detection> {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
+    var formattedDetections = [];
+    if (_recognitions.isNotEmpty) {
+      formattedDetections = formatDetections(
+          _recognitions,
+          math.max(_imageHeight, _imageWidth),
+          math.min(_imageHeight, _imageWidth),
+          screen.height,
+          screen.width);
+    }
     return Scaffold(
       body: Stack(
         children: <Widget>[
           Detector(camera, setRecognitions),
-          BoundingBox(
-              _recognitions == null ? [] : _recognitions,
-              math.max(_imageHeight, _imageWidth),
-              math.min(_imageHeight, _imageWidth),
-              screen.height,
-              screen.width,
-              selectClass),
+          BoundingBox(formattedDetections, selectClass),
           Positioned(
             bottom: 0,
             left: 0,

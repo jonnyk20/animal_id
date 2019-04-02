@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class BoundingBox extends StatelessWidget {
   final List<dynamic> results;
-  final int previewH;
-  final int previewW;
-  final double screenH;
-  final double screenW;
   final Function selectClass;
 
   BoundingBox(
     this.results,
-    this.previewH,
-    this.previewW,
-    this.screenH,
-    this.screenW,
     this.selectClass,
   );
 
@@ -22,48 +13,14 @@ class BoundingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> _renderBox() {
       return results.map((re) {
-        var _x = re["rect"]["x"];
-        var _w = re["rect"]["w"];
-        var _y = re["rect"]["y"];
-        var _h = re["rect"]["h"];
-        var scaleW, scaleH, x, y, w, h;
-
-        if (screenH / screenW > previewH / previewW) {
-          scaleW = screenH / previewH * previewW;
-          scaleH = screenH;
-          var difW = (scaleW - screenW) / scaleW;
-          x = (_x - difW / 2) * scaleW;
-          w = _w * scaleW;
-          if (_x < difW / 2) w -= (difW / 2 - _x) * scaleW;
-          y = _y * scaleH;
-          h = _h * scaleH;
-        } else {
-          scaleH = screenW / previewW * previewH;
-          scaleW = screenW;
-          var difH = (scaleH - screenH) / scaleH;
-          x = _x * scaleW;
-          w = _w * scaleW;
-          y = (_y - difH / 2) * scaleH;
-          h = _h * scaleH;
-          if (_y < difH / 2) h -= (difH / 2 - _y) * scaleH;
-        }
-        var screenWHalf = screenW / 2;
-        var screenH40P = screenH * 0.4;
-        var targetWidth = 50;
-        var targetHeight = 50;
-        var hitsTargetHorzontally = (x + w > screenWHalf - targetWidth) &&
-            (x < screenWHalf + targetWidth);
-        var hitsTargetVertically = (y + h > screenH40P - targetHeight) &&
-            (y < screenH40P + targetHeight);
-        var isHot = hitsTargetHorzontally && hitsTargetVertically;
-
-        var color = isHot ? Colors.green : Color.fromRGBO(37, 213, 253, 1.0);
+        var color =
+            re["isHot"] ? Colors.green : Color.fromRGBO(37, 213, 253, 1.0);
 
         return Positioned(
-            left: math.max(0, x),
-            top: math.max(0, y),
-            width: w,
-            height: h,
+            left: re["left"],
+            top: re["top"],
+            width: re["width"],
+            height: re["height"],
             child: GestureDetector(
               onTap: () {
                 selectClass(re["detectedClass"]);

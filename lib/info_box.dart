@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -22,9 +23,16 @@ class InfoBox extends StatelessWidget {
                 : Text('Selected: $selectedClass'),
             Text(
                 'Cup Detection Score: ${props["cups"] == null ? "none" : props["cups"].count}'),
+            props["cups"] == null
+                ? Container()
+                : LinearProgressIndicator(
+                    value: math.min((props["cups"].count) / 10, 1)),
             RaisedButton(
-              child: Text('Test Action'),
-              onPressed: props["clearDetections"],
+              child: Text('catch'),
+              color: Colors.green,
+              onPressed: (props["cups"] != null && props["cups"].count >= 10)
+                  ? props["clearDetections"]
+                  : null,
             )
           ],
         ),

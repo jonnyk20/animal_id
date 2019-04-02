@@ -18,7 +18,7 @@ Map<String, DetectedObject> _increaseObjectDetectionCounts(
     var detectedClass = detection.detectedClass;
     if (detections[detectedClass] == null) {
       detections[detectedClass] = DetectedObject(detectedClass, 1);
-    } else {
+    } else if (detections[detectedClass].count < 15) {
       detections[detectedClass] =
           DetectedObject(detectedClass, detections[detectedClass].count + 1);
     }

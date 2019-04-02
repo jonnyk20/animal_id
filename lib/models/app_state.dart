@@ -1,5 +1,9 @@
+import 'package:animal_id/models/detection.dart';
+
 class AppState {
-  final String isWorking;
-  AppState(this.isWorking);
-  static var initial = AppState('YES');
+  final List<Detection> detections;
+  AppState({this.detections});
+  static var initial = AppState(
+    detections: [],
+  );
 }

@@ -8,10 +8,11 @@ class InfoBox extends StatelessWidget {
   InfoBox(this.selectedClass);
 
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, Map>(converter: (store) {
+    return StoreConnector<AppState, Map>(converter: (store) {
       return {
-        'isWorking': store.state.isWorking,
-        'setIsWorking': () => store.dispatch(ChangeIsWorking('NO'))
+        'detections': store.state.detections,
+        'clearDetections': () => store.dispatch(ClearDetections()),
+        'detectionsCount': store.state.detections.length
       };
     }, builder: (context, props) {
       return Container(
@@ -20,10 +21,10 @@ class InfoBox extends StatelessWidget {
             selectedClass.isEmpty
                 ? Text('No selected classes')
                 : Text('Selected: $selectedClass'),
-            Text('isWorking: ${props["isWorking"]}'),
+            Text('Total Detections: ${props["detectionsCount"]}'),
             RaisedButton(
               child: Text('Test Action'),
-              onPressed: props["setIsWorking"],
+              onPressed: props["clearDetections"],
             )
           ],
         ),

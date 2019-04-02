@@ -23,7 +23,7 @@ class App extends StatelessWidget {
             ),
             routes: {
               '/': (context) => Home(),
-              '/detection': (context) => Detection(camera)
+              '/detection': (context) => DetectionScreen(camera)
             },
           );
         }));

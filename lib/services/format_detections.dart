@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:animal_id/models/detection.dart';
 
 formatDetections(
   detections,
@@ -7,7 +8,7 @@ formatDetections(
   screenH,
   screenW,
 ) {
-  return detections.map((re) {
+  return detections.map<Detection>((re) {
     var _x = re["rect"]["x"];
     var _w = re["rect"]["w"];
     var _y = re["rect"]["y"];
@@ -42,16 +43,16 @@ formatDetections(
         (x < screenWHalf + targetWidthHalf);
     var hitsTargetVertically = (y + h > screenH40P - targetHeightHalf) &&
         (y < screenH40P + targetHeightHalf);
-    var isHot = hitsTargetHorzontally && hitsTargetVertically;
+    var isTarget = hitsTargetHorzontally && hitsTargetVertically;
 
-    return {
-      "left": math.max(0, x).toDouble(),
-      "top": math.max(0, y).toDouble(),
-      "width": w.toDouble(),
-      "height": h.toDouble(),
-      "detectedClass": re["detectedClass"],
-      "confidenceInClass": re["confidenceInClass"],
-      "isHot": isHot,
-    };
+    return Detection(
+      left: math.max(0, x).toDouble(),
+      top: math.max(0, y).toDouble(),
+      width: w.toDouble(),
+      height: h.toDouble(),
+      detectedClass: re["detectedClass"],
+      confidenceInClass: re["confidenceInClass"],
+      isTarget: isTarget,
+    );
   }).toList();
 }

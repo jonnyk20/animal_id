@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:animal_id/models/detection.dart';
 
 class BoundingBox extends StatelessWidget {
-  final List<dynamic> results;
+  final List<Detection> results;
   final Function selectClass;
 
   BoundingBox(
@@ -12,18 +13,19 @@ class BoundingBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> _renderBox() {
-      return results.map((re) {
-        var color =
-            re["isHot"] ? Colors.green : Color.fromRGBO(37, 213, 253, 1.0);
+      return results.map((detection) {
+        var color = detection.isTarget
+            ? Colors.green
+            : Color.fromRGBO(37, 213, 253, 1.0);
 
         return Positioned(
-            left: re["left"],
-            top: re["top"],
-            width: re["width"],
-            height: re["height"],
+            left: detection.left,
+            top: detection.top,
+            width: detection.width,
+            height: detection.height,
             child: GestureDetector(
               onTap: () {
-                selectClass(re["detectedClass"]);
+                selectClass(detection.detectedClass);
               },
               child: Container(
                 padding: EdgeInsets.only(top: 5.0, left: 5.0),
@@ -34,7 +36,7 @@ class BoundingBox extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
+                  "${detection.detectedClass} ${(detection.confidenceInClass * 100).toStringAsFixed(0)}%",
                   style: TextStyle(
                     color: color,
                     fontSize: 14.0,

@@ -1,39 +1,34 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:animal_id/detector.dart';
 import 'package:animal_id/info_box.dart';
 import 'package:animal_id/bounding_box.dart';
 import 'package:animal_id/target.dart';
-import 'package:animal_id/services/format_detections.dart';
+import 'package:animal_id/models/detection.dart';
 
-class Detection extends StatefulWidget {
+class DetectionScreen extends StatefulWidget {
   final CameraDescription camera;
 
-  Detection(this.camera);
+  DetectionScreen(this.camera);
 
-  _DetectionState createState() => _DetectionState(camera);
+  _DetectionScreenState createState() => _DetectionScreenState(camera);
 }
 
-class _DetectionState extends State<Detection> {
+class _DetectionScreenState extends State<DetectionScreen> {
   final CameraDescription camera;
-  List<dynamic> _recognitions = [];
-  int _imageHeight = 0;
-  int _imageWidth = 0;
+  List<Detection> _recognitions = [];
   String _selectedClass = "";
 
-  _DetectionState(this.camera);
+  _DetectionScreenState(this.camera);
 
-  setRecognitions(List recognitions, imageHeight, imageWidth) {
+  setRecognitions(List<Detection> recognitions) {
     var cups = [];
-    cups = recognitions.where((re) {
-      return re["detectedClass"] == "cup";
+    cups = recognitions.where((detection) {
+      return detection.detectedClass == "cup";
     }).toList();
     if (this.mounted) {
       setState(() {
         _recognitions = cups;
-        _imageHeight = imageHeight;
-        _imageWidth = imageWidth;
       });
     }
   }
@@ -47,20 +42,12 @@ class _DetectionState extends State<Detection> {
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    var formattedDetections = [];
-    if (_recognitions.isNotEmpty) {
-      formattedDetections = formatDetections(
-          _recognitions,
-          math.max(_imageHeight, _imageWidth),
-          math.min(_imageHeight, _imageWidth),
-          screen.height,
-          screen.width);
-    }
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Detector(camera, setRecognitions),
-          BoundingBox(formattedDetections, selectClass),
+          Detector(camera, setRecognitions, screen.height, screen.width),
+          BoundingBox(_recognitions, selectClass),
           Positioned(
             bottom: 0,
             left: 0,

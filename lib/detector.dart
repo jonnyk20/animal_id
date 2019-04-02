@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
+import 'package:animal_id/services/format_detections.dart';
 import 'dart:math' as math;
 
 class Detector extends StatefulWidget {
   final CameraDescription camera;
   final Function setRecognitions;
+  final double screenHeight;
+  final double screenWidth;
 
-  Detector(this.camera, this.setRecognitions);
+  Detector(
+      this.camera, this.setRecognitions, this.screenHeight, this.screenWidth);
 
-  _DetectorState createState() => _DetectorState(camera, setRecognitions);
+  _DetectorState createState() =>
+      _DetectorState(camera, setRecognitions, screenHeight, screenWidth);
 }
 
 class _DetectorState extends State<Detector> {
   final CameraDescription camera;
   final Function setRecognitions;
+  final double screenHeight;
+  final double screenWidth;
   CameraController controller;
   bool isDetecting = false;
 
-  _DetectorState(this.camera, this.setRecognitions);
+  _DetectorState(
+    this.camera,
+    this.setRecognitions,
+    this.screenHeight,
+    this.screenWidth,
+  );
 
   @override
   void initState() {
@@ -58,8 +70,15 @@ class _DetectorState extends State<Detector> {
                     return re["detectedClass"] == "cup";
                   }).length >
                   0) {}
-
-              setRecognitions(recognitions, img.height, img.width);
+              var formattedDetections = formatDetections(
+                  recognitions,
+                  math.max(img.height, img.width),
+                  math.min(img.height, img.width),
+                  screenHeight,
+                  screenWidth);
+              setRecognitions(
+                formattedDetections,
+              );
 
               isDetecting = false;
             });

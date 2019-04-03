@@ -6,6 +6,7 @@ import 'package:animal_id/bounding_box.dart';
 import 'package:animal_id/target.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
+import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
 class DetectionScreen extends StatelessWidget {
@@ -19,9 +20,13 @@ class DetectionScreen extends StatelessWidget {
 
     return StoreConnector<AppState, Map>(converter: (store) {
       return {
-        'addDetections': (detections) {
+        'addDetections': (List<Detection> detections) {
           store.dispatch(SetCurrentDetections(detections));
-          store.dispatch(AddTrackedDetections(detections));
+          var detectionsToCount = detections.where((detection) {
+            var detectionName = detection.detectedClass;
+            return store.state.objectRecords[detectionName].isCaught == false;
+          }).toList();
+          store.dispatch(AddTrackedDetections(detectionsToCount));
         },
         'currentDetections': store.state.currentDetections,
         'objectRecords': store.state.objectRecords,

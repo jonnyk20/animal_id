@@ -10,6 +10,18 @@ class AddTrackedDetections {
   AddTrackedDetections(this.detections);
 }
 
+class RemoveTrackedDetection {
+  final String detectedObjectName;
+  RemoveTrackedDetection(this.detectedObjectName);
+}
+
 class ReduceObjecDetectionCounts {}
 
 class ReduceTrackedDetectionCounts {}
+
+class SaveDetection {
+  final String detectionName;
+  SaveDetection(
+    this.detectionName,
+  );
+}

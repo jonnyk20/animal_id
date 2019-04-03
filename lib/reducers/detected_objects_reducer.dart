@@ -7,6 +7,8 @@ final detectedObjectsReducer = combineReducers<Map<String, DetectedObject>>([
       _increaseObjectDetectionCounts),
   TypedReducer<Map<String, DetectedObject>, ReduceObjecDetectionCounts>(
       _reduceDetectedObjectCounts),
+  TypedReducer<Map<String, DetectedObject>, RemoveTrackedDetection>(
+      _removeDetectedObject),
 ]);
 
 Map<String, DetectedObject> _increaseObjectDetectionCounts(
@@ -40,6 +42,16 @@ Map<String, DetectedObject> _reduceDetectedObjectCounts(
           DetectedObject(detection.name, detection.count - 1);
     }
   });
+  return updatedDetections;
+}
+
+Map<String, DetectedObject> _removeDetectedObject(
+    Map<String, DetectedObject> state, RemoveTrackedDetection action) {
+  if (state.isEmpty) {
+    return state;
+  }
+  var updatedDetections = Map<String, DetectedObject>.from(state);
+  updatedDetections.remove(action.detectedObjectName);
   return updatedDetections;
 }
 

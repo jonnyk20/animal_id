@@ -46,36 +46,37 @@ class InfoBox extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Map>(converter: (store) {
-      var dectedObjects = store.state.detectedObjects.keys
+      var detectedObjects = store.state.detectedObjects.keys
           .map<DetectedObject>((key) => store.state.detectedObjects[key])
           .toList();
+      detectedObjects.sort((a, b) {
+        return b.count.compareTo(a.count);
+      });
       return {
         'clearDetections': () => store.dispatch(ReduceObjecDetectionCounts()),
-        'detectedObjects': dectedObjects
+        'detectedObjects': detectedObjects,
+        'saveDetection': (detectionName) {
+          store.dispatch(SaveDetection(detectionName));
+          store.dispatch(RemoveTrackedDetection(detectionName));
+        }
       };
     }, builder: (context, props) {
       return Container(
-        height: 300.0,
+        height: 250.0,
         color: Colors.blue,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-                child: ListView.builder(
-                    itemCount: props["detectedObjects"].length,
-                    itemBuilder: (context, int index) {
-                      var detectedObject = props["detectedObjects"][index];
-                      return DetectionLabel(
-                        detectedObject: detectedObject,
-                        catchObject: (detectedObject) {
-                          confirmCatch(context, detectedObject);
-                          // confirmCatch(context, detectedObject);
-                        },
-                      );
-                    }))
-          ],
-        ),
+        child: ListView.builder(
+            padding: EdgeInsets.all(0.0),
+            itemCount: props["detectedObjects"].length,
+            itemBuilder: (context, int index) {
+              DetectedObject detectedObject = props["detectedObjects"][index];
+              return DetectionLabel(
+                detectedObject: detectedObject,
+                catchObject: (detectedObject) {
+                  props["saveDetection"](detectedObject.name);
+                  confirmCatch(context, detectedObject);
+                },
+              );
+            }),
       );
     });
   }

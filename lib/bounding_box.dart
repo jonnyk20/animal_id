@@ -14,9 +14,11 @@ class BoundingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> _renderBox() {
       return results.map((detection) {
-        var color = detection.isTarget
-            ? Colors.green
-            : Color.fromRGBO(37, 213, 253, 1.0);
+        var color = detection.isCaught
+            ? Colors.white
+            : detection.isTarget
+                ? Colors.green
+                : Color.fromRGBO(37, 213, 253, 1.0);
 
         return Positioned(
             left: detection.left,

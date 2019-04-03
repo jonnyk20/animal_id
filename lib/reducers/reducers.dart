@@ -10,5 +10,6 @@ AppState appReducers(AppState state, dynamic action) {
     currentDetections:
         currentDetectionsReducer(state.currentDetections, action),
     detectedObjects: detectedObjectsReducer(state.detectedObjects, action),
+    objectRecords: state.objectRecords,
   );
 }

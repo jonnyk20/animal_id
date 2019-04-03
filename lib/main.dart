@@ -6,9 +6,11 @@ import 'package:tflite/tflite.dart';
 import 'package:redux/redux.dart';
 import 'package:animal_id/app.dart';
 import 'package:animal_id/models/app_state_model.dart';
+import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/reducers/reducers.dart';
 
 List<CameraDescription> cameras;
+Map<String, ObjectRecord> objectsInfo;
 
 loadModel() async {
   await Tflite.loadModel(
@@ -17,13 +19,30 @@ loadModel() async {
   );
 }
 
+Future<Map<String, ObjectRecord>> loadObjectInfo() async {
+  var file = await rootBundle.loadString('assets/object_info.txt');
+  var objectsInfo = Map<String, ObjectRecord>();
+
+  file.split('\n').forEach((str) {
+    var name = str.trim();
+    if (name.isNotEmpty) {
+      var isCaught = name == "cup";
+      var info = 'This is info about $name';
+      var record = ObjectRecord(name: name, info: info, isCaught: isCaught);
+      objectsInfo[name] = record;
+    }
+  });
+  return objectsInfo;
+}
+
 Future<void> main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   cameras = await availableCameras();
   await loadModel();
+  objectsInfo = await loadObjectInfo();
   final store = new Store<AppState>(appReducers,
-      initialState: AppState.initial, middleware: []);
+      initialState: AppState.initial(objectsInfo), middleware: []);
   runApp(App(store, cameras[0]));
 }

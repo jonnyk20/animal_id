@@ -1,20 +1,32 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:animal_id/services/format_detections.dart';
-import 'dart:math' as math;
+import 'package:animal_id/models/object_record_model.dart';
 
 class Detector extends StatefulWidget {
   final CameraDescription camera;
   final Function setRecognitions;
   final double screenHeight;
   final double screenWidth;
+  final Map<String, ObjectRecord> objectRecords;
 
   Detector(
-      this.camera, this.setRecognitions, this.screenHeight, this.screenWidth);
+    this.camera,
+    this.setRecognitions,
+    this.screenHeight,
+    this.screenWidth,
+    this.objectRecords,
+  );
 
-  _DetectorState createState() =>
-      _DetectorState(camera, setRecognitions, screenHeight, screenWidth);
+  _DetectorState createState() => _DetectorState(
+        camera,
+        setRecognitions,
+        screenHeight,
+        screenWidth,
+        objectRecords,
+      );
 }
 
 class _DetectorState extends State<Detector> {
@@ -22,6 +34,7 @@ class _DetectorState extends State<Detector> {
   final Function setRecognitions;
   final double screenHeight;
   final double screenWidth;
+  final Map<String, ObjectRecord> objectRecords;
   CameraController controller;
   bool isDetecting = false;
 
@@ -30,6 +43,7 @@ class _DetectorState extends State<Detector> {
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
+    this.objectRecords,
   );
 
   @override
@@ -66,16 +80,13 @@ class _DetectorState extends State<Detector> {
               numResultsPerClass: 1,
               threshold: 0.4,
             ).then((recognitions) {
-              if (recognitions.where((re) {
-                    return re["detectedClass"] == "cup";
-                  }).length >
-                  0) {}
               var formattedDetections = formatDetections(
                   recognitions,
                   math.max(img.height, img.width),
                   math.min(img.height, img.width),
                   screenHeight,
-                  screenWidth);
+                  screenWidth,
+                  objectRecords);
               setRecognitions(
                 formattedDetections,
               );

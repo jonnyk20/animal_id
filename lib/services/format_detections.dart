@@ -7,8 +7,13 @@ formatDetections(
   previewW,
   screenH,
   screenW,
+  objectRecords,
 ) {
-  return detections.map<Detection>((re) {
+  var smallestTarget = {};
+  List<Detection> formattedDetectionsList = [];
+
+  Map<int, dynamic> formattedDetectionsMap = detections.asMap();
+  formattedDetectionsMap.forEach((index, re) {
     var _x = re["rect"]["x"];
     var _w = re["rect"]["w"];
     var _y = re["rect"]["y"];
@@ -43,9 +48,20 @@ formatDetections(
         (x < screenWHalf + targetWidthHalf);
     var hitsTargetVertically = (y + h > screenH40P - targetHeightHalf) &&
         (y < screenH40P + targetHeightHalf);
-    var isTarget = hitsTargetHorzontally && hitsTargetVertically;
+    var inTargetArea = hitsTargetHorzontally && hitsTargetVertically;
+    var area = w * h;
+    var isTarget = false;
+    if (inTargetArea &&
+        (smallestTarget.isEmpty || smallestTarget["area"] > area)) {
+      smallestTarget = {
+        "area": area,
+        "index": index,
+      };
+    }
 
-    return Detection(
+    var isCaught = objectRecords[re["detectedClass"]].isCaught == true;
+
+    formattedDetectionsList.add(Detection(
       left: math.max(0, x).toDouble(),
       top: math.max(0, y).toDouble(),
       width: w.toDouble(),
@@ -53,6 +69,11 @@ formatDetections(
       detectedClass: re["detectedClass"],
       confidenceInClass: re["confidenceInClass"],
       isTarget: isTarget,
-    );
-  }).toList();
+      isCaught: isCaught,
+    ));
+  });
+  if (smallestTarget.isNotEmpty) {
+    formattedDetectionsList[smallestTarget["index"]].isTarget = true;
+  }
+  return formattedDetectionsList;
 }

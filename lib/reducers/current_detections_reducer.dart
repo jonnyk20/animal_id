@@ -7,13 +7,5 @@ final currentDetectionsReducer = combineReducers<List<Detection>>([
 ]);
 
 List<Detection> _addDetections(List<Detection> state, action) {
-  var detections = List<Detection>.from(state);
-  detections.addAll(action.detections);
-  detections = detections.where((detection) {
-    return detection.detectedClass == "cup";
-  }).toList();
-  var newDetections = action.detections.where((detection) {
-    return detection.detectedClass == "cup";
-  }).toList();
-  return newDetections;
+  return action.detections;
 }

@@ -5,7 +5,8 @@ class Detection {
   final double height;
   final String detectedClass;
   final double confidenceInClass;
-  final bool isTarget;
+  bool isTarget;
+  final bool isCaught;
   Detection({
     this.left,
     this.top,
@@ -14,5 +15,6 @@ class Detection {
     this.detectedClass,
     this.confidenceInClass,
     this.isTarget,
+    this.isCaught = false,
   });
 }

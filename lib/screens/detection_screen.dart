@@ -24,6 +24,7 @@ class DetectionScreen extends StatelessWidget {
           store.dispatch(AddTrackedDetections(detections));
         },
         'currentDetections': store.state.currentDetections,
+        'objectRecords': store.state.objectRecords,
       };
     }, builder: (context, props) {
       return Scaffold(
@@ -34,6 +35,7 @@ class DetectionScreen extends StatelessWidget {
               props["addDetections"],
               screen.height,
               screen.width,
+              props["objectRecords"],
             ),
             BoundingBox(
               props["currentDetections"],

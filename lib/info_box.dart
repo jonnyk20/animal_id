@@ -19,15 +19,26 @@ class InfoBox extends StatelessWidget {
         'detectedObjects': dectedObjects
       };
     }, builder: (context, props) {
-      return Column(
-        children: props["detectedObjects"]
-            .map<Widget>((DetectedObject detectedObject) {
-          return DetectionLabel(
-            detectedObject: detectedObject,
-            catchObject: (detectedObject) =>
-                print('CATCHING: ${detectedObject.name}'),
-          );
-        }).toList(),
+      return Container(
+        height: 300.0,
+        color: Colors.blue,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+                child: ListView.builder(
+                    itemCount: props["detectedObjects"].length,
+                    itemBuilder: (context, int index) {
+                      var detectedObject = props["detectedObjects"][index];
+                      return DetectionLabel(
+                        detectedObject: detectedObject,
+                        catchObject: (detectedObject) =>
+                            print('CATCHING: ${detectedObject.name}'),
+                      );
+                    }))
+          ],
+        ),
       );
     });
   }

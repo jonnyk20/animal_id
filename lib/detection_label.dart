@@ -13,12 +13,15 @@ class DetectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var progress = math.min((detectedObject.count) / 10, 1).toDouble();
     return Container(
       child: Column(
         children: <Widget>[
-          Text('Cup Detection Score: ${detectedObject.count}'),
+          Text(
+              'Detecting ${detectedObject.name} - ${(progress * 100).toInt()}%'),
           LinearProgressIndicator(
-              value: math.min((detectedObject.count) / 10, 1)),
+            value: progress,
+          ),
           RaisedButton(
             child: Text('catch'),
             color: Colors.green,
@@ -30,7 +33,7 @@ class DetectionLabel extends StatelessWidget {
       ),
       color: Colors.blue,
       padding: new EdgeInsets.all(40.0),
-      height: 200.0,
+      // height: 100.0,
     );
   }
 }

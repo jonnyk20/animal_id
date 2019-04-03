@@ -12,8 +12,10 @@ final detectedObjectsReducer = combineReducers<Map<String, DetectedObject>>([
 Map<String, DetectedObject> _increaseObjectDetectionCounts(
     Map<String, DetectedObject> state, AddTrackedDetections action) {
   var detections = Map<String, DetectedObject>.from(state);
-  var targetDetections =
-      action.detections.where((detection) => detection.isTarget).toList();
+  var targetDetections = action.detections
+      .where(
+          (detection) => detection.isTarget && detection.detectedClass == "cup")
+      .toList();
   targetDetections.forEach((detection) {
     var detectedClass = detection.detectedClass;
     if (detections[detectedClass] == null) {

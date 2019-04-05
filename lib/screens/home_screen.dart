@@ -19,6 +19,12 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, '/detection');
               },
             ),
+            RaisedButton(
+              child: Text('See Animals'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/animals');
+              },
+            ),
           ],
         ),
       ),

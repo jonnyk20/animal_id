@@ -26,9 +26,9 @@ Future<Map<String, ObjectRecord>> loadObjectInfo() async {
   file.split('\n').forEach((str) {
     var name = str.trim();
     if (name.isNotEmpty) {
-      // var isCaught = name == "cup";
+      var isCaught = name == "cup";
       var info = 'This is info about $name';
-      var record = ObjectRecord(name: name, info: info);
+      var record = ObjectRecord(name: name, info: info, isCaught: isCaught);
       objectsInfo[name] = record;
     }
   });
@@ -39,7 +39,13 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  cameras = await availableCameras();
+  // cameras = await availableCameras();
+  cameras = [
+    CameraDescription(
+        name: 'false',
+        lensDirection: CameraLensDirection.back,
+        sensorOrientation: 90)
+  ];
   await loadModel();
   objectsInfo = await loadObjectInfo();
   final store = new Store<AppState>(appReducers,

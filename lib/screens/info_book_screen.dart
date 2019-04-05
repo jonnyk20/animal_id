@@ -2,43 +2,46 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
-import 'package:animal_id/animal_card.dart';
+import 'package:animal_id/object_card.dart';
+import 'package:animal_id/actions/actions.dart';
 
-class AnimalsScreen extends StatelessWidget {
+class InfoBook extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Map>(converter: (store) {
-      var animalRecords = store.state.objectRecords;
-      var animalsList = animalRecords.keys
-          .map<ObjectRecord>((animalName) => animalRecords[animalName])
+      var objectRecords = store.state.objectRecords;
+      var objectsList = objectRecords.keys
+          .map<ObjectRecord>((animalName) => objectRecords[animalName])
           .toList();
-      animalsList.sort((a, b) {
+      objectsList.sort((a, b) {
         return b.isCaught.toString().compareTo(a.isCaught.toString());
       });
       return {
-        "animals": animalsList,
+        "objects": objectsList,
+        "selectObjectRecord": (objectRecord) =>
+            store.dispatch(SelectObjectRecord(objectRecord))
       };
     }, builder: (context, props) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('View Animals'),
+          title: Text('View Objects'),
         ),
         body: Container(
           child: ListView.builder(
             padding: EdgeInsets.all(0.0),
-            itemCount: props["animals"].length,
+            itemCount: props["objects"].length,
             itemBuilder: (context, int index) {
-              ObjectRecord objectRecord = props["animals"][index];
+              ObjectRecord objectRecord = props["objects"][index];
               return Container(
                 padding: EdgeInsets.all(10.0),
-                child: AnimalCard(
+                child: ObjectCard(
                   objectRecord: objectRecord,
+                  selectObjectRecord: props["selectObjectRecord"],
                 ),
               );
             },
           ),
         ),
         floatingActionButton: Container(
-          margin: EdgeInsets.only(top: 150.0),
           child: FloatingActionButton(
             foregroundColor: Colors.blue,
             backgroundColor: Colors.white,
@@ -46,7 +49,6 @@ class AnimalsScreen extends StatelessWidget {
             child: Icon(Icons.arrow_back),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       );
     });
   }

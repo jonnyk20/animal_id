@@ -1,4 +1,5 @@
 import 'package:animal_id/models/detection_model.dart';
+import 'package:animal_id/models/object_record_model.dart';
 
 class SetCurrentDetections {
   final List<Detection> detections;
@@ -24,4 +25,9 @@ class SaveDetection {
   SaveDetection(
     this.detectionName,
   );
+}
+
+class SelectObjectRecord {
+  final ObjectRecord objectRecord;
+  SelectObjectRecord(this.objectRecord);
 }

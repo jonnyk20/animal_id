@@ -5,7 +5,8 @@ import 'package:redux/redux.dart';
 import 'package:camera/camera.dart';
 import 'package:animal_id/screens/home_screen.dart';
 import 'package:animal_id/screens/detection_screen.dart';
-import 'package:animal_id/screens/animals_screen.dart';
+import 'package:animal_id/screens/info_book_screen.dart';
+import 'package:animal_id/screens/info_page_screen.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
@@ -38,7 +39,8 @@ class App extends StatelessWidget {
                 routes: {
                   '/': (context) => Home(),
                   '/detection': (context) => DetectionScreen(camera),
-                  '/animals': (context) => AnimalsScreen()
+                  '/info-book': (context) => InfoBook(),
+                  '/info-page': (context) => InfoPage()
                 },
               );
             }));

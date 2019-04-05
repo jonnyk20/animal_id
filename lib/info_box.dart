@@ -16,14 +16,14 @@ class InfoBox extends StatelessWidget {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "You have caught a ${detectedObject.name}!",
+            "Congratulations on your new Catch: ${detectedObject.name}!",
             style: TextStyle(
               color: Colors.blue,
             ),
           ),
           backgroundColor: Colors.white,
           content: new Text(
-            "Go to your animal book to learn about this animal",
+            "Go to your info book to learn about it",
             style: TextStyle(
               color: Colors.blue,
             ),

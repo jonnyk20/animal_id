@@ -6,11 +6,13 @@ class AppState {
   final List<Detection> currentDetections;
   final Map<String, DetectedObject> detectedObjects;
   final Map<String, ObjectRecord> objectRecords;
+  final ObjectRecord selectedObject;
 
   AppState({
     this.currentDetections,
     this.detectedObjects,
     this.objectRecords,
+    this.selectedObject,
   });
   static var initial = (objectInfo) => AppState(
       currentDetections: [], detectedObjects: {}, objectRecords: objectInfo);

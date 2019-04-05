@@ -20,9 +20,9 @@ class _HomeState extends State<Home> {
               },
             ),
             RaisedButton(
-              child: Text('See Animals'),
+              child: Text('See Objects'),
               onPressed: () {
-                Navigator.pushNamed(context, '/animals');
+                Navigator.pushNamed(context, '/info-book');
               },
             ),
           ],

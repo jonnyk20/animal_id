@@ -30,18 +30,21 @@ class DetectionScreen extends StatelessWidget {
         },
         'currentDetections': store.state.currentDetections,
         'objectRecords': store.state.objectRecords,
+        'isTargeting': store.state.isTargeting,
+        'updateTargetingState': (bool targetingState) =>
+            store.dispatch(UpdateTargetingStatus(targetingState)),
       };
     }, builder: (context, props) {
       return Scaffold(
         body: Stack(
           children: <Widget>[
             Detector(
-              camera,
-              props["addDetections"],
-              screen.height,
-              screen.width,
-              props["objectRecords"],
-            ),
+                camera,
+                props["addDetections"],
+                screen.height,
+                screen.width,
+                props["objectRecords"],
+                props["updateTargetingState"]),
             BoundingBox(
               props["currentDetections"],
               (selectedClass) => print('SELECTED CLASS: $selectedClass'),
@@ -52,7 +55,7 @@ class DetectionScreen extends StatelessWidget {
               right: 0,
               child: InfoBox("[Selected Class]"),
             ),
-            Target(),
+            Target(props["isTargeting"]),
           ],
         ),
         floatingActionButton: Container(

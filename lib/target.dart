@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Target extends StatelessWidget {
-  @override
+  final bool isTargeting;
+  Target(this.isTargeting);
   Widget build(BuildContext context) {
+    Color color = (isTargeting ? Colors.green : Colors.white).withOpacity(0.5);
     return Center(
       child: Container(
         alignment: FractionalOffset(0.5, 0.4),
@@ -13,7 +15,7 @@ class Target extends StatelessWidget {
           decoration: new BoxDecoration(
             shape: BoxShape.circle,
             border: new Border.all(
-              color: Colors.white.withOpacity(0.5),
+              color: color,
               width: 2.0,
               style: BorderStyle.solid,
             ),

@@ -7,13 +7,18 @@ class AppState {
   final Map<String, DetectedObject> detectedObjects;
   final Map<String, ObjectRecord> objectRecords;
   final ObjectRecord selectedObject;
+  final bool isTargeting;
 
   AppState({
     this.currentDetections,
     this.detectedObjects,
     this.objectRecords,
     this.selectedObject,
+    this.isTargeting = false,
   });
   static var initial = (objectInfo) => AppState(
-      currentDetections: [], detectedObjects: {}, objectRecords: objectInfo);
+        currentDetections: [],
+        detectedObjects: {},
+        objectRecords: objectInfo,
+      );
 }

@@ -31,3 +31,8 @@ class SelectObjectRecord {
   final ObjectRecord objectRecord;
   SelectObjectRecord(this.objectRecord);
 }
+
+class UpdateTargetingStatus {
+  final bool targetingStatus;
+  UpdateTargetingStatus(this.targetingStatus);
+}

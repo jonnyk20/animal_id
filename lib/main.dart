@@ -39,13 +39,13 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  // cameras = await availableCameras();
-  cameras = [
-    CameraDescription(
-        name: 'false',
-        lensDirection: CameraLensDirection.back,
-        sensorOrientation: 90)
-  ];
+  cameras = await availableCameras();
+  // cameras = [
+  //   CameraDescription(
+  //       name: 'false',
+  //       lensDirection: CameraLensDirection.back,
+  //       sensorOrientation: 90)
+  // ];
   await loadModel();
   objectsInfo = await loadObjectInfo();
   final store = new Store<AppState>(appReducers,

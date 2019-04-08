@@ -3,9 +3,10 @@ import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/models/object_record_model.dart';
 
 final selelectedObjectRecordReducer = combineReducers<ObjectRecord>([
-  TypedReducer<ObjectRecord, SelectObjectRecord>(_saveDetection),
+  TypedReducer<ObjectRecord, SelectObjectRecord>(_selectObjectRecord),
 ]);
 
-ObjectRecord _saveDetection(ObjectRecord state, SelectObjectRecord action) {
+ObjectRecord _selectObjectRecord(
+    ObjectRecord state, SelectObjectRecord action) {
   return action.objectRecord;
 }

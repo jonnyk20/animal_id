@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:animal_id/services/format_detections.dart';
 import 'package:animal_id/models/object_record_model.dart';
+import 'package:animal_id/models/detection_model.dart';
 
 class Detector extends StatefulWidget {
   final CameraDescription camera;
@@ -11,6 +12,7 @@ class Detector extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
   final Map<String, ObjectRecord> objectRecords;
+  final Function updateTargetingState;
 
   Detector(
     this.camera,
@@ -18,6 +20,7 @@ class Detector extends StatefulWidget {
     this.screenHeight,
     this.screenWidth,
     this.objectRecords,
+    this.updateTargetingState,
   );
 
   _DetectorState createState() => _DetectorState(
@@ -26,6 +29,7 @@ class Detector extends StatefulWidget {
         screenHeight,
         screenWidth,
         objectRecords,
+        updateTargetingState,
       );
 }
 
@@ -35,6 +39,7 @@ class _DetectorState extends State<Detector> {
   final double screenHeight;
   final double screenWidth;
   final Map<String, ObjectRecord> objectRecords;
+  final Function updateTargetingState;
   CameraController controller;
   bool isDetecting = false;
 
@@ -44,6 +49,7 @@ class _DetectorState extends State<Detector> {
     this.screenHeight,
     this.screenWidth,
     this.objectRecords,
+    this.updateTargetingState,
   );
 
   @override
@@ -80,17 +86,19 @@ class _DetectorState extends State<Detector> {
               numResultsPerClass: 1,
               threshold: 0.4,
             ).then((recognitions) {
-              var formattedDetections = formatDetections(
+              List<Detection> formattedDetections = formatDetections(
                   recognitions,
                   math.max(img.height, img.width),
                   math.min(img.height, img.width),
                   screenHeight,
                   screenWidth,
                   objectRecords);
+              bool targettingState =
+                  formattedDetections.any((detection) => detection.isTarget);
+              updateTargetingState(targettingState);
               setRecognitions(
                 formattedDetections,
               );
-
               isDetecting = false;
             });
           }

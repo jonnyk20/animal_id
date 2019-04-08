@@ -14,30 +14,46 @@ class DetectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var progress = math.min((detectedObject.count) / 10, 1).toDouble();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
+    return Card(
+      color: Colors.blue,
+      elevation: 5.0,
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 10.0,
+          bottom: 10.0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-                'Detecting ${detectedObject.name} - ${(progress * 100).toInt()}%'),
-            Container(
-              width: 200,
-              child: LinearProgressIndicator(
-                value: progress,
-              ),
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 10.0),
+                  child: Text(
+                    'Detecting ${detectedObject.name} - ${(progress * 100).toInt()}%',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  child: LinearProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Colors.green),
+                    value: progress,
+                  ),
+                )
+              ],
+            ),
+            RaisedButton(
+              child: Text('catch'),
+              color: Colors.green,
+              onPressed: (detectedObject.count >= 10)
+                  ? () => catchObject(detectedObject)
+                  : null,
             )
           ],
         ),
-        RaisedButton(
-          child: Text('catch'),
-          color: Colors.green,
-          onPressed: (detectedObject.count >= 10)
-              ? () => catchObject(detectedObject)
-              : null,
-        )
-      ],
+      ),
     );
   }
 }

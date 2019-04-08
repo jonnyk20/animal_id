@@ -61,22 +61,27 @@ class InfoBox extends StatelessWidget {
         }
       };
     }, builder: (context, props) {
-      return Container(
-        height: 250.0,
-        color: Colors.blue,
-        child: ListView.builder(
-            padding: EdgeInsets.all(0.0),
-            itemCount: props["detectedObjects"].length,
-            itemBuilder: (context, int index) {
-              DetectedObject detectedObject = props["detectedObjects"][index];
-              return DetectionLabel(
-                detectedObject: detectedObject,
-                catchObject: (detectedObject) {
-                  props["saveDetection"](detectedObject.name);
-                  confirmCatch(context, detectedObject);
-                },
-              );
-            }),
+      return Card(
+        color: Colors.white.withOpacity(0.8),
+        elevation: 10.0,
+        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+        child: Container(
+          height: 250.0,
+          padding: EdgeInsets.all(10.0),
+          child: ListView.builder(
+              padding: EdgeInsets.all(0.0),
+              itemCount: props["detectedObjects"].length,
+              itemBuilder: (context, int index) {
+                DetectedObject detectedObject = props["detectedObjects"][index];
+                return DetectionLabel(
+                  detectedObject: detectedObject,
+                  catchObject: (detectedObject) {
+                    props["saveDetection"](detectedObject.name);
+                    confirmCatch(context, detectedObject);
+                  },
+                );
+              }),
+        ),
       );
     });
   }

@@ -7,7 +7,7 @@ class FakeDetector extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Container(
-            color: Colors.lightBlue,
+            color: Colors.black,
           ),
         )
       ],

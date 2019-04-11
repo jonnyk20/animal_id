@@ -4,7 +4,7 @@ import 'package:animal_id/widgets/detector.dart';
 import 'package:animal_id/widgets/fake_detector.dart';
 import 'package:animal_id/widgets/info_box.dart';
 import 'package:animal_id/widgets/bounding_box.dart';
-import 'package:animal_id/widgets/target.dart';
+import 'package:animal_id/widgets/target/target.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detection_model.dart';

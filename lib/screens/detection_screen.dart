@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:animal_id/widgets/detector.dart';
+import 'package:animal_id/widgets/fake_detector.dart';
 import 'package:animal_id/widgets/info_box.dart';
 import 'package:animal_id/widgets/bounding_box.dart';
 import 'package:animal_id/widgets/target.dart';
@@ -38,13 +39,15 @@ class DetectionScreen extends StatelessWidget {
       return Scaffold(
         body: Stack(
           children: <Widget>[
-            Detector(
-                camera,
-                props["addDetections"],
-                screen.height,
-                screen.width,
-                props["objectRecords"],
-                props["updateTargetingState"]),
+            // Detector(
+            //   camera,
+            //   props["addDetections"],
+            //   screen.height,
+            //   screen.width,
+            //   props["objectRecords"],
+            //   props["updateTargetingState"],
+            // ),
+            FakeDetector(),
             BoundingBox(
               props["currentDetections"],
               (selectedClass) => print('SELECTED CLASS: $selectedClass'),

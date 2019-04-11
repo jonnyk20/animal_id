@@ -2,7 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
-import 'package:animal_id/object_card.dart';
+import 'package:animal_id/widgets/object_card.dart';
 import 'package:animal_id/actions/actions.dart';
 
 class InfoBook extends StatelessWidget {

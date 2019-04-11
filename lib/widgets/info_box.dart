@@ -3,7 +3,7 @@ import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/actions/actions.dart';
-import 'package:animal_id/detection_label.dart';
+import 'package:animal_id/widgets/detection_label.dart';
 
 class InfoBox extends StatelessWidget {
   final String selectedClass;

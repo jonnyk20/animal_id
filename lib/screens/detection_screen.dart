@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:animal_id/detector.dart';
-import 'package:animal_id/info_box.dart';
-import 'package:animal_id/bounding_box.dart';
-import 'package:animal_id/target.dart';
+import 'package:animal_id/widgets/detector.dart';
+import 'package:animal_id/widgets/info_box.dart';
+import 'package:animal_id/widgets/bounding_box.dart';
+import 'package:animal_id/widgets/target.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detection_model.dart';

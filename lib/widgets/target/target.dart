@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:animal_id/widgets/target/animated_target.dart';
+import 'package:animal_id/widgets/target/detecting_target.dart';
+import 'package:animal_id/widgets/target/saving_target.dart';
+import 'package:animal_id/widgets/target/pulse.dart';
 
 class Target extends StatelessWidget {
   final bool isTargeting;
-  Target(this.isTargeting);
+  final bool isSaving;
+  Target({
+    this.isTargeting,
+    this.isSaving,
+  });
 
   Widget build(BuildContext context) {
     Color color = (isTargeting ? Colors.green : Colors.white).withOpacity(0.5);
@@ -30,7 +36,18 @@ class Target extends StatelessWidget {
                 ),
               ),
             ),
-            AnimatedTarget(),
+            // DetectingTarget(),
+            Positioned(
+              top: top - 0,
+              child: Pulse(50),
+            ),
+            !isSaving
+                ? Container()
+                : Positioned(
+                    top: top - 50,
+                    child: Pulse(150),
+                  ),
+            // Pulse(),
           ],
         ),
       ),

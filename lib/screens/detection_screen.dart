@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:animal_id/models/app_state_model.dart';
+import 'package:animal_id/models/detection_model.dart';
+import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/widgets/detector.dart';
 import 'package:animal_id/widgets/fake_detector.dart';
 import 'package:animal_id/widgets/info_box.dart';
 import 'package:animal_id/widgets/bounding_box.dart';
 import 'package:animal_id/widgets/target/target.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:animal_id/models/app_state_model.dart';
-import 'package:animal_id/models/detection_model.dart';
-import 'package:animal_id/actions/actions.dart';
+import 'package:animal_id/widgets/fake_Save_button.dart';
 
 class DetectionScreen extends StatelessWidget {
   final CameraDescription camera;
@@ -34,6 +35,9 @@ class DetectionScreen extends StatelessWidget {
         'isTargeting': store.state.isTargeting,
         'updateTargetingState': (bool targetingState) =>
             store.dispatch(UpdateTargetingStatus(targetingState)),
+        'isSaving': store.state.isSaving,
+        'updateSavingState': (bool savingState) =>
+            store.dispatch(ChangeSavingStatus(savingState))
       };
     }, builder: (context, props) {
       return Scaffold(
@@ -58,7 +62,14 @@ class DetectionScreen extends StatelessWidget {
               right: 0,
               child: InfoBox("[Selected Class]"),
             ),
-            Target(props["isTargeting"]),
+            Target(
+              isTargeting: props["isTargeting"],
+              isSaving: props["isSaving"],
+            ),
+            FakeSaveButton(
+              isSaving: props["isSaving"],
+              changeSavingState: props["updateSavingState"],
+            )
           ],
         ),
         floatingActionButton: Container(

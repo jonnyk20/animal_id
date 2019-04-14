@@ -27,6 +27,11 @@ class SaveDetection {
   );
 }
 
+class ChangeSavingStatus {
+  final bool savingStatus;
+  ChangeSavingStatus(this.savingStatus);
+}
+
 class SelectObjectRecord {
   final ObjectRecord objectRecord;
   SelectObjectRecord(this.objectRecord);

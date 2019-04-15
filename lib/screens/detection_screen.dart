@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/actions/actions.dart';
+import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detector.dart';
 import 'package:animal_id/widgets/fake_detector.dart';
 import 'package:animal_id/widgets/info_box.dart';
@@ -34,10 +35,10 @@ class DetectionScreen extends StatelessWidget {
         'objectRecords': store.state.objectRecords,
         'isTargeting': store.state.isTargeting,
         'updateTargetingState': (bool targetingState) =>
-            store.dispatch(UpdateTargetingStatus(targetingState)),
-        'isSaving': store.state.isSaving,
-        'updateSavingState': (bool savingState) =>
-            store.dispatch(ChangeSavingStatus(savingState))
+            store.dispatch(SetTargetingStatus(targetingState)),
+        'savingStatus': store.state.savingStatus,
+        'setSavingStatus': (SavingStatuses savingStatus) =>
+            store.dispatch(SetSavingStatus(savingStatus))
       };
     }, builder: (context, props) {
       return Scaffold(
@@ -60,15 +61,15 @@ class DetectionScreen extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: InfoBox("[Selected Class]"),
+              child: InfoBox(),
             ),
             Target(
               isTargeting: props["isTargeting"],
-              isSaving: props["isSaving"],
+              savingStatus: props["savingStatus"],
             ),
             FakeSaveButton(
-              isSaving: props["isSaving"],
-              changeSavingState: props["updateSavingState"],
+              savingStatus: props["savingStatus"],
+              setSavingStatus: props["setSavingStatus"],
             )
           ],
         ),

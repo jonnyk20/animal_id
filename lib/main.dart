@@ -48,7 +48,7 @@ Future<void> main() async {
   ];
   await loadModel();
   objectsInfo = await loadObjectInfo();
-  final store = new Store<AppState>(appReducers,
+  final store = Store<AppState>(appReducers,
       initialState: AppState.initial(objectsInfo), middleware: []);
   runApp(App(store, cameras[0]));
 }

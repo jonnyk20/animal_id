@@ -15,13 +15,13 @@ class SpritePainter extends CustomPainter {
     double area = size * size;
     double radius = sqrt(area * value / 4);
 
-    final Paint paint = new Paint()..color = color;
+    final Paint paint = Paint()..color = color;
     canvas.drawCircle(rect.center, radius, paint);
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    Rect rect = new Rect.fromLTRB(0.0, 0.0, size.width, size.height);
+    Rect rect = Rect.fromLTRB(0.0, 0.0, size.width, size.height);
 
     for (int wave = 1; wave >= 0; wave--) {
       circle(canvas, rect, wave + _animation.value);
@@ -38,7 +38,7 @@ class Pulse extends StatefulWidget {
   final double size;
   Pulse(this.size);
   @override
-  PulseState createState() => new PulseState(size);
+  PulseState createState() => PulseState(size);
 }
 
 class PulseState extends State<Pulse> with SingleTickerProviderStateMixin {
@@ -50,8 +50,8 @@ class PulseState extends State<Pulse> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _controller = new AnimationController(
-        vsync: this, duration: Duration(milliseconds: 500));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     //_startAnimation()
     _controller.repeat();
   }
@@ -65,8 +65,8 @@ class PulseState extends State<Pulse> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: new SpritePainter(_controller),
-      child: new SizedBox(
+      painter: SpritePainter(_controller),
+      child: SizedBox(
         width: size,
         height: size,
       ),

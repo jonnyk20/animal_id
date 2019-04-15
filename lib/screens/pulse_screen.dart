@@ -9,19 +9,19 @@ class SpritePainter extends CustomPainter {
 
   void circle(Canvas canvas, Rect rect, double value) {
     double opacity = (1.0 - (value / 4.0)).clamp(0.0, 1.0);
-    Color color = new Color.fromRGBO(0, 117, 194, opacity);
+    Color color = Color.fromRGBO(0, 117, 194, opacity);
 
     double size = rect.width / 2;
     double area = size * size;
     double radius = sqrt(area * value / 4);
 
-    final Paint paint = new Paint()..color = color;
+    final Paint paint = Paint()..color = color;
     canvas.drawCircle(rect.center, radius, paint);
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    Rect rect = new Rect.fromLTRB(0.0, 0.0, size.width, size.height);
+    Rect rect = Rect.fromLTRB(0.0, 0.0, size.width, size.height);
 
     for (int wave = 3; wave >= 0; wave--) {
       circle(canvas, rect, wave + _animation.value);
@@ -36,7 +36,7 @@ class SpritePainter extends CustomPainter {
 
 class SpriteDemo extends StatefulWidget {
   @override
-  SpriteDemoState createState() => new SpriteDemoState();
+  SpriteDemoState createState() => SpriteDemoState();
 }
 
 class SpriteDemoState extends State<SpriteDemo>
@@ -46,7 +46,7 @@ class SpriteDemoState extends State<SpriteDemo>
   @override
   void initState() {
     super.initState();
-    _controller = new AnimationController(
+    _controller = AnimationController(
       vsync: this,
     );
     //_startAnimation();
@@ -68,18 +68,18 @@ class SpriteDemoState extends State<SpriteDemo>
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: const Text('Pulse')),
-      body: new CustomPaint(
-        painter: new SpritePainter(_controller),
-        child: new SizedBox(
+    return Scaffold(
+      appBar: AppBar(title: const Text('Pulse')),
+      body: CustomPaint(
+        painter: SpritePainter(_controller),
+        child: SizedBox(
           width: 200.0,
           height: 200.0,
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: _startAnimation,
-        child: new Icon(Icons.play_arrow),
+        child: Icon(Icons.play_arrow),
       ),
     );
   }
@@ -87,8 +87,8 @@ class SpriteDemoState extends State<SpriteDemo>
 
 void main() {
   runApp(
-    new MaterialApp(
-      home: new SpriteDemo(),
+    MaterialApp(
+      home: SpriteDemo(),
     ),
   );
 }

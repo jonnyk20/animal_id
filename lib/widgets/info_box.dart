@@ -4,25 +4,24 @@ import 'package:animal_id/models/detected_object_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/widgets/detection_label.dart';
+import 'package:animal_id/constants/constants.dart';
 
 class InfoBox extends StatelessWidget {
-  final String selectedClass;
-  InfoBox(this.selectedClass);
-
   confirmCatch(context, DetectedObject detectedObject) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text(
-            "Congratulations on your new Catch: ${detectedObject.name}!",
+          title: Text(
+            "Congratulations on your Catch: ${detectedObject.name}!",
             style: TextStyle(
               color: Colors.blue,
             ),
           ),
           backgroundColor: Colors.white,
-          content: new Text(
+          content: Text(
             "Go to your info book to learn about it",
             style: TextStyle(
               color: Colors.blue,
@@ -30,10 +29,10 @@ class InfoBox extends StatelessWidget {
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
+            FlatButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: new Text("Close"),
+              child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -58,7 +57,8 @@ class InfoBox extends StatelessWidget {
         'saveDetection': (detectionName) {
           store.dispatch(SaveDetection(detectionName));
           store.dispatch(RemoveTrackedDetection(detectionName));
-        }
+        },
+        'canSave': store.state.savingStatus == SavingStatuses.not_saving
       };
     }, builder: (context, props) {
       return Card(
@@ -74,12 +74,12 @@ class InfoBox extends StatelessWidget {
               itemBuilder: (context, int index) {
                 DetectedObject detectedObject = props["detectedObjects"][index];
                 return DetectionLabel(
-                  detectedObject: detectedObject,
-                  catchObject: (detectedObject) {
-                    props["saveDetection"](detectedObject.name);
-                    confirmCatch(context, detectedObject);
-                  },
-                );
+                    detectedObject: detectedObject,
+                    catchObject: (detectedObject) {
+                      props["saveDetection"](detectedObject.name);
+                      confirmCatch(context, detectedObject);
+                    },
+                    canSave: props["canSave"]);
               }),
         ),
       );

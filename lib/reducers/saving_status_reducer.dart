@@ -1,10 +1,11 @@
 import 'package:redux/redux.dart';
 import 'package:animal_id/actions/actions.dart';
+import 'package:animal_id/constants/constants.dart';
 
-final savingStatusReducer = combineReducers<bool>([
-  TypedReducer<bool, ChangeSavingStatus>(_changeSavingStatus),
+final savingStatusReducer = combineReducers<SavingStatuses>([
+  TypedReducer<SavingStatuses, SetSavingStatus>(_setSavingStatus),
 ]);
 
-bool _changeSavingStatus(bool state, ChangeSavingStatus action) {
+SavingStatuses _setSavingStatus(SavingStatuses state, SetSavingStatus action) {
   return action.savingStatus;
 }

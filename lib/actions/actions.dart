@@ -1,5 +1,6 @@
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
+import 'package:animal_id/constants/constants.dart';
 
 class SetCurrentDetections {
   final List<Detection> detections;
@@ -27,9 +28,9 @@ class SaveDetection {
   );
 }
 
-class ChangeSavingStatus {
-  final bool savingStatus;
-  ChangeSavingStatus(this.savingStatus);
+class SetSavingStatus {
+  final SavingStatuses savingStatus;
+  SetSavingStatus(this.savingStatus);
 }
 
 class SelectObjectRecord {
@@ -37,7 +38,7 @@ class SelectObjectRecord {
   SelectObjectRecord(this.objectRecord);
 }
 
-class UpdateTargetingStatus {
+class SetTargetingStatus {
   final bool targetingStatus;
-  UpdateTargetingStatus(this.targetingStatus);
+  SetTargetingStatus(this.targetingStatus);
 }

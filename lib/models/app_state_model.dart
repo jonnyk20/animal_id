@@ -1,6 +1,7 @@
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
+import 'package:animal_id/constants/constants.dart';
 
 class AppState {
   final List<Detection> currentDetections;
@@ -8,7 +9,7 @@ class AppState {
   final Map<String, ObjectRecord> objectRecords;
   final ObjectRecord selectedObject;
   final bool isTargeting;
-  final bool isSaving;
+  final SavingStatuses savingStatus;
 
   AppState({
     this.currentDetections,
@@ -16,7 +17,7 @@ class AppState {
     this.objectRecords,
     this.selectedObject,
     this.isTargeting = false,
-    this.isSaving = false,
+    this.savingStatus = SavingStatuses.not_saving,
   });
   static var initial = (objectInfo) => AppState(
         currentDetections: [],

@@ -17,6 +17,6 @@ AppState appReducers(AppState state, dynamic action) {
     objectRecords: objectRecordsReducer(state.objectRecords, action),
     selectedObject: selelectedObjectRecordReducer(state.selectedObject, action),
     isTargeting: targetStatusReducer(state.isTargeting, action),
-    isSaving: savingStatusReducer(state.isSaving, action),
+    savingStatus: savingStatusReducer(state.savingStatus, action),
   );
 }

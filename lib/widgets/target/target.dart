@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:animal_id/widgets/target/detecting_target.dart';
-import 'package:animal_id/widgets/target/saving_target.dart';
 import 'package:animal_id/widgets/target/pulse.dart';
+import 'package:animal_id/constants/constants.dart';
 
 class Target extends StatelessWidget {
   final bool isTargeting;
-  final bool isSaving;
+  final SavingStatuses savingStatus;
   Target({
     this.isTargeting,
-    this.isSaving,
+    this.savingStatus,
   });
 
   Widget build(BuildContext context) {
@@ -26,9 +25,9 @@ class Target extends StatelessWidget {
               child: Container(
                 height: targetSize,
                 width: targetSize,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: new Border.all(
+                  border: Border.all(
                     color: color,
                     width: 2.0,
                     style: BorderStyle.solid,
@@ -36,18 +35,16 @@ class Target extends StatelessWidget {
                 ),
               ),
             ),
-            // DetectingTarget(),
             Positioned(
               top: top - 0,
               child: Pulse(50),
             ),
-            !isSaving
-                ? Container()
-                : Positioned(
+            savingStatus == SavingStatuses.saving
+                ? Positioned(
                     top: top - 50,
                     child: Pulse(150),
-                  ),
-            // Pulse(),
+                  )
+                : Container(),
           ],
         ),
       ),

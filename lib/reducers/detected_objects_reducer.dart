@@ -63,6 +63,6 @@ main() {
   const oneSec = const Duration(seconds:1);
   const fiveSec = const Duration(seconds:5);
   var interval = Timer.periodic(oneSec, (Timer t) => print('hi!'));
-  var timer = new Timer(fiveSec, () => interval.cancel());
+  var timer = Timer(fiveSec, () => interval.cancel());
 }
 */

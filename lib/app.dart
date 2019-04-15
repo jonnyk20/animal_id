@@ -26,7 +26,7 @@ class App extends StatelessWidget {
   App(this.store, this.camera);
 
   Widget build(BuildContext context) {
-    return new StoreProvider<AppState>(
+    return StoreProvider<AppState>(
         store: store,
         child: StoreBuilder<AppState>(
             onInit: (store) => startTimer(store),

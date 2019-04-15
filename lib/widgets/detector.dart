@@ -58,7 +58,7 @@ class _DetectorState extends State<Detector> {
     if (camera == null) {
       print('No camera found');
     } else {
-      controller = new CameraController(
+      controller = CameraController(
         widget.camera,
         ResolutionPreset.medium,
       );

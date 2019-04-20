@@ -6,11 +6,11 @@ import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detector.dart';
-import 'package:animal_id/widgets/fake_detector.dart';
+// import 'package:animal_id/widgets/fake_detector.dart';
 import 'package:animal_id/widgets/info_box.dart';
 import 'package:animal_id/widgets/bounding_box.dart';
 import 'package:animal_id/widgets/target/target.dart';
-import 'package:animal_id/widgets/fake_Save_button.dart';
+// import 'package:animal_id/widgets/fake_Save_button.dart';
 
 class DetectionScreen extends StatelessWidget {
   final CameraDescription camera;
@@ -34,8 +34,8 @@ class DetectionScreen extends StatelessWidget {
         'currentDetections': store.state.currentDetections,
         'objectRecords': store.state.objectRecords,
         'isTargeting': store.state.isTargeting,
-        'updateTargetingState': (bool targetingState) =>
-            store.dispatch(SetTargetingStatus(targetingState)),
+        'setTargetingStatus': (bool targetingStatus) =>
+            store.dispatch(SetTargetingStatus(targetingStatus)),
         'savingStatus': store.state.savingStatus,
         'setSavingStatus': (SavingStatuses savingStatus) =>
             store.dispatch(SetSavingStatus(savingStatus))
@@ -44,15 +44,15 @@ class DetectionScreen extends StatelessWidget {
       return Scaffold(
         body: Stack(
           children: <Widget>[
-            // Detector(
-            //   camera,
-            //   props["addDetections"],
-            //   screen.height,
-            //   screen.width,
-            //   props["objectRecords"],
-            //   props["updateTargetingState"],
-            // ),
-            FakeDetector(),
+            Detector(
+              camera,
+              props["addDetections"],
+              screen.height,
+              screen.width,
+              props["objectRecords"],
+              props["setTargetingStatus"],
+            ),
+            // FakeDetector(),
             BoundingBox(
               props["currentDetections"],
               (selectedClass) => print('SELECTED CLASS: $selectedClass'),
@@ -67,10 +67,10 @@ class DetectionScreen extends StatelessWidget {
               isTargeting: props["isTargeting"],
               savingStatus: props["savingStatus"],
             ),
-            FakeSaveButton(
-              savingStatus: props["savingStatus"],
-              setSavingStatus: props["setSavingStatus"],
-            )
+            // FakeSaveButton(
+            //   savingStatus: props["savingStatus"],
+            //   setSavingStatus: props["setSavingStatus"],
+            // )
           ],
         ),
         floatingActionButton: Container(

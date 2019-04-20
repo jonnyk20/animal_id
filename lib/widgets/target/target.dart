@@ -35,10 +35,12 @@ class Target extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: top - 0,
-              child: Pulse(50),
-            ),
+            isTargeting
+                ? Positioned(
+                    top: top - 0,
+                    child: Pulse(50),
+                  )
+                : Container(),
             savingStatus == SavingStatuses.saving
                 ? Positioned(
                     top: top - 50,

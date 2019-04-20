@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:audioplayers/audio_cache.dart';
+
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -6,8 +9,17 @@ import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/widgets/detection_label.dart';
 import 'package:animal_id/constants/constants.dart';
 
+AudioCache player = AudioCache();
+const alarmAudioPath = 'sounds/save.wav';
+
+const saveDuration = Duration(milliseconds: 300);
+
+playSound() {
+  player.play(alarmAudioPath);
+}
+
 class InfoBox extends StatelessWidget {
-  confirmCatch(context, DetectedObject detectedObject) {
+  confirmCatch(context, DetectedObject detectedObject, callback) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -34,6 +46,7 @@ class InfoBox extends StatelessWidget {
               textColor: Colors.white,
               child: Text("Close"),
               onPressed: () {
+                callback();
                 Navigator.of(context).pop();
               },
             ),
@@ -58,7 +71,9 @@ class InfoBox extends StatelessWidget {
           store.dispatch(SaveDetection(detectionName));
           store.dispatch(RemoveTrackedDetection(detectionName));
         },
-        'canSave': store.state.savingStatus == SavingStatuses.not_saving
+        'canSave': store.state.savingStatus == SavingStatuses.not_saving,
+        'setSavingStatus': (SavingStatuses savingStatus) =>
+            store.dispatch(SetSavingStatus(savingStatus))
       };
     }, builder: (context, props) {
       return Card(
@@ -76,8 +91,15 @@ class InfoBox extends StatelessWidget {
                 return DetectionLabel(
                     detectedObject: detectedObject,
                     catchObject: (detectedObject) {
-                      props["saveDetection"](detectedObject.name);
-                      confirmCatch(context, detectedObject);
+                      playSound();
+                      props["setSavingStatus"](SavingStatuses.saving);
+                      Timer(saveDuration, () {
+                        props["setSavingStatus"](SavingStatuses.confirming);
+                        confirmCatch(context, detectedObject, () {
+                          props["setSavingStatus"](SavingStatuses.not_saving);
+                        });
+                        props["saveDetection"](detectedObject.name);
+                      });
                     },
                     canSave: props["canSave"]);
               }),

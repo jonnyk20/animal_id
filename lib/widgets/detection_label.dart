@@ -12,6 +12,9 @@ class DetectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var progress = math.min((detectedObject.count) / 10, 1).toDouble();
+    if (canSave && (detectedObject.count == 10)) {
+      catchObject(detectedObject);
+    }
     return Card(
       color: Colors.blue,
       elevation: 5.0,

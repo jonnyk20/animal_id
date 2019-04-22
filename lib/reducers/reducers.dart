@@ -4,6 +4,7 @@ import 'package:animal_id/reducers/detected_objects_reducer.dart';
 import 'package:animal_id/reducers/object_records_reducer.dart';
 import 'package:animal_id/reducers/selected_object_reducer.dart';
 import 'package:animal_id/reducers/detecting_status_reducer.dart';
+import 'package:animal_id/reducers/targeting_status_reducer.dart';
 import 'package:animal_id/reducers/saving_status_reducer.dart';
 
 // Todo, restructure reducers to look like:
@@ -17,6 +18,7 @@ AppState appReducers(AppState state, dynamic action) {
     objectRecords: objectRecordsReducer(state.objectRecords, action),
     selectedObject: selelectedObjectRecordReducer(state.selectedObject, action),
     isDetecting: detectingStatusReducer(state.isDetecting, action),
+    isTargeting: targetingStatusReducer(state.isTargeting, action),
     savingStatus: savingStatusReducer(state.savingStatus, action),
   );
 }

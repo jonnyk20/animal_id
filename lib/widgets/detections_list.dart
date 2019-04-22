@@ -20,6 +20,7 @@ class DetectionsList extends StatelessWidget {
   final Function saveDetection;
   final Function confirmCatch;
   final Function setSavingStatus;
+  final Function clearTargetingAndDetectiongStatuses;
 
   DetectionsList({
     this.detectedObjects,
@@ -27,6 +28,7 @@ class DetectionsList extends StatelessWidget {
     this.saveDetection,
     this.confirmCatch,
     this.setSavingStatus,
+    this.clearTargetingAndDetectiongStatuses,
   });
 
   @override
@@ -42,6 +44,7 @@ class DetectionsList extends StatelessWidget {
             return DetectionLabel(
                 detectedObject: detectedObject,
                 catchObject: (detectedObject) {
+                  clearTargetingAndDetectiongStatuses();
                   playSound();
                   setSavingStatus(SavingStatuses.saving);
                   Timer(saveDuration, () {

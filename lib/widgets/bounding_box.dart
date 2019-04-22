@@ -4,10 +4,12 @@ import 'package:animal_id/models/detection_model.dart';
 class BoundingBox extends StatelessWidget {
   final List<Detection> results;
   final Function selectClass;
+  final bool isTargeting;
 
   BoundingBox(
     this.results,
     this.selectClass,
+    this.isTargeting,
   );
 
   @override
@@ -16,7 +18,7 @@ class BoundingBox extends StatelessWidget {
       return results.map((detection) {
         var color = detection.isCaught
             ? Colors.white
-            : detection.isTarget
+            : (isTargeting && detection.isTarget)
                 ? Colors.green
                 : Color.fromRGBO(37, 213, 253, 1.0);
 

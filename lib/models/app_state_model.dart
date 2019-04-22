@@ -9,6 +9,7 @@ class AppState {
   final Map<String, ObjectRecord> objectRecords;
   final ObjectRecord selectedObject;
   final bool isDetecting;
+  final bool isTargeting;
   final SavingStatuses savingStatus;
 
   AppState({
@@ -17,6 +18,7 @@ class AppState {
     this.objectRecords,
     this.selectedObject,
     this.isDetecting = false,
+    this.isTargeting = false,
     this.savingStatus = SavingStatuses.not_saving,
   });
   static var initial = (objectInfo) => AppState(

@@ -62,7 +62,15 @@ class InfoBox extends StatelessWidget {
         },
         'canSave': store.state.savingStatus == SavingStatuses.not_saving,
         'setSavingStatus': (SavingStatuses savingStatus) =>
-            store.dispatch(SetSavingStatus(savingStatus))
+            store.dispatch(SetSavingStatus(savingStatus)),
+        'setTargetingStatus': (bool targetingStatus) =>
+            store.dispatch(SetTargetingStatus(targetingStatus)),
+        'setDetectingStatus': (bool targetingStatus) =>
+            store.dispatch(SetDetectingStatus(targetingStatus)),
+        'clearTargetingAndDetectiongStatuses': () {
+          store.dispatch(SetTargetingStatus(false));
+          store.dispatch(SetDetectingStatus(false));
+        }
       };
     }, builder: (context, props) {
       return Card(
@@ -72,9 +80,22 @@ class InfoBox extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Center(
-              child: RaisedButton(
-                child: Text('TEST'),
-                onPressed: null,
+              child: GestureDetector(
+                onTapDown: (details) {
+                  props['setTargetingStatus'](true);
+                },
+                onTapUp: (details) {
+                  props['setTargetingStatus'](false);
+                  props['setDetectingStatus'](false);
+                },
+                child: Card(
+                  color: Colors.blue,
+                  child: Container(
+                    height: 50.0,
+                    width: 100.0,
+                    child: Text('Detect'),
+                  ),
+                ),
               ),
             ),
             DetectionsList(
@@ -83,6 +104,8 @@ class InfoBox extends StatelessWidget {
               canSave: props['canSave'],
               setSavingStatus: props['setSavingStatus'],
               confirmCatch: confirmCatch,
+              clearTargetingAndDetectiongStatuses:
+                  props['clearTargetingAndDetectiongStatuses'],
             )
           ],
         ),

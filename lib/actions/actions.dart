@@ -42,3 +42,8 @@ class SetDetectingStatus {
   final bool detectingStatus;
   SetDetectingStatus(this.detectingStatus);
 }
+
+class SetTargetingStatus {
+  final bool targetingStatus;
+  SetTargetingStatus(this.targetingStatus);
+}

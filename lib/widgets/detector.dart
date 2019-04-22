@@ -13,23 +13,26 @@ class Detector extends StatefulWidget {
   final double screenWidth;
   final Map<String, ObjectRecord> objectRecords;
   final Function setDetectingStatus;
+  final bool isTargeting;
 
-  Detector(
+  Detector({
     this.camera,
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
     this.objectRecords,
     this.setDetectingStatus,
-  );
+    this.isTargeting,
+  });
 
   _DetectorState createState() => _DetectorState(
-        camera,
-        setRecognitions,
-        screenHeight,
-        screenWidth,
-        objectRecords,
-        setDetectingStatus,
+        camera: camera,
+        setRecognitions: setRecognitions,
+        screenHeight: screenHeight,
+        screenWidth: screenWidth,
+        objectRecords: objectRecords,
+        setDetectingStatus: setDetectingStatus,
+        isTargeting: isTargeting,
       );
 }
 
@@ -42,15 +45,17 @@ class _DetectorState extends State<Detector> {
   final Function setDetectingStatus;
   CameraController controller;
   bool isDetecting = false;
+  final bool isTargeting;
 
-  _DetectorState(
+  _DetectorState({
     this.camera,
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
     this.objectRecords,
     this.setDetectingStatus,
-  );
+    this.isTargeting,
+  });
 
   @override
   void initState() {
@@ -87,12 +92,13 @@ class _DetectorState extends State<Detector> {
               threshold: 0.4,
             ).then((recognitions) {
               List<Detection> formattedDetections = formatDetections(
-                  recognitions,
-                  math.max(img.height, img.width),
-                  math.min(img.height, img.width),
-                  screenHeight,
-                  screenWidth,
-                  objectRecords);
+                recognitions,
+                math.max(img.height, img.width),
+                math.min(img.height, img.width),
+                screenHeight,
+                screenWidth,
+                objectRecords,
+              );
               bool targettingState =
                   formattedDetections.any((detection) => detection.isTarget);
               setDetectingStatus(targettingState);

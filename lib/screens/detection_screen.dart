@@ -33,9 +33,9 @@ class DetectionScreen extends StatelessWidget {
         },
         'currentDetections': store.state.currentDetections,
         'objectRecords': store.state.objectRecords,
-        'isTargeting': store.state.isTargeting,
-        'setTargetingStatus': (bool targetingStatus) =>
-            store.dispatch(SetTargetingStatus(targetingStatus)),
+        'isDetecting': store.state.isDetecting,
+        'setDetectingStatus': (bool detectingStatus) =>
+            store.dispatch(SetDetectingStatus(detectingStatus)),
         'savingStatus': store.state.savingStatus,
         'setSavingStatus': (SavingStatuses savingStatus) =>
             store.dispatch(SetSavingStatus(savingStatus))
@@ -50,7 +50,7 @@ class DetectionScreen extends StatelessWidget {
               screen.height,
               screen.width,
               props["objectRecords"],
-              props["setTargetingStatus"],
+              props["setDetectingStatus"],
             ),
             // FakeDetector(),
             BoundingBox(
@@ -64,7 +64,7 @@ class DetectionScreen extends StatelessWidget {
               child: InfoBox(),
             ),
             Target(
-              isTargeting: props["isTargeting"],
+              isDetecting: props["isDetecting"],
               savingStatus: props["savingStatus"],
             ),
             // FakeSaveButton(

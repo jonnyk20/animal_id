@@ -12,7 +12,7 @@ class Detector extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
   final Map<String, ObjectRecord> objectRecords;
-  final Function setTargetingStatus;
+  final Function setDetectingStatus;
 
   Detector(
     this.camera,
@@ -20,7 +20,7 @@ class Detector extends StatefulWidget {
     this.screenHeight,
     this.screenWidth,
     this.objectRecords,
-    this.setTargetingStatus,
+    this.setDetectingStatus,
   );
 
   _DetectorState createState() => _DetectorState(
@@ -29,7 +29,7 @@ class Detector extends StatefulWidget {
         screenHeight,
         screenWidth,
         objectRecords,
-        setTargetingStatus,
+        setDetectingStatus,
       );
 }
 
@@ -39,7 +39,7 @@ class _DetectorState extends State<Detector> {
   final double screenHeight;
   final double screenWidth;
   final Map<String, ObjectRecord> objectRecords;
-  final Function setTargetingStatus;
+  final Function setDetectingStatus;
   CameraController controller;
   bool isDetecting = false;
 
@@ -49,7 +49,7 @@ class _DetectorState extends State<Detector> {
     this.screenHeight,
     this.screenWidth,
     this.objectRecords,
-    this.setTargetingStatus,
+    this.setDetectingStatus,
   );
 
   @override
@@ -95,7 +95,7 @@ class _DetectorState extends State<Detector> {
                   objectRecords);
               bool targettingState =
                   formattedDetections.any((detection) => detection.isTarget);
-              setTargetingStatus(targettingState);
+              setDetectingStatus(targettingState);
               setRecognitions(
                 formattedDetections,
               );

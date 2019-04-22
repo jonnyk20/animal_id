@@ -38,7 +38,7 @@ class SelectObjectRecord {
   SelectObjectRecord(this.objectRecord);
 }
 
-class SetTargetingStatus {
-  final bool targetingStatus;
-  SetTargetingStatus(this.targetingStatus);
+class SetDetectingStatus {
+  final bool detectingStatus;
+  SetDetectingStatus(this.detectingStatus);
 }

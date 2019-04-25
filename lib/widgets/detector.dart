@@ -5,6 +5,7 @@ import 'package:tflite/tflite.dart';
 import 'package:animal_id/services/format_detections.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/detection_model.dart';
+import 'package:animal_id/models/target_detection_frame_model.dart';
 
 class Detector extends StatefulWidget {
   final CameraDescription camera;
@@ -14,6 +15,7 @@ class Detector extends StatefulWidget {
   final Map<String, ObjectRecord> objectRecords;
   final Function setDetectingStatus;
   final bool isTargeting;
+  final Function addTargetDetectionFrame;
 
   Detector({
     this.camera,
@@ -23,17 +25,18 @@ class Detector extends StatefulWidget {
     this.objectRecords,
     this.setDetectingStatus,
     this.isTargeting,
+    this.addTargetDetectionFrame,
   });
 
   _DetectorState createState() => _DetectorState(
-        camera: camera,
-        setRecognitions: setRecognitions,
-        screenHeight: screenHeight,
-        screenWidth: screenWidth,
-        objectRecords: objectRecords,
-        setDetectingStatus: setDetectingStatus,
-        isTargeting: isTargeting,
-      );
+      camera: camera,
+      setRecognitions: setRecognitions,
+      screenHeight: screenHeight,
+      screenWidth: screenWidth,
+      objectRecords: objectRecords,
+      setDetectingStatus: setDetectingStatus,
+      isTargeting: isTargeting,
+      addTargetDetectionFrame: addTargetDetectionFrame);
 }
 
 class _DetectorState extends State<Detector> {
@@ -44,8 +47,9 @@ class _DetectorState extends State<Detector> {
   final Map<String, ObjectRecord> objectRecords;
   final Function setDetectingStatus;
   CameraController controller;
-  bool isDetecting = false;
   final bool isTargeting;
+  bool _isScanning = false;
+  final Function addTargetDetectionFrame;
 
   _DetectorState({
     this.camera,
@@ -55,6 +59,7 @@ class _DetectorState extends State<Detector> {
     this.objectRecords,
     this.setDetectingStatus,
     this.isTargeting,
+    this.addTargetDetectionFrame,
   });
 
   @override
@@ -74,8 +79,8 @@ class _DetectorState extends State<Detector> {
         setState(() {});
 
         controller.startImageStream((CameraImage img) {
-          if (!isDetecting) {
-            isDetecting = true;
+          if (!_isScanning) {
+            _isScanning = true;
 
             var bytesList = img.planes.map((plane) {
               return plane.bytes;
@@ -99,13 +104,22 @@ class _DetectorState extends State<Detector> {
                 screenWidth,
                 objectRecords,
               );
-              bool targettingState =
-                  formattedDetections.any((detection) => detection.isTarget);
-              setDetectingStatus(targettingState);
+              Detection detectedObject = formattedDetections.firstWhere(
+                  (detection) => detection.isTarget,
+                  orElse: () => null);
+              bool isDetecting = detectedObject != null;
+              setDetectingStatus(isDetecting);
               setRecognitions(
                 formattedDetections,
               );
-              isDetecting = false;
+              if (isDetecting) {
+                var targetDetectionFrame = TargetDetectionFrame(
+                  detectionName: detectedObject.detectedClass,
+                  bytesList: bytesList,
+                );
+                addTargetDetectionFrame(targetDetectionFrame);
+              }
+              _isScanning = false;
             });
           }
         });

@@ -45,9 +45,12 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/labels.txt
-    - assets/model.tflite
-    - assets/object_info.txt
+    - assets/models/detection/model.tflite
+    - assets/models/detection/labels.txt
+    - assets/models/detection/info.txt
+    - assets/models/classification/model.tflite
+    - assets/models/classification/labels.txt
+    - assets/models/classification/info.txt
     - assets/sounds/save.wav
   # assets:
   #  - images/a_dot_burr.jpeg

@@ -13,14 +13,17 @@ List<CameraDescription> cameras;
 Map<String, ObjectRecord> objectsInfo;
 
 loadModel() async {
-  await Tflite.loadModel(
-    model: "assets/model.tflite",
-    labels: "assets/labels.txt",
+  print('------LOADING MODEL');
+  var res = await Tflite.loadModel(
+    model: "assets/models/detection/model.tflite",
+    labels: "assets/models/detection/labels.txt",
   );
+  print('-------LOADED MODEL');
+  print(res);
 }
 
 Future<Map<String, ObjectRecord>> loadObjectInfo() async {
-  var file = await rootBundle.loadString('assets/object_info.txt');
+  var file = await rootBundle.loadString('assets/models/detection/info.txt');
   var objectsInfo = Map<String, ObjectRecord>();
 
   file.split('\n').forEach((str) {

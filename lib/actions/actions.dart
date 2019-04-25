@@ -1,5 +1,6 @@
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
+import 'package:animal_id/models/target_detection_frame_model.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class SetCurrentDetections {
@@ -47,3 +48,10 @@ class SetTargetingStatus {
   final bool targetingStatus;
   SetTargetingStatus(this.targetingStatus);
 }
+
+class AddTargetDetectionFrame {
+  final TargetDetectionFrame targetDetectionFrame;
+  AddTargetDetectionFrame(this.targetDetectionFrame);
+}
+
+class ClearTargetDetectionFrames {}

@@ -1,6 +1,7 @@
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
+import 'package:animal_id/models/target_detection_frame_model.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class AppState {
@@ -11,6 +12,7 @@ class AppState {
   final bool isDetecting;
   final bool isTargeting;
   final SavingStatuses savingStatus;
+  final List<TargetDetectionFrame> targetDetectionFrames;
 
   AppState({
     this.currentDetections,
@@ -20,10 +22,12 @@ class AppState {
     this.isDetecting = false,
     this.isTargeting = false,
     this.savingStatus = SavingStatuses.not_saving,
+    this.targetDetectionFrames,
   });
   static var initial = (objectInfo) => AppState(
         currentDetections: [],
         detectedObjects: {},
         objectRecords: objectInfo,
+        targetDetectionFrames: [],
       );
 }

@@ -59,6 +59,7 @@ class InfoBox extends StatelessWidget {
         'saveDetection': (detectionName) {
           store.dispatch(SaveDetection(detectionName));
           store.dispatch(RemoveTrackedDetection(detectionName));
+          store.dispatch(ClearTargetDetectionFrames());
         },
         'canSave': store.state.savingStatus == SavingStatuses.not_saving,
         'setSavingStatus': (SavingStatuses savingStatus) =>

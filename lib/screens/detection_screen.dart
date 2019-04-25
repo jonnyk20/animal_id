@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detection_model.dart';
+import 'package:animal_id/models/target_detection_frame_model.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detector.dart';
@@ -22,6 +23,10 @@ class DetectionScreen extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
 
     return StoreConnector<AppState, Map>(converter: (store) {
+      if (store.state.detectedObjects.length == 0 &&
+          store.state.targetDetectionFrames.length > 0) {
+        store.dispatch(ClearTargetDetectionFrames());
+      }
       return {
         'setDetections': (List<Detection> detections) {
           store.dispatch(SetCurrentDetections(detections));
@@ -46,7 +51,12 @@ class DetectionScreen extends StatelessWidget {
         },
         'savingStatus': store.state.savingStatus,
         'setSavingStatus': (SavingStatuses savingStatus) =>
-            store.dispatch(SetSavingStatus(savingStatus))
+            store.dispatch(SetSavingStatus(savingStatus)),
+        'addTargetDetectionFrame': (TargetDetectionFrame targetDetectionFrame) {
+          if (store.state.isTargeting) {
+            store.dispatch(AddTargetDetectionFrame(targetDetectionFrame));
+          }
+        },
       };
     }, builder: (context, props) {
       return Scaffold(
@@ -60,6 +70,7 @@ class DetectionScreen extends StatelessWidget {
               objectRecords: props['objectRecords'],
               setDetectingStatus: props['setDetectingStatus'],
               isTargeting: props['isTargeting'],
+              addTargetDetectionFrame: props['addTargetDetectionFrame'],
             ),
             BoundingBox(
               props["currentDetections"],

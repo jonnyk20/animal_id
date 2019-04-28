@@ -19,7 +19,7 @@ class DetectionsList extends StatelessWidget {
   final bool canSave;
   final Function saveDetection;
   final Function confirmCatch;
-  final Function setSavingStatus;
+  final Function setClassifyingStatus;
   final Function clearTargetingAndDetectiongStatuses;
 
   DetectionsList({
@@ -27,7 +27,7 @@ class DetectionsList extends StatelessWidget {
     this.canSave,
     this.saveDetection,
     this.confirmCatch,
-    this.setSavingStatus,
+    this.setClassifyingStatus,
     this.clearTargetingAndDetectiongStatuses,
   });
 
@@ -46,11 +46,11 @@ class DetectionsList extends StatelessWidget {
                 catchObject: (detectedObject) {
                   clearTargetingAndDetectiongStatuses();
                   playSound();
-                  setSavingStatus(SavingStatuses.saving);
+                  setClassifyingStatus(ClassifyingStatuses.classifying);
                   Timer(saveDuration, () {
-                    setSavingStatus(SavingStatuses.confirming);
+                    setClassifyingStatus(ClassifyingStatuses.classified);
                     confirmCatch(context, detectedObject, () {
-                      setSavingStatus(SavingStatuses.not_saving);
+                      setClassifyingStatus(ClassifyingStatuses.not_classifying);
                     });
                     saveDetection(detectedObject.name);
                   });

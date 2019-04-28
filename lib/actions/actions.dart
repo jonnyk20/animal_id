@@ -29,9 +29,9 @@ class SaveDetection {
   );
 }
 
-class SetSavingStatus {
-  final SavingStatuses savingStatus;
-  SetSavingStatus(this.savingStatus);
+class SetClassifyingStatus {
+  final ClassifyingStatuses classifyingStatus;
+  SetClassifyingStatus(this.classifyingStatus);
 }
 
 class SelectObjectRecord {

@@ -49,47 +49,54 @@ class DetectionScreen extends StatelessWidget {
             store.dispatch(SetDetectingStatus(detectingStatus));
           }
         },
-        'savingStatus': store.state.savingStatus,
-        'setSavingStatus': (SavingStatuses savingStatus) =>
-            store.dispatch(SetSavingStatus(savingStatus)),
+        'classifyingStatus': store.state.classifyingStatus,
+        'setClassifyingStatus': (ClassifyingStatuses classifyingStatus) =>
+            store.dispatch(SetClassifyingStatus(classifyingStatus)),
         'addTargetDetectionFrame': (TargetDetectionFrame targetDetectionFrame) {
           if (store.state.isTargeting) {
             store.dispatch(AddTargetDetectionFrame(targetDetectionFrame));
           }
         },
+        'targetDetectionFrames': store.state.targetDetectionFrames,
+        'classifyingStatus': store.state.classifyingStatus
       };
     }, builder: (context, props) {
       return Scaffold(
         body: Stack(
           children: <Widget>[
-            Detector(
-              camera: camera,
-              setRecognitions: props["setDetections"],
-              screenHeight: screen.height,
-              screenWidth: screen.width,
-              objectRecords: props['objectRecords'],
-              setDetectingStatus: props['setDetectingStatus'],
-              isTargeting: props['isTargeting'],
-              addTargetDetectionFrame: props['addTargetDetectionFrame'],
-            ),
-            BoundingBox(
-              props["currentDetections"],
-              (selectedClass) => print('SELECTED CLASS: $selectedClass'),
-              props["isTargeting"],
-            ),
+            props['classifyingStatus'] == ClassifyingStatuses.not_classifying
+                ? Detector(
+                    camera: camera,
+                    setRecognitions: props["setDetections"],
+                    screenHeight: screen.height,
+                    screenWidth: screen.width,
+                    objectRecords: props['objectRecords'],
+                    setDetectingStatus: props['setDetectingStatus'],
+                    isTargeting: props['isTargeting'],
+                    addTargetDetectionFrame: props['addTargetDetectionFrame'],
+                  )
+                : Container(),
+            props['classifyingStatus'] == ClassifyingStatuses.not_classifying
+                ? BoundingBox(
+                    props["currentDetections"],
+                    (selectedClass) => print('SELECTED CLASS: $selectedClass'),
+                    props["isTargeting"],
+                  )
+                : Container(),
             Positioned(
               bottom: 0,
               left: 0,
               right: 0,
-              child: InfoBox(),
+              child: InfoBox(
+                  targetDetectionFrames: props['targetDetectionFrames']),
             ),
             Target(
               isDetecting: props["isDetecting"] && props["isTargeting"],
-              savingStatus: props["savingStatus"],
+              classifyingStatus: props["classifyingStatus"],
             ),
             // FakeSaveButton(
-            //   savingStatus: props["savingStatus"],
-            //   setSavingStatus: props["setSavingStatus"],
+            //   classifyingStatus: props["classifyingStatus"],
+            //   setClassifyingStatus: props["setClassifyingStatus"],
             // )
           ],
         ),

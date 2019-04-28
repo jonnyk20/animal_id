@@ -65,6 +65,7 @@ class _DetectorState extends State<Detector> {
   @override
   void initState() {
     super.initState();
+    print('-------INITIATING DETECTOR----------');
     if (camera == null) {
       print('No camera found');
     } else {
@@ -116,6 +117,8 @@ class _DetectorState extends State<Detector> {
                 var targetDetectionFrame = TargetDetectionFrame(
                   detectionName: detectedObject.detectedClass,
                   bytesList: bytesList,
+                  height: img.height,
+                  width: img.width,
                 );
                 addTargetDetectionFrame(targetDetectionFrame);
               }

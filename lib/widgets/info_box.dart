@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
-
+import 'package:animal_id/models/target_detection_frame_model.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detections_list.dart';
+import 'package:animal_id/widgets/classifier.dart';
 
 class InfoBox extends StatelessWidget {
+  final List<TargetDetectionFrame> targetDetectionFrames;
+
+  InfoBox({
+    this.targetDetectionFrames,
+  });
+
   confirmCatch(context, DetectedObject detectedObject, callback) {
+    // Filter frames
+    // Switch model
+    // -------
+    // Run inference on frames
+    // Calcualte top detection
+    // Return top detection
+    // Switch model back (JK)
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -16,17 +30,15 @@ class InfoBox extends StatelessWidget {
         // return object of type Dialog
         return AlertDialog(
           title: Text(
-            "Congratulations on your Catch: ${detectedObject.name}!",
+            "Detected Object: ${detectedObject.name}",
             style: TextStyle(
               color: Colors.blue,
             ),
           ),
           backgroundColor: Colors.white,
-          content: Text(
-            "Go to your info book to learn about it",
-            style: TextStyle(
-              color: Colors.blue,
-            ),
+          content: Classifier(
+            detectedObject: detectedObject,
+            targetDetectionFrames: targetDetectionFrames,
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -37,6 +49,7 @@ class InfoBox extends StatelessWidget {
               onPressed: () {
                 callback();
                 Navigator.of(context).pop();
+                // clear all relevant statuses
               },
             ),
           ],
@@ -61,9 +74,10 @@ class InfoBox extends StatelessWidget {
           store.dispatch(RemoveTrackedDetection(detectionName));
           store.dispatch(ClearTargetDetectionFrames());
         },
-        'canSave': store.state.savingStatus == SavingStatuses.not_saving,
-        'setSavingStatus': (SavingStatuses savingStatus) =>
-            store.dispatch(SetSavingStatus(savingStatus)),
+        'canSave': store.state.classifyingStatus ==
+            ClassifyingStatuses.not_classifying,
+        'setClassifyingStatus': (ClassifyingStatuses classifyingStatus) =>
+            store.dispatch(SetClassifyingStatus(classifyingStatus)),
         'setTargetingStatus': (bool targetingStatus) =>
             store.dispatch(SetTargetingStatus(targetingStatus)),
         'setDetectingStatus': (bool targetingStatus) =>
@@ -71,7 +85,8 @@ class InfoBox extends StatelessWidget {
         'clearTargetingAndDetectiongStatuses': () {
           store.dispatch(SetTargetingStatus(false));
           store.dispatch(SetDetectingStatus(false));
-        }
+        },
+        'classifyingStatus': store.state.classifyingStatus,
       };
     }, builder: (context, props) {
       return Card(
@@ -103,7 +118,7 @@ class InfoBox extends StatelessWidget {
               detectedObjects: props['detectedObjects'],
               saveDetection: props['saveDetection'],
               canSave: props['canSave'],
-              setSavingStatus: props['setSavingStatus'],
+              setClassifyingStatus: props['setClassifyingStatus'],
               confirmCatch: confirmCatch,
               clearTargetingAndDetectiongStatuses:
                   props['clearTargetingAndDetectiongStatuses'],

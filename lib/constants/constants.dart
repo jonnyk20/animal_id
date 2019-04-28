@@ -1,1 +1,1 @@
-enum SavingStatuses { saving, confirming, not_saving }
+enum ClassifyingStatuses { classifying, classified, not_classifying }

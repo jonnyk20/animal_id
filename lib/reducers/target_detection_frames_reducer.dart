@@ -15,8 +15,6 @@ List<TargetDetectionFrame> _addTargetDetectionFrame(
   final List<TargetDetectionFrame> updatedTargetDetectionFrames =
       List<TargetDetectionFrame>.from(state);
   updatedTargetDetectionFrames.add(action.targetDetectionFrame);
-  print('UPDATED FRAMES');
-  print(updatedTargetDetectionFrames.length);
   return updatedTargetDetectionFrames;
 }
 

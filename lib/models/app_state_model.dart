@@ -11,8 +11,9 @@ class AppState {
   final ObjectRecord selectedObject;
   final bool isDetecting;
   final bool isTargeting;
-  final SavingStatuses savingStatus;
+  final ClassifyingStatuses classifyingStatus;
   final List<TargetDetectionFrame> targetDetectionFrames;
+  final DetectedObject objectToClassify;
 
   AppState({
     this.currentDetections,
@@ -21,8 +22,9 @@ class AppState {
     this.selectedObject,
     this.isDetecting = false,
     this.isTargeting = false,
-    this.savingStatus = SavingStatuses.not_saving,
+    this.classifyingStatus = ClassifyingStatuses.not_classifying,
     this.targetDetectionFrames,
+    this.objectToClassify,
   });
   static var initial = (objectInfo) => AppState(
         currentDetections: [],

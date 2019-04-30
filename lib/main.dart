@@ -12,15 +12,15 @@ import 'package:animal_id/reducers/reducers.dart';
 List<CameraDescription> cameras;
 Map<String, ObjectRecord> objectsInfo;
 
-loadModel() async {
-  print('------LOADING MODEL');
-  var res = await Tflite.loadModel(
-    model: "assets/models/detection/model.tflite",
-    labels: "assets/models/detection/labels.txt",
-  );
-  print('-------LOADED MODEL');
-  print(res);
-}
+// loadModel() async {
+//   print('------LOADING DETECTION MODEL');
+//   var res = await Tflite.loadModel(
+//     model: "assets/models/detection/model.tflite",
+//     labels: "assets/models/detection/labels.txt",
+//   );
+//   print('-------LOADED MODEL');
+//   print(res);
+// }
 
 Future<Map<String, ObjectRecord>> loadObjectInfo() async {
   var file = await rootBundle.loadString('assets/models/detection/info.txt');

@@ -25,7 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   camera: 0.4.3+2
-  tflite: 1.0.1
+  flutter_tflite:
+    path: https://github.com/jonnyk20/flutter_tflite.git
   flutter_redux: ^0.5.2
   path: 1.6.2
   audioplayers: 0.10.1
@@ -57,8 +58,6 @@ flutter:
     # test
     - assets/models/test_classification/model.tflite
     - assets/models/test_classification/labels.txt
-    - assets/mobilenet_v1_1.0_224.txt
-    - assets/mobilenet_v1_1.0_224.tflite
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg

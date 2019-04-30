@@ -8,6 +8,7 @@ import 'package:animal_id/screens/detection_screen.dart';
 import 'package:animal_id/screens/info_book_screen.dart';
 import 'package:animal_id/screens/info_page_screen.dart';
 import 'package:animal_id/screens/test_classification_screen.dart';
+import 'package:animal_id/screens/photo_screen.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
@@ -44,6 +45,7 @@ class App extends StatelessWidget {
                   '/info-page': (context) => InfoPage(),
                   '/test-classification': (context) =>
                       TestClassificationScreen(),
+                  '/photo': (context) => PhotoHome([camera]),
                 },
               );
             }));

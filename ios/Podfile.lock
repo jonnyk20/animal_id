@@ -9,7 +9,7 @@ PODS:
   - path_provider (0.0.1):
     - Flutter
   - TensorFlowLite (1.12.0)
-  - tflite (1.0.1):
+  - tflite (1.0.3):
     - Flutter
     - TensorFlowLite
 
@@ -46,7 +46,7 @@ SPEC CHECKSUMS:
   image_picker: ee00aab0487cedc80a304085219503cc6d0f2e22
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   TensorFlowLite: e81aef029750aa46b42ad16553fa4cddd81498cc
-  tflite: da767354bf0b89bb6f20beccc32b5d86515b5830
+  tflite: 10048c9542172375a1e90171f296c0efbd980e59
 
 PODFILE CHECKSUM: 3389836f37640698630b8f0670315d626d5f1469
 

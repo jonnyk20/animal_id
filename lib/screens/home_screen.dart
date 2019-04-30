@@ -48,6 +48,14 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, '/test-classification');
               },
             ),
+            RaisedButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('Photo'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/photo');
+              },
+            ),
           ],
         ),
       ),

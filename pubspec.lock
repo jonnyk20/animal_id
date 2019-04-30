@@ -215,9 +215,9 @@ packages:
   tflite:
     dependency: "direct main"
     description:
-      name: tflite
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: flutter_tflite
+      relative: true
+    source: path
     version: "1.0.3"
   typed_data:
     dependency: transitive

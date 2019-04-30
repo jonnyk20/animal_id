@@ -25,8 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   camera: 0.4.3+2
-  flutter_tflite:
-    path: https://github.com/jonnyk20/flutter_tflite.git
+  tflite:
+    path: ./flutter_tflite
   flutter_redux: ^0.5.2
   path: 1.6.2
   audioplayers: 0.10.1

@@ -11,6 +11,7 @@ import 'package:tflite/tflite.dart';
 
 loadModel() async {
   print('LOADING CLASSIFICATION MODEL');
+  Tflite.close();
   var res = await Tflite.loadModel(
     model: "assets/models/test_classification/model.tflite",
     labels: "assets/models/test_classification/labels.txt",

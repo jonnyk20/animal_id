@@ -7,9 +7,11 @@ import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/classification_model.dart';
 
 const detection = "detection";
+const classification = "classification";
 
 loadModelType(type) async {
   print('------LOADING MODEL');
+  Tflite.close();
   var res = await Tflite.loadModel(
     model: "assets/models/$type/model.tflite",
     labels: "assets/models/$type/labels.txt",
@@ -121,6 +123,7 @@ class ClassifierState extends State<Classifier> {
   }
 
   startClassification() async {
+    await loadModelType(classification);
     print('STARTING CLASSIFICATION');
     List<TargetDetectionFrame> filteredFrames =
         filterFrames(targetDetectionFrames, detectedObject);
@@ -131,10 +134,6 @@ class ClassifierState extends State<Classifier> {
     setState(() {
       classifiedObject = topClassification;
     });
-  }
-
-  endClassification() async {
-    await loadModelType(detection);
   }
 
   @override

@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:animal_id/utils/model_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
-import 'package:tflite/tflite.dart';
 import 'package:redux/redux.dart';
 import 'package:animal_id/app.dart';
 import 'package:animal_id/models/app_state_model.dart';
@@ -11,17 +11,6 @@ import 'package:animal_id/reducers/reducers.dart';
 
 List<CameraDescription> cameras;
 Map<String, ObjectRecord> objectsInfo;
-
-loadModel() async {
-  print('------LOADING DETECTION MODEL');
-  Tflite.close();
-  var res = await Tflite.loadModel(
-    model: "assets/models/detection/model.tflite",
-    labels: "assets/models/detection/labels.txt",
-  );
-  print('-------LOADED MODEL');
-  print(res);
-}
 
 Future<Map<String, ObjectRecord>> loadObjectInfo() async {
   var file = await rootBundle.loadString('assets/models/detection/info.txt');
@@ -50,7 +39,7 @@ Future<void> main() async {
   //       lensDirection: CameraLensDirection.back,
   //       sensorOrientation: 90)
   // ];
-  await loadModel();
+  await loadModel(MlModels.detection);
   objectsInfo = await loadObjectInfo();
   final store = Store<AppState>(appReducers,
       initialState: AppState.initial(objectsInfo), middleware: []);

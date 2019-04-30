@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
-import 'package:animal_id/services/format_detections.dart';
+import 'package:animal_id/utils/format_detections.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';

@@ -1,19 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tflite/tflite.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
-}
-
-loadNewModel() async {
-  print('------LOADING NEW MODEL');
-  var res = await Tflite.loadModel(
-    model: "assets/models/classification/model.tflite",
-    labels: "assets/models/classification/labels.txt",
-  );
-  print('-------LOADED NEW MODEL');
-  print(res);
 }
 
 class _HomeState extends State<Home> {

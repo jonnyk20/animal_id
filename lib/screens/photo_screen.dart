@@ -4,21 +4,10 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:animal_id/services/classify_image.dart';
-import 'package:tflite/tflite.dart';
+import 'package:animal_id/utils/classify_image.dart';
+import 'package:animal_id/utils/model_loader.dart';
 
 // import 'crop.dart';
-
-loadModel() async {
-  print('LOADING CLASSIFICATION MODEL');
-  Tflite.close();
-  var res = await Tflite.loadModel(
-    model: "assets/models/test_classification/model.tflite",
-    labels: "assets/models/test_classification/labels.txt",
-  );
-  print('MODEL LOADED');
-  print(res);
-}
 
 Future<File> deleteThis() async {
   final Directory extDir = await getApplicationDocumentsDirectory();
@@ -61,7 +50,7 @@ class _PhotoHomeState extends State<PhotoHome> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    loadModel();
+    loadModel(MlModels.classification);
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }

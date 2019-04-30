@@ -43,8 +43,10 @@ class _HomeState extends State<Home> {
             RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text('Load classification model'),
-              onPressed: loadNewModel,
+              child: Text('Test Classification'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/test-classification');
+              },
             ),
           ],
         ),

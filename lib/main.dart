@@ -49,7 +49,7 @@ Future<void> main() async {
   //       lensDirection: CameraLensDirection.back,
   //       sensorOrientation: 90)
   // ];
-  await loadModel();
+  // await loadModel();
   objectsInfo = await loadObjectInfo();
   final store = Store<AppState>(appReducers,
       initialState: AppState.initial(objectsInfo), middleware: []);

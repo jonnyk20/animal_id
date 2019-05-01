@@ -1,4 +1,5 @@
 import 'package:animal_id/models/app_state_model.dart';
+import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/reducers/current_detections_reducer.dart';
 import 'package:animal_id/reducers/detected_objects_reducer.dart';
 import 'package:animal_id/reducers/object_records_reducer.dart';
@@ -8,6 +9,7 @@ import 'package:animal_id/reducers/targeting_status_reducer.dart';
 import 'package:animal_id/reducers/classifying_status_reducer.dart';
 import 'package:animal_id/reducers/target_detection_frames_reducer.dart';
 import 'package:animal_id/reducers/object_to_classify_reducer.dart';
+import 'package:animal_id/reducers/classification_result_reducer.dart';
 
 // Todo, restructure reducers to look like:
 // https://github.com/brianegan/flutter_architecture_samples/blob/master/example/redux/lib/reducers/
@@ -27,5 +29,7 @@ AppState appReducers(AppState state, dynamic action) {
       targetDetectionFrames:
           targetDetectionFramesReducer(state.targetDetectionFrames, action),
       objectToClassify:
-          objectToClassifyReducer(state.objectToClassify, action));
+          objectToClassifyReducer(state.objectToClassify, action),
+      classificationResult: classificationResultReducer(state.classificationResult, action),
+        );
 }

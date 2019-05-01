@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
+import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detector.dart';
@@ -13,6 +14,7 @@ import 'package:animal_id/widgets/info_box.dart';
 import 'package:animal_id/widgets/bounding_box.dart';
 import 'package:animal_id/widgets/target/target.dart';
 // import 'package:animal_id/widgets/fake_Save_button.dart';
+import 'package:animal_id/widgets/photo_classifier.dart';
 
 class DetectionScreen extends StatelessWidget {
   final CameraDescription camera;
@@ -62,11 +64,20 @@ class DetectionScreen extends StatelessWidget {
         'classifyingStatus': store.state.classifyingStatus,
         'objectToClassify': store.state.objectToClassify,
         'clearObjectToClassify': () => store.dispatch(ClearObjectToClassify),
+        'setClassificationResult': (ClassificationResult result) => store.dispatch(SetClassificationResult(result)),
+        'clearClassificationResult': () => store.dispatch(ClearClassificationResult())
       };
     }, builder: (context, props) {
       return Scaffold(
         body: Stack(
           children: <Widget>[
+                                    (props['classifyingStatus'] == ClassifyingStatuses.classified) ?
+            PhotoClassifier(
+              camera: camera,
+              setClassifyingStatus: props["setClassifyingStatus"],
+              setClassificationResult: props['setClassificationResult'], // (JK) single or double
+              clearClassificationResult: props['clearClassificationResult'], // (JK) single or double
+              ) : Container(child: Text('BBB'),),
                         props['classifyingStatus'] == ClassifyingStatuses.not_classifying
                 ?
             Detector(
@@ -93,10 +104,11 @@ class DetectionScreen extends StatelessWidget {
               child: InfoBox(
                   targetDetectionFrames: props['targetDetectionFrames']),
             ),
+            (props['classifyingStatus'] != ClassifyingStatuses.classified) ?
             Target(
               isDetecting: props["isDetecting"] && props["isTargeting"],
               classifyingStatus: props["classifyingStatus"],
-            ),
+            ) : Container(),
             // FakeSaveButton(
             //   classifyingStatus: props["classifyingStatus"],
             //   setClassifyingStatus: props["setClassifyingStatus"],

@@ -9,8 +9,6 @@ final objectToClassifyReducer = combineReducers<DetectedObject>([
 
 DetectedObject _setObjectToClassify(
     DetectedObject state, SetObjectToClassify action) {
-  print('SETTING OBJECT TO CLASSIFY!!!');
-  print(action.objectToClassify);
   return action.objectToClassify;
 }
 

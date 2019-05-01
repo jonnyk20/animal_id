@@ -178,7 +178,7 @@ class _PhotoHomeState extends State<PhotoHome> with WidgetsBindingObserver {
       RaisedButton(
         child: Text('Classify'),
         onPressed:
-            imagePath == null ? null : () => classifyImage(File(imagePath)),
+            imagePath == null ? null : () => classifyImage(File(imagePath), () {}),
       )
     ];
 

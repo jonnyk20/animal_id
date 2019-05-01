@@ -23,6 +23,7 @@ class InfoBox extends StatelessWidget {
     // Calcualte top detection
     // Return top detection
     // Switch model back (JK)
+
     showDialog(
       context: context,
       barrierDismissible: false,

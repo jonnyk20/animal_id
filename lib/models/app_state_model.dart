@@ -2,6 +2,7 @@ import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
+import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class AppState {
@@ -14,6 +15,7 @@ class AppState {
   final ClassifyingStatuses classifyingStatus;
   final List<TargetDetectionFrame> targetDetectionFrames;
   final DetectedObject objectToClassify;
+  final ClassificationResult classificationResult;
 
   AppState({
     this.currentDetections,
@@ -25,6 +27,7 @@ class AppState {
     this.classifyingStatus = ClassifyingStatuses.not_classifying,
     this.targetDetectionFrames,
     this.objectToClassify,
+    this.classificationResult,
   });
   static var initial = (objectInfo) => AppState(
         currentDetections: [],

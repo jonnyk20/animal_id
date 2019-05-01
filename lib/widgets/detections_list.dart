@@ -53,10 +53,11 @@ class DetectionsList extends StatelessWidget {
                   // Figure this out (JK)
                   setClassifyingStatus(ClassifyingStatuses.classifying);
                   Timer(saveDuration, () {
-                  setClassifyingStatus(ClassifyingStatuses.classified);
-                    triggerClassification(context, detectedObject, () {
-                      setClassifyingStatus(ClassifyingStatuses.not_classifying);
-                    });
+                  // setClassifyingStatus(ClassifyingStatuses.classified);
+                    // triggerClassification(context, detectedObject, () {
+                    //   setClassifyingStatus(ClassifyingStatuses.not_classifying);
+                    // });
+                    setClassifyingStatus(ClassifyingStatuses.classified);
                     saveDetection(detectedObject.name);
                   });
                 },

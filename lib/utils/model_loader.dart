@@ -7,7 +7,7 @@ loadModel(MlModels modelType) async {
   String modelString = '';
   switch (modelType) {
     case MlModels.classification:
-      modelString = 'classification';
+      modelString = 'test_classification';
       break;
     case MlModels.detection:
       modelString = 'detection';

@@ -15,7 +15,7 @@ class InfoBox extends StatelessWidget {
     this.targetDetectionFrames,
   });
 
-  confirmCatch(context, DetectedObject detectedObject, callback) {
+  triggerClassification(context, DetectedObject detectedObject, callback) {
     // Filter frames
     // Switch model
     // -------
@@ -36,6 +36,7 @@ class InfoBox extends StatelessWidget {
             ),
           ),
           backgroundColor: Colors.white,
+          // content: Text('No'),
           content: Classifier(
             detectedObject: detectedObject,
             targetDetectionFrames: targetDetectionFrames,
@@ -87,6 +88,8 @@ class InfoBox extends StatelessWidget {
           store.dispatch(SetDetectingStatus(false));
         },
         'classifyingStatus': store.state.classifyingStatus,
+        'setObjectToClassify': (DetectedObject objectToClassify) =>
+            store.dispatch(SetObjectToClassify(objectToClassify)),
       };
     }, builder: (context, props) {
       return Card(
@@ -119,9 +122,10 @@ class InfoBox extends StatelessWidget {
               saveDetection: props['saveDetection'],
               canSave: props['canSave'],
               setClassifyingStatus: props['setClassifyingStatus'],
-              confirmCatch: confirmCatch,
+              triggerClassification: triggerClassification,
               clearTargetingAndDetectiongStatuses:
                   props['clearTargetingAndDetectiongStatuses'],
+              setObjectToClassify: props['setObjectToClassify'],
             )
           ],
         ),

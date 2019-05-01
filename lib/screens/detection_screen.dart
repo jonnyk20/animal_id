@@ -1,3 +1,4 @@
+// import 'package:animal_id/models/detected_object_model.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -58,14 +59,17 @@ class DetectionScreen extends StatelessWidget {
           }
         },
         'targetDetectionFrames': store.state.targetDetectionFrames,
-        'classifyingStatus': store.state.classifyingStatus
+        'classifyingStatus': store.state.classifyingStatus,
+        'objectToClassify': store.state.objectToClassify,
+        'clearObjectToClassify': () => store.dispatch(ClearObjectToClassify),
       };
     }, builder: (context, props) {
       return Scaffold(
         body: Stack(
           children: <Widget>[
-            props['classifyingStatus'] == ClassifyingStatuses.not_classifying
-                ? Detector(
+                        props['classifyingStatus'] == ClassifyingStatuses.not_classifying
+                ?
+            Detector(
                     camera: camera,
                     setRecognitions: props["setDetections"],
                     screenHeight: screen.height,
@@ -74,8 +78,7 @@ class DetectionScreen extends StatelessWidget {
                     setDetectingStatus: props['setDetectingStatus'],
                     isTargeting: props['isTargeting'],
                     addTargetDetectionFrame: props['addTargetDetectionFrame'],
-                  )
-                : Container(),
+                  ) : Container(),
             props['classifyingStatus'] == ClassifyingStatuses.not_classifying
                 ? BoundingBox(
                     props["currentDetections"],

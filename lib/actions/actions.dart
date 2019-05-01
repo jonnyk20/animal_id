@@ -1,3 +1,4 @@
+import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
@@ -55,3 +56,10 @@ class AddTargetDetectionFrame {
 }
 
 class ClearTargetDetectionFrames {}
+
+class SetObjectToClassify {
+  final DetectedObject objectToClassify;
+  SetObjectToClassify(this.objectToClassify);
+}
+
+class ClearObjectToClassify {}

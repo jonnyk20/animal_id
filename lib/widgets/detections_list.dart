@@ -18,17 +18,19 @@ class DetectionsList extends StatelessWidget {
   final List<DetectedObject> detectedObjects;
   final bool canSave;
   final Function saveDetection;
-  final Function confirmCatch;
+  final Function triggerClassification;
   final Function setClassifyingStatus;
   final Function clearTargetingAndDetectiongStatuses;
+  final Function setObjectToClassify;
 
   DetectionsList({
     this.detectedObjects,
     this.canSave,
     this.saveDetection,
-    this.confirmCatch,
+    this.triggerClassification,
     this.setClassifyingStatus,
     this.clearTargetingAndDetectiongStatuses,
+    this.setObjectToClassify,
   });
 
   @override
@@ -46,10 +48,13 @@ class DetectionsList extends StatelessWidget {
                 catchObject: (detectedObject) {
                   clearTargetingAndDetectiongStatuses();
                   playSound();
+                  print('SET_OBJECT_TO_CLASSIFY');
+                  setObjectToClassify(detectedObject);
+                  // Figure this out (JK)
                   setClassifyingStatus(ClassifyingStatuses.classifying);
                   Timer(saveDuration, () {
-                    setClassifyingStatus(ClassifyingStatuses.classified);
-                    confirmCatch(context, detectedObject, () {
+                  setClassifyingStatus(ClassifyingStatuses.classified);
+                    triggerClassification(context, detectedObject, () {
                       setClassifyingStatus(ClassifyingStatuses.not_classifying);
                     });
                     saveDetection(detectedObject.name);

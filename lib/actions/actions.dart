@@ -6,8 +6,8 @@ import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class SetCurrentDetections {
-  final List<Detection> detections;
-  SetCurrentDetections(this.detections);
+  final List<Detection> currentDetections;
+  SetCurrentDetections(this.currentDetections);
 }
 
 class AddTrackedDetections {
@@ -70,6 +70,6 @@ class SetClassificationResult {
   SetClassificationResult(this.classificationResult);
 }
 
-class ClearClassificationResult {
-  
-}
+class ClearClassificationResult {}
+
+class ClearDetectionStates {}

@@ -71,7 +71,7 @@ class DetectionScreen extends StatelessWidget {
       return Scaffold(
         body: Stack(
           children: <Widget>[
-                                    (props['classifyingStatus'] == ClassifyingStatuses.classified) ?
+                                    (props['classifyingStatus'] == ClassifyingStatuses.classifying) ?
             PhotoClassifier(
               camera: camera,
               setClassifyingStatus: props["setClassifyingStatus"],
@@ -104,7 +104,7 @@ class DetectionScreen extends StatelessWidget {
               child: InfoBox(
                   targetDetectionFrames: props['targetDetectionFrames']),
             ),
-            (props['classifyingStatus'] != ClassifyingStatuses.classified) ?
+            (props['classifyingStatus'] != ClassifyingStatuses.classifying) ?
             Target(
               isDetecting: props["isDetecting"] && props["isTargeting"],
               classifyingStatus: props["classifyingStatus"],

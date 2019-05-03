@@ -61,9 +61,9 @@ class FakeSaveButton extends StatelessWidget {
 
   onSave(context) {
     playSound();
-    setClassifyingStatus(ClassifyingStatuses.classifying);
+    setClassifyingStatus(ClassifyingStatuses.initiating_classification);
     Timer(threeSec, () {
-      setClassifyingStatus(ClassifyingStatuses.classified);
+      setClassifyingStatus(ClassifyingStatuses.classifying);
       fakeConfirm(context);
     });
   }

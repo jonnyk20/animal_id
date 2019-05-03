@@ -41,7 +41,7 @@ class Target extends StatelessWidget {
                     child: Pulse(50),
                   )
                 : Container(),
-            classifyingStatus == ClassifyingStatuses.classifying
+            classifyingStatus == ClassifyingStatuses.initiating_classification
                 ? Positioned(
                     top: top - 50,
                     child: Pulse(150),

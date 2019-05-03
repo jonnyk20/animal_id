@@ -1,5 +1,4 @@
 import 'package:animal_id/models/app_state_model.dart';
-import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/reducers/current_detections_reducer.dart';
 import 'package:animal_id/reducers/detected_objects_reducer.dart';
 import 'package:animal_id/reducers/object_records_reducer.dart';

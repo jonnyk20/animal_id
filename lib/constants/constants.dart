@@ -1,1 +1,5 @@
-enum ClassifyingStatuses { classifying, classified, not_classifying }
+enum ClassifyingStatuses {
+  initiating_classification,
+  classifying,
+  not_classifying,
+}

@@ -11,6 +11,7 @@ const alarmAudioPath = 'sounds/save.wav';
 const saveDuration = Duration(milliseconds: 300);
 
 playSound() {
+  player.disableLog();
   player.play(alarmAudioPath);
 }
 
@@ -51,13 +52,13 @@ class DetectionsList extends StatelessWidget {
                   print('SET_OBJECT_TO_CLASSIFY');
                   setObjectToClassify(detectedObject);
                   // Figure this out (JK)
-                  setClassifyingStatus(ClassifyingStatuses.classifying);
+                  setClassifyingStatus(ClassifyingStatuses.initiating_classification);
                   Timer(saveDuration, () {
                   // setClassifyingStatus(ClassifyingStatuses.classified);
                     // triggerClassification(context, detectedObject, () {
                     //   setClassifyingStatus(ClassifyingStatuses.not_classifying);
                     // });
-                    setClassifyingStatus(ClassifyingStatuses.classified);
+                    setClassifyingStatus(ClassifyingStatuses.classifying);
                     saveDetection(detectedObject.name);
                   });
                 },

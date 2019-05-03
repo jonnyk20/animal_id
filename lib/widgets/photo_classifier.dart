@@ -63,6 +63,7 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
         if (!mounted) {
           return;
         }
+
         showResults();
         captureImage();
         setState(() {});
@@ -151,7 +152,7 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
     // clear states
     setClassifyingStatus(ClassifyingStatuses.not_classifying);
     clearClassificationResult();
-    Navigator.pop(context);
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   Widget build(BuildContext context) {

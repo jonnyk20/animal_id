@@ -23,7 +23,6 @@ loadModel(MlModels modelType) async {
       model: "assets/models/$modelString/model.tflite",
       labels: "assets/models/$modelString/labels.txt",
     );
-    print('LOADED MODEL');
     print(res);
   } on PlatformException {
     print('Failed to load model.');

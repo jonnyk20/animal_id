@@ -61,15 +61,3 @@ Map<String, DetectedObject> _clearDetectedObject(
     Map<String, DetectedObject> state, ClearDetectionStates action) {
   return Map<String, DetectedObject>();
 }
-
-/*
-import 'dart:math' as math;
-import 'dart:async';
-
-main() {
-  const oneSec = const Duration(seconds:1);
-  const fiveSec = const Duration(seconds:5);
-  var interval = Timer.periodic(oneSec, (Timer t) => print('hi!'));
-  var timer = Timer(fiveSec, () => interval.cancel());
-}
-*/

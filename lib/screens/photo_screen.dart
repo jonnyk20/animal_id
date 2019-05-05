@@ -177,8 +177,9 @@ class _PhotoHomeState extends State<PhotoHome> with WidgetsBindingObserver {
     final List<Widget> toggles = <Widget>[
       RaisedButton(
         child: Text('Classify'),
-        onPressed:
-            imagePath == null ? null : () => classifyImage(File(imagePath), () {}),
+        onPressed: imagePath == null
+            ? null
+            : () => classifyImage(File(imagePath), () {}),
       )
     ];
 
@@ -278,7 +279,6 @@ class _PhotoHomeState extends State<PhotoHome> with WidgetsBindingObserver {
 
 class Please extends StatelessWidget {
   testFn(context) async {
-    print('Loading Image');
     var image = await deleteThis();
     var path = image.path;
     showDialog(
@@ -290,8 +290,6 @@ class Please extends StatelessWidget {
             ),
           );
         });
-    print('IAMGE LOADED');
-    print(image);
   }
 
   @override

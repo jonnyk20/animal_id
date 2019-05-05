@@ -65,7 +65,6 @@ class _DetectorState extends State<Detector> {
   @override
   void initState() {
     super.initState();
-    print('-------INITIATING DETECTOR----------');
     if (camera == null) {
       print('No camera found');
     } else {
@@ -134,7 +133,6 @@ class _DetectorState extends State<Detector> {
   void dispose() {
     controller?.dispose();
     super.dispose();
-    print('DISPOSING DETECTOR');
   }
 
   Widget build(BuildContext context) {

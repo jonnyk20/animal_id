@@ -3,10 +3,11 @@ import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/models/object_record_model.dart';
 
 final objectRecordsReducer = combineReducers<Map<String, ObjectRecord>>([
-  TypedReducer<Map<String, ObjectRecord>, SaveDetection>(_saveDetection),
+  TypedReducer<Map<String, ObjectRecord>, SaveDetection>(
+      _initiateClassification),
 ]);
 
-Map<String, ObjectRecord> _saveDetection(
+Map<String, ObjectRecord> _initiateClassification(
     Map<String, ObjectRecord> state, SaveDetection action) {
   var objectRecords = Map<String, ObjectRecord>.from(state);
   objectRecords[action.detectionName].isCaught = true;

@@ -15,12 +15,12 @@ playSound() {
 var threeSec = Duration(milliseconds: 300);
 
 class FakeSaveButton extends StatelessWidget {
-  final ClassifyingStatuses classifyingStatus;
-  final Function setClassifyingStatus;
+  final ClassificationStatuses classifyingStatus;
+  final Function setClassificationStatus;
 
   FakeSaveButton({
     this.classifyingStatus,
-    this.setClassifyingStatus,
+    this.setClassificationStatus,
   });
 
   fakeConfirm(context) {
@@ -49,7 +49,7 @@ class FakeSaveButton extends StatelessWidget {
               textColor: Colors.white,
               child: Text("Close"),
               onPressed: () {
-                setClassifyingStatus(ClassifyingStatuses.not_classifying);
+                setClassificationStatus(ClassificationStatuses.not_classifying);
                 Navigator.of(context).pop();
               },
             ),
@@ -61,9 +61,9 @@ class FakeSaveButton extends StatelessWidget {
 
   onSave(context) {
     playSound();
-    setClassifyingStatus(ClassifyingStatuses.initiating_classification);
+    setClassificationStatus(ClassificationStatuses.initiating_classification);
     Timer(threeSec, () {
-      setClassifyingStatus(ClassifyingStatuses.classifying);
+      setClassificationStatus(ClassificationStatuses.classifying);
       fakeConfirm(context);
     });
   }
@@ -74,7 +74,7 @@ class FakeSaveButton extends StatelessWidget {
       child: Container(
         child: RaisedButton(
           child: Text('Save'),
-          onPressed: classifyingStatus == ClassifyingStatuses.not_classifying
+          onPressed: classifyingStatus == ClassificationStatuses.not_classifying
               ? () => onSave(context)
               : null,
         ),

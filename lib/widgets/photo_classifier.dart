@@ -8,28 +8,24 @@ import 'package:camera/camera.dart';
 import 'package:animal_id/widgets/classification_results.dart';
 import 'package:animal_id/constants/constants.dart';
 
-
-void logError(String code, String message) =>
-    print('Error: $code\nError Message: $message');
-
 class PhotoClassifier extends StatefulWidget {
   final CameraDescription camera;
-  final Function setClassifyingStatus;
+  final Function setClassificationStatus;
   final Function setClassificationResult;
   final Function clearClassificationResult;
 
   PhotoClassifier({
     this.camera,
-    this.setClassifyingStatus,
+    this.setClassificationStatus,
     this.setClassificationResult,
-    this.clearClassificationResult
+    this.clearClassificationResult,
   });
 
   _PhotoClassifierState createState() => _PhotoClassifierState(
-      setClassifyingStatus: setClassifyingStatus,
-      camera: camera,
-      setClassificationResult: setClassificationResult,
-      clearClassificationResult: clearClassificationResult,
+        setClassificationStatus: setClassificationStatus,
+        camera: camera,
+        setClassificationResult: setClassificationResult,
+        clearClassificationResult: clearClassificationResult,
       );
 }
 
@@ -37,13 +33,13 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
   final CameraDescription camera;
   CameraController controller;
   String imagePath;
-  final Function setClassifyingStatus;
+  final Function setClassificationStatus;
   final Function setClassificationResult;
   final Function clearClassificationResult;
 
   _PhotoClassifierState({
     this.camera,
-    this.setClassifyingStatus,
+    this.setClassificationStatus,
     this.setClassificationResult,
     this.clearClassificationResult,
   });
@@ -51,7 +47,6 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
   @override
   void initState() {
     super.initState();
-    print('-------INITIATING PhotoClassifier----------');
     if (camera == null) {
       print('No camera found');
     } else {
@@ -77,20 +72,12 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
     super.dispose();
   }
 
-
   void _showCameraException(CameraException e) {
-    logError(e.code, e.description);
-    showInSnackBar('Error: ${e.code}\n${e.description}');
+    print('Error: ${e.code}\n${e.description}');
   }
 
-  void showInSnackBar(String message) {
-    print('MESSAGE:');
-    print(message);
-  }
-
-    Future<String> takePicture() async {
+  Future<String> takePicture() async {
     if (!controller.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
       return null;
     }
     final Directory extDir = await getApplicationDocumentsDirectory();
@@ -103,13 +90,9 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
       // A capture is already pending, do nothing.
       return null;
     }
-    print('ATTEMPTING TO SAVE TO ');
-    print(filePath);
     try {
-
       await controller.takePicture(filePath);
     } on CameraException catch (e) {
-      print('PHOTO ERROR');
       _showCameraException(e);
       return null;
     }
@@ -124,35 +107,38 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
       setState(() {
         imagePath = filePath;
       });
-      if (filePath != null) showInSnackBar('Picture saved to $filePath');
+      if (filePath != null) print('Picture saved to $filePath');
     }
   }
 
   showResults() {
     showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        content: Container(
-          child: ClassificationResults(),
-        ),
-        actions: <Widget>[
-          RaisedButton(
-            child: Text('close'),
-            onPressed: () => closeClassifier(context),
-          )
-        ],
-      );
-    });
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Container(
+              child: ClassificationResults(),
+            ),
+            actions: <Widget>[
+              RaisedButton(
+                child: Text(
+                  'close',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => closeClassifier(context),
+              ),
+            ],
+          );
+        });
   }
 
   closeClassifier(context) {
     // await reset model
     loadModel(MlModels.detection);
     // clear states
-    setClassifyingStatus(ClassifyingStatuses.not_classifying);
+    setClassificationStatus(ClassificationStatuses.not_classifying);
     clearClassificationResult();
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.of(context).pushReplacementNamed('/');
   }
 
   Widget build(BuildContext context) {

@@ -6,7 +6,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detections_list.dart';
-import 'package:animal_id/widgets/classifier.dart';
 
 class InfoBox extends StatelessWidget {
   final List<TargetDetectionFrame> targetDetectionFrames;
@@ -14,51 +13,6 @@ class InfoBox extends StatelessWidget {
   InfoBox({
     this.targetDetectionFrames,
   });
-
-  triggerClassification(context, DetectedObject detectedObject, callback) {
-    // Filter frames
-    // Switch model
-    // -------
-    // Run inference on frames
-    // Calcualte top detection
-    // Return top detection
-    // Switch model back (JK)
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: Text(
-            "Detected Object: ${detectedObject.name}",
-            style: TextStyle(
-              color: Colors.blue,
-            ),
-          ),
-          backgroundColor: Colors.white,
-          // content: Text('No'),
-          content: Classifier(
-            detectedObject: detectedObject,
-            targetDetectionFrames: targetDetectionFrames,
-          ),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            FlatButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text("Close"),
-              onPressed: () {
-                callback();
-                Navigator.of(context).pop();
-                // clear all relevant statuses
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Map>(converter: (store) {
@@ -71,15 +25,14 @@ class InfoBox extends StatelessWidget {
       return {
         'clearDetections': () => store.dispatch(ReduceObjecDetectionCounts()),
         'detectedObjects': detectedObjects,
-        'saveDetection': (detectionName) {
+        'initiateClassification': (detectionName) {
           store.dispatch(SaveDetection(detectionName));
           store.dispatch(RemoveTrackedDetection(detectionName));
-          store.dispatch(ClearTargetDetectionFrames());
         },
         'canSave': store.state.classifyingStatus ==
-            ClassifyingStatuses.not_classifying,
-        'setClassifyingStatus': (ClassifyingStatuses classifyingStatus) =>
-            store.dispatch(SetClassifyingStatus(classifyingStatus)),
+            ClassificationStatuses.not_classifying,
+        'setClassificationStatus': (ClassificationStatuses classifyingStatus) =>
+            store.dispatch(SetClassificationStatus(classifyingStatus)),
         'setTargetingStatus': (bool targetingStatus) =>
             store.dispatch(SetTargetingStatus(targetingStatus)),
         'setDetectingStatus': (bool targetingStatus) =>
@@ -120,10 +73,9 @@ class InfoBox extends StatelessWidget {
             ),
             DetectionsList(
               detectedObjects: props['detectedObjects'],
-              saveDetection: props['saveDetection'],
+              initiateClassification: props['initiateClassification'],
               canSave: props['canSave'],
-              setClassifyingStatus: props['setClassifyingStatus'],
-              triggerClassification: triggerClassification,
+              setClassificationStatus: props['setClassificationStatus'],
               clearTargetingAndDetectiongStatuses:
                   props['clearTargetingAndDetectiongStatuses'],
               setObjectToClassify: props['setObjectToClassify'],

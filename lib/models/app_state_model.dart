@@ -12,10 +12,11 @@ class AppState {
   final ObjectRecord selectedObject;
   final bool isDetecting;
   final bool isTargeting;
-  final ClassifyingStatuses classifyingStatus;
+  final ClassificationStatuses classifyingStatus;
   final List<TargetDetectionFrame> targetDetectionFrames;
   final DetectedObject objectToClassify;
   final ClassificationResult classificationResult;
+  final ClassifyModes classifyMode;
 
   AppState({
     this.currentDetections,
@@ -24,11 +25,13 @@ class AppState {
     this.selectedObject,
     this.isDetecting = false,
     this.isTargeting = false,
-    this.classifyingStatus = ClassifyingStatuses.not_classifying,
+    this.classifyingStatus = ClassificationStatuses.not_classifying,
     this.targetDetectionFrames,
     this.objectToClassify,
     this.classificationResult,
+    this.classifyMode = ClassifyModes.photo,
   });
+
   static var initial = (objectInfo) => AppState(
         currentDetections: [],
         detectedObjects: {},

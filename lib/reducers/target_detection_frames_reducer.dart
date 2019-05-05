@@ -7,7 +7,7 @@ final targetDetectionFramesReducer =
   TypedReducer<List<TargetDetectionFrame>, AddTargetDetectionFrame>(
       _addTargetDetectionFrame),
   TypedReducer<List<TargetDetectionFrame>, ClearTargetDetectionFrames>(
-      _clearDetectionFrames),
+      _clearTargetDetectionFrames),
 ]);
 
 List<TargetDetectionFrame> _addTargetDetectionFrame(
@@ -18,7 +18,7 @@ List<TargetDetectionFrame> _addTargetDetectionFrame(
   return updatedTargetDetectionFrames;
 }
 
-List<TargetDetectionFrame> _clearDetectionFrames(
+List<TargetDetectionFrame> _clearTargetDetectionFrames(
     List<TargetDetectionFrame> state, ClearTargetDetectionFrames action) {
   return List<TargetDetectionFrame>();
 }

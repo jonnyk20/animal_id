@@ -18,18 +18,16 @@ playSound() {
 class DetectionsList extends StatelessWidget {
   final List<DetectedObject> detectedObjects;
   final bool canSave;
-  final Function saveDetection;
-  final Function triggerClassification;
-  final Function setClassifyingStatus;
+  final Function initiateClassification;
+  final Function setClassificationStatus;
   final Function clearTargetingAndDetectiongStatuses;
   final Function setObjectToClassify;
 
   DetectionsList({
     this.detectedObjects,
     this.canSave,
-    this.saveDetection,
-    this.triggerClassification,
-    this.setClassifyingStatus,
+    this.initiateClassification,
+    this.setClassificationStatus,
     this.clearTargetingAndDetectiongStatuses,
     this.setObjectToClassify,
   });
@@ -47,19 +45,14 @@ class DetectionsList extends StatelessWidget {
             return DetectionLabel(
                 detectedObject: detectedObject,
                 catchObject: (detectedObject) {
-                  clearTargetingAndDetectiongStatuses();
                   playSound();
-                  print('SET_OBJECT_TO_CLASSIFY');
+                  clearTargetingAndDetectiongStatuses();
                   setObjectToClassify(detectedObject);
-                  // Figure this out (JK)
-                  setClassifyingStatus(ClassifyingStatuses.initiating_classification);
+                  setClassificationStatus(
+                      ClassificationStatuses.initiating_classification);
                   Timer(saveDuration, () {
-                  // setClassifyingStatus(ClassifyingStatuses.classified);
-                    // triggerClassification(context, detectedObject, () {
-                    //   setClassifyingStatus(ClassifyingStatuses.not_classifying);
-                    // });
-                    setClassifyingStatus(ClassifyingStatuses.classifying);
-                    saveDetection(detectedObject.name);
+                    setClassificationStatus(ClassificationStatuses.classifying);
+                    initiateClassification(detectedObject.name);
                   });
                 },
                 canSave: canSave);

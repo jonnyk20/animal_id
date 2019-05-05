@@ -4,7 +4,7 @@ import 'package:animal_id/constants/constants.dart';
 
 class Target extends StatelessWidget {
   final bool isDetecting;
-  final ClassifyingStatuses classifyingStatus;
+  final ClassificationStatuses classifyingStatus;
   Target({
     this.isDetecting,
     this.classifyingStatus,
@@ -41,7 +41,8 @@ class Target extends StatelessWidget {
                     child: Pulse(50),
                   )
                 : Container(),
-            classifyingStatus == ClassifyingStatuses.initiating_classification
+            classifyingStatus ==
+                    ClassificationStatuses.initiating_classification
                 ? Positioned(
                     top: top - 50,
                     child: Pulse(150),

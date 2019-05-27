@@ -51,12 +51,12 @@ class GeneralClassifier extends StatelessWidget {
         switch (classifyMode) {
           case ClassifyModes.photo:
             return PhotoClassifier(
-              camera: camera,
-              setClassificationStatus: setClassificationStatus,
-              setClassificationResult: setClassificationResult,
-              clearClassificationResult: clearClassificationResult,
-              setPreviewPath: setPreviewPath,
-            );
+                camera: camera,
+                setClassificationStatus: setClassificationStatus,
+                setClassificationResult: setClassificationResult,
+                clearClassificationResult: clearClassificationResult,
+                setPreviewPath: setPreviewPath,
+                objectToClassify: objectToClassify);
           case ClassifyModes.frames:
             return FrameClassifier(
               setClassificationStatus: setClassificationStatus,

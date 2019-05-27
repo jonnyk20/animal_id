@@ -31,6 +31,7 @@ class DetectionScreen extends StatelessWidget {
       // }
       return {
         'setDetections': (List<Detection> detections) {
+          print('SETTING DETECTIONS');
           store.dispatch(SetCurrentDetections(detections));
           if (store.state.isTargeting) {
             var detectionsToCount = detections.where((detection) {

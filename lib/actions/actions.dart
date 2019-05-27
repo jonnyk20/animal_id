@@ -73,3 +73,8 @@ class SetClassificationResult {
 class ClearClassificationResult {}
 
 class ClearDetectionStates {}
+
+class SetPreviewPath {
+  final previewPath;
+  SetPreviewPath(this.previewPath);
+}

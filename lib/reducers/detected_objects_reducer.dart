@@ -1,6 +1,7 @@
 import 'package:redux/redux.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/models/detected_object_model.dart';
+import 'package:animal_id/models/detection_model.dart';
 
 final detectedObjectsReducer = combineReducers<Map<String, DetectedObject>>([
   TypedReducer<Map<String, DetectedObject>, AddTrackedDetections>(
@@ -16,15 +17,19 @@ final detectedObjectsReducer = combineReducers<Map<String, DetectedObject>>([
 Map<String, DetectedObject> _increaseObjectDetectionCounts(
     Map<String, DetectedObject> state, AddTrackedDetections action) {
   var detections = Map<String, DetectedObject>.from(state);
-  var targetDetections =
+  List<Detection> targetDetections =
       action.detections.where((detection) => detection.isTarget).toList();
   targetDetections.forEach((detection) {
     var detectedClass = detection.detectedClass;
     if (detections[detectedClass] == null) {
-      detections[detectedClass] = DetectedObject(detectedClass, 1);
+      detections[detectedClass] = DetectedObject(
+          name: detectedClass, count: 1, lastTargetDection: detection);
     } else if (detections[detectedClass].count < 15) {
-      detections[detectedClass] =
-          DetectedObject(detectedClass, detections[detectedClass].count + 1);
+      detections[detectedClass] = DetectedObject(
+        name: detectedClass,
+        count: detections[detectedClass].count + 1,
+        lastTargetDection: detection,
+      );
     }
   });
 
@@ -38,10 +43,12 @@ Map<String, DetectedObject> _reduceDetectedObjectCounts(
   }
   var updatedDetections = Map<String, DetectedObject>();
   state.keys.forEach((k) {
-    var detection = state[k];
+    DetectedObject detection = state[k];
     if (detection.count > 0) {
-      updatedDetections[k] =
-          DetectedObject(detection.name, detection.count - 1);
+      updatedDetections[k] = DetectedObject(
+          name: detection.name,
+          count: detection.count - 1,
+          lastTargetDection: detection.lastTargetDection);
     }
   });
   return updatedDetections;

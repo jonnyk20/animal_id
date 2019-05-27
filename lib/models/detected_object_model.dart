@@ -1,8 +1,13 @@
+import 'package:animal_id/models/detection_model.dart';
+
 class DetectedObject {
   final String name;
   final int count;
-  DetectedObject(
+  final Detection lastTargetDection;
+
+  DetectedObject({
     this.name,
     this.count,
-  );
+    this.lastTargetDection,
+  });
 }

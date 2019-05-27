@@ -32,6 +32,8 @@ class GeneralClassifier extends StatelessWidget {
               store.dispatch(ClearClassificationResult),
           'clearTargetDetectionFrames': () =>
               store.dispatch(ClearTargetDetectionFrames),
+          'setPreviewPath': (String path) =>
+              store.dispatch(SetPreviewPath(path)),
         };
       },
       builder: (context, props) {
@@ -44,6 +46,7 @@ class GeneralClassifier extends StatelessWidget {
         Function clearClassificationResult = props['clearClassificationResult'];
         Function clearTargetDetectionFrames =
             props['clearTargetDetectionFrames'];
+        Function setPreviewPath = props['setPreviewPath'];
 
         switch (classifyMode) {
           case ClassifyModes.photo:
@@ -52,6 +55,7 @@ class GeneralClassifier extends StatelessWidget {
               setClassificationStatus: setClassificationStatus,
               setClassificationResult: setClassificationResult,
               clearClassificationResult: clearClassificationResult,
+              setPreviewPath: setPreviewPath,
             );
           case ClassifyModes.frames:
             return FrameClassifier(

@@ -17,6 +17,7 @@ class AppState {
   final DetectedObject objectToClassify;
   final ClassificationResult classificationResult;
   final ClassifyModes classifyMode;
+  final String previewPath;
 
   AppState({
     this.currentDetections,
@@ -30,6 +31,7 @@ class AppState {
     this.objectToClassify,
     this.classificationResult,
     this.classifyMode = ClassifyModes.photo,
+    this.previewPath = '',
   });
 
   static var initial = (objectInfo) => AppState(

@@ -5,20 +5,23 @@ import 'package:path_provider/path_provider.dart';
 import 'package:animal_id/utils/model_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:animal_id/widgets/classification_results.dart';
 import 'package:animal_id/constants/constants.dart';
+// import 'package:animal_id/widgets/classification_results.dart';
+import 'package:animal_id/widgets/photo_preview.dart';
 
 class PhotoClassifier extends StatefulWidget {
   final CameraDescription camera;
   final Function setClassificationStatus;
   final Function setClassificationResult;
   final Function clearClassificationResult;
+  final Function setPreviewPath;
 
   PhotoClassifier({
     this.camera,
     this.setClassificationStatus,
     this.setClassificationResult,
     this.clearClassificationResult,
+    this.setPreviewPath,
   });
 
   _PhotoClassifierState createState() => _PhotoClassifierState(
@@ -26,6 +29,7 @@ class PhotoClassifier extends StatefulWidget {
         camera: camera,
         setClassificationResult: setClassificationResult,
         clearClassificationResult: clearClassificationResult,
+        setPreviewPath: setPreviewPath,
       );
 }
 
@@ -36,12 +40,14 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
   final Function setClassificationStatus;
   final Function setClassificationResult;
   final Function clearClassificationResult;
+  final Function setPreviewPath;
 
   _PhotoClassifierState({
     this.camera,
     this.setClassificationStatus,
     this.setClassificationResult,
     this.clearClassificationResult,
+    this.setPreviewPath,
   });
 
   @override
@@ -102,11 +108,9 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
   captureImage() async {
     await loadModel(MlModels.classification);
     String filePath = await takePicture();
+    setPreviewPath(filePath);
     if (mounted) {
-      await classifyImage(File(filePath), setClassificationResult);
-      setState(() {
-        imagePath = filePath;
-      });
+      // await classifyImage(File(filePath), setClassificationResult);
       if (filePath != null) print('Picture saved to $filePath');
     }
   }
@@ -117,7 +121,8 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
         builder: (context) {
           return AlertDialog(
             content: Container(
-              child: ClassificationResults(),
+              child: PhotoPreview(),
+              // child: ClassificationResults(),
             ),
             actions: <Widget>[
               RaisedButton(

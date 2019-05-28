@@ -3,6 +3,7 @@ import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
 import 'package:animal_id/models/classification_result_model.dart';
+import 'package:animal_id/models/image_preview_model.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class SetCurrentDetections {
@@ -74,7 +75,7 @@ class ClearClassificationResult {}
 
 class ClearDetectionStates {}
 
-class SetPreviewPath {
-  final previewPath;
-  SetPreviewPath(this.previewPath);
+class SetImagePreview {
+  final ImagePreview imagePreview;
+  SetImagePreview(this.imagePreview);
 }

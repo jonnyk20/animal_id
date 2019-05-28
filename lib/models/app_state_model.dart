@@ -3,6 +3,7 @@ import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
 import 'package:animal_id/models/classification_result_model.dart';
+import 'package:animal_id/models/image_preview_model.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class AppState {
@@ -17,22 +18,21 @@ class AppState {
   final DetectedObject objectToClassify;
   final ClassificationResult classificationResult;
   final ClassifyModes classifyMode;
-  final String previewPath;
+  final ImagePreview imagePreview;
 
-  AppState({
-    this.currentDetections,
-    this.detectedObjects,
-    this.objectRecords,
-    this.selectedObject,
-    this.isDetecting = false,
-    this.isTargeting = false,
-    this.classifyingStatus = ClassificationStatuses.not_classifying,
-    this.targetDetectionFrames,
-    this.objectToClassify,
-    this.classificationResult,
-    this.classifyMode = ClassifyModes.photo,
-    this.previewPath = '',
-  });
+  AppState(
+      {this.currentDetections,
+      this.detectedObjects,
+      this.objectRecords,
+      this.selectedObject,
+      this.isDetecting = false,
+      this.isTargeting = false,
+      this.classifyingStatus = ClassificationStatuses.not_classifying,
+      this.targetDetectionFrames,
+      this.objectToClassify,
+      this.classificationResult,
+      this.classifyMode = ClassifyModes.photo,
+      this.imagePreview});
 
   static var initial = (objectInfo) => AppState(
         currentDetections: [],

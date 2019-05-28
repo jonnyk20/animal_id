@@ -7,6 +7,11 @@ class Detection {
   final double confidenceInClass;
   bool isTarget;
   final bool isCaught;
+  final double rawLeft;
+  final double rawTop;
+  final double rawWidth;
+  final double rawHeight;
+
   Detection({
     this.left,
     this.top,
@@ -16,5 +21,9 @@ class Detection {
     this.confidenceInClass,
     this.isTarget,
     this.isCaught = false,
+    this.rawLeft,
+    this.rawTop,
+    this.rawWidth,
+    this.rawHeight,
   });
 }

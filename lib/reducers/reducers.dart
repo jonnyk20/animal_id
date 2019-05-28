@@ -9,7 +9,7 @@ import 'package:animal_id/reducers/classifying_status_reducer.dart';
 import 'package:animal_id/reducers/target_detection_frames_reducer.dart';
 import 'package:animal_id/reducers/object_to_classify_reducer.dart';
 import 'package:animal_id/reducers/classification_result_reducer.dart';
-import 'package:animal_id/reducers/preview_path_reducer.dart';
+import 'package:animal_id/reducers/image_preview_reducer.dart';
 
 // Todo, restructure reducers to look like:
 // https://github.com/brianegan/flutter_architecture_samples/blob/master/example/redux/lib/reducers/
@@ -30,6 +30,6 @@ AppState appReducers(AppState state, dynamic action) {
     objectToClassify: objectToClassifyReducer(state.objectToClassify, action),
     classificationResult:
         classificationResultReducer(state.classificationResult, action),
-    previewPath: previewPathReducer(state.previewPath, action),
+    imagePreview: imagePreviewReducer(state.imagePreview, action),
   );
 }

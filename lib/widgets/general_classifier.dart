@@ -6,6 +6,7 @@ import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
+import 'package:animal_id/models/image_preview_model.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/photo_classifier.dart';
 import 'package:animal_id/widgets/frame_classifier.dart';
@@ -32,8 +33,8 @@ class GeneralClassifier extends StatelessWidget {
               store.dispatch(ClearClassificationResult),
           'clearTargetDetectionFrames': () =>
               store.dispatch(ClearTargetDetectionFrames),
-          'setPreviewPath': (String path) =>
-              store.dispatch(SetPreviewPath(path)),
+          'setPreviewPath': (ImagePreview preview) =>
+              store.dispatch(SetImagePreview(preview)),
         };
       },
       builder: (context, props) {

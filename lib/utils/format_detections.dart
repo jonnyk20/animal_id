@@ -70,6 +70,10 @@ formatDetections(
       confidenceInClass: re["confidenceInClass"],
       isTarget: isTarget,
       isCaught: isCaught,
+      rawLeft: _x,
+      rawTop: _y,
+      rawHeight: _h,
+      rawWidth: _w,
     ));
   });
   if (smallestTarget.isNotEmpty) {

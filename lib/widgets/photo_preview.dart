@@ -26,7 +26,7 @@ class PhotoPreview extends StatelessWidget {
         : Container(
             child: Image.file(
               File(preview.path),
-              fit: BoxFit.fitHeight,
+              height: 300.0,
             ),
           );
   }

@@ -77,6 +77,7 @@ class _PhotoHomeState extends State<PhotoHome> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
       appBar: AppBar(
         title: const Text('Camera example'),

@@ -59,4 +59,6 @@ cropImage(String previewPath, DetectedObject objectToClassify,
     height: adjustedHeight,
     width: adjustedWidth,
   ));
+
+  return croppedFile;
 }

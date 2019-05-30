@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/constants/constants.dart';
-import 'package:animal_id/widgets/detection_label.dart';
+import 'package:animal_id/widgets/detection/detection_label.dart';
 
 AudioCache player = AudioCache();
 const alarmAudioPath = 'sounds/save.wav';

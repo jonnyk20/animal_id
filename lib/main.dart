@@ -13,15 +13,16 @@ List<CameraDescription> cameras;
 Map<String, ObjectRecord> objectsInfo;
 
 Future<Map<String, ObjectRecord>> loadObjectInfo() async {
-  var file = await rootBundle.loadString('assets/models/detection/info.txt');
+  var file =
+      await rootBundle.loadString('assets/models/classification/info.txt');
   var objectsInfo = Map<String, ObjectRecord>();
 
   file.split('\n').forEach((str) {
-    var name = str.trim();
+    var name = str.trim().toLowerCase();
     if (name.isNotEmpty) {
-      var isCaught = false; //name == "cup";
+      var isFound = false; //name == "cup";
       var info = 'This is info about $name';
-      var record = ObjectRecord(name: name, info: info, isCaught: isCaught);
+      var record = ObjectRecord(name: name, info: info, isFound: isFound);
       objectsInfo[name] = record;
     }
   });

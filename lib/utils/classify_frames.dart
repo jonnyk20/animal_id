@@ -58,9 +58,10 @@ calculateTopClassification(List<List<Classification>> classifications) async {
     }
   });
   await loadModel(MlModels.detection);
-  return ClassificationResult(
-      name: topClassificationName,
-      score: classificationsMap[topClassificationName]);
+  double score = classificationsMap[topClassificationName]
+      ? classificationsMap[topClassificationName]
+      : 0;
+  return ClassificationResult(name: topClassificationName, score: score);
 }
 
 classifyByFrames(

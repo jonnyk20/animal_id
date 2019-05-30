@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:animal_id/widgets/classification_results.dart';
+import 'package:animal_id/widgets/classification/classification_results.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';

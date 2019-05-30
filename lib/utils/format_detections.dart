@@ -7,7 +7,6 @@ formatDetections(
   previewW,
   screenH,
   screenW,
-  objectRecords,
 ) {
   var smallestTarget = {};
   List<Detection> formattedDetectionsList = [];
@@ -59,8 +58,6 @@ formatDetections(
       };
     }
 
-    var isCaught = objectRecords[re["detectedClass"]].isCaught == true;
-
     formattedDetectionsList.add(Detection(
       left: math.max(0, x).toDouble(),
       top: math.max(0, y).toDouble(),
@@ -69,7 +66,7 @@ formatDetections(
       detectedClass: re["detectedClass"],
       confidenceInClass: re["confidenceInClass"],
       isTarget: isTarget,
-      isCaught: isCaught,
+      isRelevant: true, // Todo Filter by class names (JK)
       rawLeft: _x,
       rawTop: _y,
       rawHeight: _h,

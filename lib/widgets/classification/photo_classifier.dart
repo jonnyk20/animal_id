@@ -8,8 +8,7 @@ import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 import 'package:animal_id/utils/classify_image.dart';
 import 'package:animal_id/utils/crop_image.dart';
-// import 'package:animal_id/widgets/classification_results.dart';
-import 'package:animal_id/widgets/photo_preview.dart';
+import 'package:animal_id/widgets/classification/photo_preview.dart';
 
 class PhotoClassifier extends StatefulWidget {
   final CameraDescription camera;

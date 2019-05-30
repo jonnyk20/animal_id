@@ -5,4 +5,9 @@ class ClassificationResult {
     this.name,
     this.score,
   });
+
+  static ClassificationResult empty = ClassificationResult(
+    name: '',
+    score: 0,
+  );
 }

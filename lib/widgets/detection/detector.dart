@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:animal_id/utils/format_detections.dart';
-import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
 
@@ -12,7 +11,6 @@ class Detector extends StatefulWidget {
   final Function setRecognitions;
   final double screenHeight;
   final double screenWidth;
-  final Map<String, ObjectRecord> objectRecords;
   final Function setDetectingStatus;
   final bool isTargeting;
   final Function addTargetDetectionFrame;
@@ -22,7 +20,6 @@ class Detector extends StatefulWidget {
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
-    this.objectRecords,
     this.setDetectingStatus,
     this.isTargeting,
     this.addTargetDetectionFrame,
@@ -33,7 +30,6 @@ class Detector extends StatefulWidget {
       setRecognitions: setRecognitions,
       screenHeight: screenHeight,
       screenWidth: screenWidth,
-      objectRecords: objectRecords,
       setDetectingStatus: setDetectingStatus,
       isTargeting: isTargeting,
       addTargetDetectionFrame: addTargetDetectionFrame);
@@ -44,7 +40,6 @@ class _DetectorState extends State<Detector> {
   final Function setRecognitions;
   final double screenHeight;
   final double screenWidth;
-  final Map<String, ObjectRecord> objectRecords;
   final Function setDetectingStatus;
   CameraController controller;
   final bool isTargeting;
@@ -56,7 +51,6 @@ class _DetectorState extends State<Detector> {
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
-    this.objectRecords,
     this.setDetectingStatus,
     this.isTargeting,
     this.addTargetDetectionFrame,
@@ -102,7 +96,6 @@ class _DetectorState extends State<Detector> {
                 math.min(img.height, img.width),
                 screenHeight,
                 screenWidth,
-                objectRecords,
               );
               Detection detectedObject = formattedDetections.firstWhere(
                   (detection) => detection.isTarget,

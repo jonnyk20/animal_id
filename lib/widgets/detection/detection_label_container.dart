@@ -5,7 +5,7 @@ import 'package:animal_id/models/detected_object_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
-import 'package:animal_id/widgets/detections_list.dart';
+import 'package:animal_id/widgets/detection/detections_list.dart';
 
 class InfoBox extends StatelessWidget {
   final List<TargetDetectionFrame> targetDetectionFrames;
@@ -26,7 +26,6 @@ class InfoBox extends StatelessWidget {
         'clearDetections': () => store.dispatch(ReduceObjecDetectionCounts()),
         'detectedObjects': detectedObjects,
         'initiateClassification': (detectionName) {
-          store.dispatch(SaveDetection(detectionName));
           store.dispatch(RemoveTrackedDetection(detectionName));
         },
         'canSave': store.state.classifyingStatus ==

@@ -25,10 +25,10 @@ class ReduceObjecDetectionCounts {}
 
 class ReduceTrackedDetectionCounts {}
 
-class SaveDetection {
-  final String detectionName;
-  SaveDetection(
-    this.detectionName,
+class SaveClassificationResult {
+  final ClassificationResult result;
+  SaveClassificationResult(
+    this.result,
   );
 }
 

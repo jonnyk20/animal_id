@@ -2,7 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
-import 'package:animal_id/widgets/object_card.dart';
+import 'package:animal_id/widgets/animal_records/record_card.dart';
 import 'package:animal_id/actions/actions.dart';
 
 class InfoBook extends StatelessWidget {
@@ -13,7 +13,7 @@ class InfoBook extends StatelessWidget {
           .map<ObjectRecord>((animalName) => objectRecords[animalName])
           .toList();
       objectsList.sort((a, b) {
-        return b.isCaught.toString().compareTo(a.isCaught.toString());
+        return b.isFound.toString().compareTo(a.isFound.toString());
       });
       return {
         "objects": objectsList,

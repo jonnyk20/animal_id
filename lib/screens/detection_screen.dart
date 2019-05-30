@@ -4,14 +4,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
-import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
-import 'package:animal_id/widgets/detector.dart';
-import 'package:animal_id/widgets/info_box.dart';
-import 'package:animal_id/widgets/bounding_box.dart';
+import 'package:animal_id/widgets/detection/detector.dart';
+import 'package:animal_id/widgets/detection/detection_label_container.dart';
+import 'package:animal_id/widgets/detection/bounding_box.dart';
 import 'package:animal_id/widgets/target/target.dart';
-import 'package:animal_id/widgets/general_classifier.dart';
+import 'package:animal_id/widgets/classification/general_classifier.dart';
 
 class DetectionScreen extends StatelessWidget {
   final CameraDescription camera;
@@ -23,21 +22,12 @@ class DetectionScreen extends StatelessWidget {
     Size screen = MediaQuery.of(context).size;
 
     return StoreConnector<AppState, Map>(converter: (store) {
-      // if (store.state.detectedObjects.length == 0 &&
-      //     store.state.targetDetectionFrames.length > 0 &&
-      //     store.state.classifyingStatus ==
-      //         ClassificationStatuses.not_classifying) {
-      //   store.dispatch(ClearTargetDetectionFrames());
-      // }
       return {
         'setDetections': (List<Detection> detections) {
           store.dispatch(SetCurrentDetections(detections));
           if (store.state.isTargeting) {
             var detectionsToCount = detections.where((detection) {
-              var detectionName = detection.detectedClass;
-              return store.state.objectRecords[detectionName].isCaught ==
-                      false &&
-                  detection.isTarget;
+              return detection.isTarget;
             }).toList();
             store.dispatch(AddTrackedDetections(detectionsToCount));
           }
@@ -63,8 +53,6 @@ class DetectionScreen extends StatelessWidget {
         'classifyingStatus': store.state.classifyingStatus,
         'objectToClassify': store.state.objectToClassify,
         'clearObjectToClassify': () => store.dispatch(ClearObjectToClassify),
-        'setClassificationResult': (ClassificationResult result) =>
-            store.dispatch(SetClassificationResult(result)),
         'clearClassificationResult': () =>
             store.dispatch(ClearClassificationResult())
       };
@@ -85,7 +73,6 @@ class DetectionScreen extends StatelessWidget {
                     setRecognitions: props["setDetections"],
                     screenHeight: screen.height,
                     screenWidth: screen.width,
-                    objectRecords: props['objectRecords'],
                     setDetectingStatus: props['setDetectingStatus'],
                     isTargeting: props['isTargeting'],
                     addTargetDetectionFrame: props['addTargetDetectionFrame'],
@@ -94,7 +81,6 @@ class DetectionScreen extends StatelessWidget {
             props['classifyingStatus'] == ClassificationStatuses.not_classifying
                 ? BoundingBox(
                     props["currentDetections"],
-                    (selectedClass) => print('SELECTED CLASS: $selectedClass'),
                     props["isTargeting"],
                   )
                 : Container(),

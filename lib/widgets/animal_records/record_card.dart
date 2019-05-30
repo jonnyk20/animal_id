@@ -12,7 +12,7 @@ class ObjectCard extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    return !objectRecord.isCaught
+    return !objectRecord.isFound
         ? Card(
             color: Colors.grey,
             elevation: 5.0,

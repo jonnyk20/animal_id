@@ -20,9 +20,13 @@ Future<Map<String, ObjectRecord>> loadObjectInfo() async {
   file.split('\n').forEach((str) {
     var name = str.trim().toLowerCase();
     if (name.isNotEmpty) {
-      var isFound = false; //name == "cup";
+      var isFound = name == "pug";
       var info = 'This is info about $name';
-      var record = ObjectRecord(name: name, info: info, isFound: isFound);
+      var record = ObjectRecord(
+        name: name,
+        info: info,
+        isFound: isFound,
+      );
       objectsInfo[name] = record;
     }
   });

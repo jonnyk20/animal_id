@@ -1,10 +1,38 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/object_record_model.dart';
+
+BorderRadiusGeometry roundedTop = BorderRadius.only(
+  topLeft: Radius.circular(5.0),
+  topRight: Radius.circular(5.0),
+);
+
+Widget filter = Positioned.fill(
+  child: Container(
+    decoration: BoxDecoration(
+      borderRadius: roundedTop,
+      color: Colors.blue.withOpacity(0.97),
+    ),
+    child: Container(
+      alignment: Alignment.center,
+      child: Text(
+        "?",
+        style: TextStyle(
+          color: Colors.white.withOpacity(0.2),
+          fontSize: 48.0,
+        ),
+      ),
+    ),
+  ),
+);
 
 class ObjectCard extends StatelessWidget {
   final ObjectRecord objectRecord;
   final Function selectObjectRecord;
-  ObjectCard({this.objectRecord, this.selectObjectRecord});
+  ObjectCard({
+    this.objectRecord,
+    this.selectObjectRecord,
+  });
 
   onSelectObjectRecord(context) {
     selectObjectRecord(objectRecord);
@@ -12,75 +40,53 @@ class ObjectCard extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    return !objectRecord.isFound
-        ? Card(
-            color: Colors.grey,
-            elevation: 5.0,
-            child: Container(
-              alignment: Alignment.center,
-              height: 100.0,
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                "?????",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
-        : Card(
-            color: Colors.blue,
-            child: GestureDetector(
-              onTap: () {
-                onSelectObjectRecord(context);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                height: 100.0,
-                padding: EdgeInsets.all(10.0),
-                child: Row(
+    bool isFound = objectRecord.isFound;
+    Function onTap = isFound ? onSelectObjectRecord : (context) {};
+
+    return GestureDetector(
+      onTap: () {
+        onTap(context);
+      },
+      child: Card(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 10,
+                child: Stack(
                   children: <Widget>[
                     Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'IMAGE',
-                        style: TextStyle(
-                          color: Colors.white,
+                      decoration: BoxDecoration(
+                        borderRadius: roundedTop,
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            'assets/images/dogs/adult.jpg',
+                          ),
                         ),
                       ),
-                      width: 100.0,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                        color: Colors.white,
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                      )),
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "${objectRecord.name}",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            "${objectRecord.info}",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
+                    isFound ? Container() : filter
                   ],
                 ),
               ),
-            ),
-          );
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: EdgeInsets.all(5.0),
+                  child: Text(
+                    "${objectRecord.name}",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 8.0),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

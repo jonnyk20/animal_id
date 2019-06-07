@@ -30,7 +30,6 @@ class GeneralClassifier extends StatelessWidget {
               store.dispatch(SetClassificationStatus(status)),
           'setClassificationResult': (ClassificationResult result) {
             String classificationName = result.name.toLowerCase();
-            print('NAME: $classificationName');
             Map<String, ObjectRecord> records = store.state.objectRecords;
             ObjectRecord record = records[classificationName];
             if (record == null) {

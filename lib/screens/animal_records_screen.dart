@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/app_state_model.dart';
@@ -21,24 +22,27 @@ class InfoBook extends StatelessWidget {
             store.dispatch(SelectObjectRecord(objectRecord))
       };
     }, builder: (context, props) {
+      double width = MediaQuery.of(context).size.width;
+      int count = (width / 100).floor();
+      List<ObjectRecord> objectRecords = props["objects"];
       return Scaffold(
         appBar: AppBar(
           title: Text('View Objects'),
         ),
         body: Container(
-          child: ListView.builder(
-            padding: EdgeInsets.all(0.0),
-            itemCount: props["objects"].length,
-            itemBuilder: (context, int index) {
-              ObjectRecord objectRecord = props["objects"][index];
+          child: GridView.count(
+            padding: EdgeInsets.all(5.0),
+            addRepaintBoundaries: false,
+            crossAxisCount: count,
+            childAspectRatio: (1 / 1.2),
+            children: objectRecords.map<Widget>((objectRecord) {
               return Container(
-                padding: EdgeInsets.all(10.0),
                 child: ObjectCard(
                   objectRecord: objectRecord,
                   selectObjectRecord: props["selectObjectRecord"],
                 ),
               );
-            },
+            }).toList(),
           ),
         ),
         floatingActionButton: Container(

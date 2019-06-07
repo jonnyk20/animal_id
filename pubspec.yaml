@@ -60,6 +60,8 @@ flutter:
     # test
     - assets/models/test_classification/model.tflite
     - assets/models/test_classification/labels.txt
+    - assets/images/dogs/puppy.jpg
+    - assets/images/dogs/adult.jpg
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg

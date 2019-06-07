@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
             RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text('Open Camera'),
+              child: Text('Open Detector'),
               onPressed: () {
                 Navigator.pushNamed(context, '/detection');
               },
@@ -24,17 +24,9 @@ class _HomeState extends State<Home> {
             RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text('See Objects'),
+              child: Text('See Saved Detections'),
               onPressed: () {
                 Navigator.pushNamed(context, '/info-book');
-              },
-            ),
-            RaisedButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: Text('Test Classification'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/test-classification');
               },
             ),
           ],

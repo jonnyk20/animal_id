@@ -64,9 +64,7 @@ class DetectionScreen extends StatelessWidget {
                 ? GeneralClassifier(
                     camera: camera,
                   )
-                : Container(
-                    child: Text('BBB'),
-                  ),
+                : Container(),
             props['classifyingStatus'] == ClassificationStatuses.not_classifying
                 ? Detector(
                     camera: camera,

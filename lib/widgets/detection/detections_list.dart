@@ -35,7 +35,7 @@ class DetectionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.0,
+      height: 200.0,
       padding: EdgeInsets.all(10.0),
       child: ListView.builder(
           padding: EdgeInsets.all(0.0),

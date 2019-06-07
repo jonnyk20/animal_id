@@ -45,13 +45,14 @@ class InfoBox extends StatelessWidget {
             store.dispatch(SetObjectToClassify(objectToClassify)),
       };
     }, builder: (context, props) {
-      return Card(
-        color: Colors.white.withOpacity(0.8),
-        elevation: 10.0,
+      return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
         child: Column(
           children: <Widget>[
-            Center(
+            Container(
+              margin: EdgeInsets.only(
+                top: 10.0,
+              ),
               child: GestureDetector(
                 onTapDown: (details) {
                   props['setTargetingStatus'](true);
@@ -63,9 +64,15 @@ class InfoBox extends StatelessWidget {
                 child: Card(
                   color: Colors.blue,
                   child: Container(
+                    alignment: Alignment.center,
                     height: 50.0,
                     width: 100.0,
-                    child: Text('Detect'),
+                    child: Text(
+                      'Find a Dog',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),

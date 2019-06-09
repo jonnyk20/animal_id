@@ -26,17 +26,17 @@ Widget filter = Positioned.fill(
   ),
 );
 
-class ObjectCard extends StatelessWidget {
+class RecordListItem extends StatelessWidget {
   final ObjectRecord objectRecord;
   final Function selectObjectRecord;
-  ObjectCard({
+  RecordListItem({
     this.objectRecord,
     this.selectObjectRecord,
   });
 
   onSelectObjectRecord(context) {
     selectObjectRecord(objectRecord);
-    Navigator.pushNamed(context, '/info-page');
+    Navigator.pushNamed(context, '/record-screen');
   }
 
   Widget build(BuildContext context) {

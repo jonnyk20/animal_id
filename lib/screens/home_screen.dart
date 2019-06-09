@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
               textColor: Colors.white,
               child: Text('See Saved Detections'),
               onPressed: () {
-                Navigator.pushNamed(context, '/info-book');
+                Navigator.pushNamed(context, '/record-list-screen');
               },
             ),
           ],

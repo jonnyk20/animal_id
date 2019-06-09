@@ -3,15 +3,20 @@ import 'package:animal_id/widgets/target/pulse.dart';
 import 'package:animal_id/constants/constants.dart';
 
 class Target extends StatelessWidget {
-  final bool isDetecting;
+  final bool isTargeting;
+  final bool isScanning;
   final ClassificationStatuses classifyingStatus;
   Target({
-    this.isDetecting,
+    this.isTargeting,
+    this.isScanning,
     this.classifyingStatus,
   });
 
   Widget build(BuildContext context) {
-    Color color = (isDetecting ? Colors.green : Colors.white).withOpacity(0.5);
+    Color color = (isTargeting && isScanning)
+        ? Colors.green
+        : isTargeting ? Colors.blue : Colors.white;
+
     Size screen = MediaQuery.of(context).size;
     double targetSize = 50;
     double top = (screen.height * 0.4) - (targetSize / 2);
@@ -35,7 +40,7 @@ class Target extends StatelessWidget {
                 ),
               ),
             ),
-            isDetecting
+            isTargeting && isScanning
                 ? Positioned(
                     top: top - 0,
                     child: Pulse(50),

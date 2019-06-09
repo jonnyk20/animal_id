@@ -1,14 +1,15 @@
 import 'package:redux/redux.dart';
 import 'package:animal_id/actions/actions.dart';
 
-final detectingStatusReducer = combineReducers<bool>([
-  TypedReducer<bool, SetDetectingStatus>(_setDetectingStatus),
-  TypedReducer<bool, ClearDetectionStates>(_clearDetectingStatus),
+final targetingStatusReducer = combineReducers<bool>([
+  TypedReducer<bool, SetTargetingStatus>(_setTargetingStatus),
+  TypedReducer<bool, ClearDetectionStates>(_clearTargetingStatus),
 ]);
 
-bool _setDetectingStatus(bool state, SetDetectingStatus action) {
-  return action.detectingStatus;
+bool _setTargetingStatus(bool state, SetTargetingStatus action) {
+  return action.targetingStatus;
 }
-bool _clearDetectingStatus(bool state, ClearDetectionStates action) {
+
+bool _clearTargetingStatus(bool state, ClearDetectionStates action) {
   return false;
 }

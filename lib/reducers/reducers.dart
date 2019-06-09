@@ -4,7 +4,7 @@ import 'package:animal_id/reducers/detected_objects_reducer.dart';
 import 'package:animal_id/reducers/object_records_reducer.dart';
 import 'package:animal_id/reducers/selected_object_reducer.dart';
 import 'package:animal_id/reducers/detecting_status_reducer.dart';
-import 'package:animal_id/reducers/targeting_status_reducer.dart';
+import 'package:animal_id/reducers/scanning_status_reducer.dart';
 import 'package:animal_id/reducers/classifying_status_reducer.dart';
 import 'package:animal_id/reducers/target_detection_frames_reducer.dart';
 import 'package:animal_id/reducers/object_to_classify_reducer.dart';
@@ -21,8 +21,8 @@ AppState appReducers(AppState state, dynamic action) {
     detectedObjects: detectedObjectsReducer(state.detectedObjects, action),
     objectRecords: objectRecordsReducer(state.objectRecords, action),
     selectedObject: selelectedObjectRecordReducer(state.selectedObject, action),
-    isDetecting: detectingStatusReducer(state.isDetecting, action),
     isTargeting: targetingStatusReducer(state.isTargeting, action),
+    isScanning: scanningStatusReducer(state.isScanning, action),
     classifyingStatus:
         classifyingStatusReducer(state.classifyingStatus, action),
     targetDetectionFrames:

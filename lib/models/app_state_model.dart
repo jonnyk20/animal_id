@@ -11,8 +11,8 @@ class AppState {
   final Map<String, DetectedObject> detectedObjects;
   final Map<String, ObjectRecord> objectRecords;
   final ObjectRecord selectedObject;
-  final bool isDetecting;
   final bool isTargeting;
+  final bool isScanning;
   final ClassificationStatuses classifyingStatus;
   final List<TargetDetectionFrame> targetDetectionFrames;
   final DetectedObject objectToClassify;
@@ -20,19 +20,20 @@ class AppState {
   final ClassifyModes classifyMode;
   final ImagePreview imagePreview;
 
-  AppState(
-      {this.currentDetections,
-      this.detectedObjects,
-      this.objectRecords,
-      this.selectedObject,
-      this.isDetecting = false,
-      this.isTargeting = false,
-      this.classifyingStatus = ClassificationStatuses.not_classifying,
-      this.targetDetectionFrames,
-      this.objectToClassify,
-      this.classificationResult,
-      this.classifyMode = ClassifyModes.photo,
-      this.imagePreview});
+  AppState({
+    this.currentDetections,
+    this.detectedObjects,
+    this.objectRecords,
+    this.selectedObject,
+    this.isTargeting = false,
+    this.isScanning = false,
+    this.classifyingStatus = ClassificationStatuses.not_classifying,
+    this.targetDetectionFrames,
+    this.objectToClassify,
+    this.classificationResult,
+    this.classifyMode = ClassifyModes.photo,
+    this.imagePreview,
+  });
 
   static var initial = (objectInfo) => AppState(
         currentDetections: [],

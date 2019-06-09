@@ -42,14 +42,14 @@ class SelectObjectRecord {
   SelectObjectRecord(this.objectRecord);
 }
 
-class SetDetectingStatus {
-  final bool detectingStatus;
-  SetDetectingStatus(this.detectingStatus);
-}
-
 class SetTargetingStatus {
   final bool targetingStatus;
   SetTargetingStatus(this.targetingStatus);
+}
+
+class SetScanningStatus {
+  final bool scanningStatus;
+  SetScanningStatus(this.scanningStatus);
 }
 
 class AddTargetDetectionFrame {

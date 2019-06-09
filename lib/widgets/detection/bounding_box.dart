@@ -3,19 +3,20 @@ import 'package:animal_id/models/detection_model.dart';
 
 class BoundingBox extends StatelessWidget {
   final List<Detection> results;
-  final bool isTargeting;
+  final bool isScanning;
 
   BoundingBox(
     this.results,
-    this.isTargeting,
+    this.isScanning,
   );
 
   @override
   Widget build(BuildContext context) {
     List<Widget> _renderBox() {
       return results.map((detection) {
-        var color =
-            (isTargeting && detection.isTarget) ? Colors.green : Colors.white;
+        var color = (isScanning && detection.isTarget)
+            ? Colors.green
+            : detection.isTarget ? Colors.blue : Colors.white.withOpacity(0.5);
 
         return Positioned(
             left: detection.left,

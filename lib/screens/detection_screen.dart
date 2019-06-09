@@ -25,7 +25,7 @@ class DetectionScreen extends StatelessWidget {
       return {
         'setDetections': (List<Detection> detections) {
           store.dispatch(SetCurrentDetections(detections));
-          if (store.state.isTargeting) {
+          if (store.state.isScanning) {
             var detectionsToCount = detections.where((detection) {
               return detection.isTarget;
             }).toList();
@@ -34,18 +34,16 @@ class DetectionScreen extends StatelessWidget {
         },
         'currentDetections': store.state.currentDetections,
         'objectRecords': store.state.objectRecords,
-        'isDetecting': store.state.isDetecting,
         'isTargeting': store.state.isTargeting,
-        'setDetectingStatus': (bool detectingStatus) {
-          if (store.state.isTargeting) {
-            store.dispatch(SetDetectingStatus(detectingStatus));
-          }
+        'isScanning': store.state.isScanning,
+        'setTargetingStatus': (bool targetingStatus) {
+          store.dispatch(SetTargetingStatus(targetingStatus));
         },
         'classifyingStatus': store.state.classifyingStatus,
         'setClassificationStatus': (ClassificationStatuses classifyingStatus) =>
             store.dispatch(SetClassificationStatus(classifyingStatus)),
         'addTargetDetectionFrame': (TargetDetectionFrame targetDetectionFrame) {
-          if (store.state.isTargeting) {
+          if (store.state.isScanning) {
             store.dispatch(AddTargetDetectionFrame(targetDetectionFrame));
           }
         },
@@ -71,15 +69,15 @@ class DetectionScreen extends StatelessWidget {
                     setRecognitions: props["setDetections"],
                     screenHeight: screen.height,
                     screenWidth: screen.width,
-                    setDetectingStatus: props['setDetectingStatus'],
-                    isTargeting: props['isTargeting'],
+                    setTargetingStatus: props['setTargetingStatus'],
+                    isScanning: props['isScanning'],
                     addTargetDetectionFrame: props['addTargetDetectionFrame'],
                   )
                 : Container(),
             props['classifyingStatus'] == ClassificationStatuses.not_classifying
                 ? BoundingBox(
                     props["currentDetections"],
-                    props["isTargeting"],
+                    props["isScanning"],
                   )
                 : Container(),
             Positioned(
@@ -91,7 +89,8 @@ class DetectionScreen extends StatelessWidget {
             ),
             (props['classifyingStatus'] != ClassificationStatuses.classifying)
                 ? Target(
-                    isDetecting: props["isDetecting"] && props["isTargeting"],
+                    isTargeting: props["isTargeting"],
+                    isScanning: props["isScanning"],
                     classifyingStatus: props["classifyingStatus"],
                   )
                 : Container(),

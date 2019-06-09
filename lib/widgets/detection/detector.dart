@@ -11,8 +11,8 @@ class Detector extends StatefulWidget {
   final Function setRecognitions;
   final double screenHeight;
   final double screenWidth;
-  final Function setDetectingStatus;
-  final bool isTargeting;
+  final Function setTargetingStatus;
+  final bool isScanning;
   final Function addTargetDetectionFrame;
 
   Detector({
@@ -20,8 +20,8 @@ class Detector extends StatefulWidget {
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
-    this.setDetectingStatus,
-    this.isTargeting,
+    this.setTargetingStatus,
+    this.isScanning,
     this.addTargetDetectionFrame,
   });
 
@@ -30,8 +30,8 @@ class Detector extends StatefulWidget {
       setRecognitions: setRecognitions,
       screenHeight: screenHeight,
       screenWidth: screenWidth,
-      setDetectingStatus: setDetectingStatus,
-      isTargeting: isTargeting,
+      setTargetingStatus: setTargetingStatus,
+      isScanning: isScanning,
       addTargetDetectionFrame: addTargetDetectionFrame);
 }
 
@@ -40,10 +40,10 @@ class _DetectorState extends State<Detector> {
   final Function setRecognitions;
   final double screenHeight;
   final double screenWidth;
-  final Function setDetectingStatus;
+  final Function setTargetingStatus;
   CameraController controller;
-  final bool isTargeting;
-  bool _isScanning = false;
+  final bool isScanning;
+  bool _isDetectorActive = false;
   final Function addTargetDetectionFrame;
 
   _DetectorState({
@@ -51,8 +51,8 @@ class _DetectorState extends State<Detector> {
     this.setRecognitions,
     this.screenHeight,
     this.screenWidth,
-    this.setDetectingStatus,
-    this.isTargeting,
+    this.setTargetingStatus,
+    this.isScanning,
     this.addTargetDetectionFrame,
   });
 
@@ -73,8 +73,8 @@ class _DetectorState extends State<Detector> {
         setState(() {});
 
         controller.startImageStream((CameraImage img) {
-          if (!_isScanning) {
-            _isScanning = true;
+          if (!_isDetectorActive) {
+            _isDetectorActive = true;
 
             var bytesList = img.planes.map((plane) {
               return plane.bytes;
@@ -100,12 +100,12 @@ class _DetectorState extends State<Detector> {
               Detection detectedObject = formattedDetections.firstWhere(
                   (detection) => detection.isTarget,
                   orElse: () => null);
-              bool isDetecting = detectedObject != null;
-              setDetectingStatus(isDetecting);
+              bool isTargeting = detectedObject != null;
+              setTargetingStatus(isTargeting);
               setRecognitions(
                 formattedDetections,
               );
-              if (isDetecting) {
+              if (isTargeting) {
                 var targetDetectionFrame = TargetDetectionFrame(
                   detectionName: detectedObject.detectedClass,
                   bytesList: bytesList,
@@ -114,7 +114,7 @@ class _DetectorState extends State<Detector> {
                 );
                 addTargetDetectionFrame(targetDetectionFrame);
               }
-              _isScanning = false;
+              _isDetectorActive = false;
             });
           }
         });

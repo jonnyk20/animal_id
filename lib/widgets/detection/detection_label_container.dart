@@ -32,13 +32,13 @@ class InfoBox extends StatelessWidget {
             ClassificationStatuses.not_classifying,
         'setClassificationStatus': (ClassificationStatuses classifyingStatus) =>
             store.dispatch(SetClassificationStatus(classifyingStatus)),
-        'setTargetingStatus': (bool targetingStatus) =>
-            store.dispatch(SetTargetingStatus(targetingStatus)),
-        'setDetectingStatus': (bool targetingStatus) =>
-            store.dispatch(SetDetectingStatus(targetingStatus)),
+        'setScanningStatus': (bool scanningStatus) =>
+            store.dispatch(SetScanningStatus(scanningStatus)),
+        'setTargetingStatus': (bool scanningStatus) =>
+            store.dispatch(SetTargetingStatus(scanningStatus)),
         'clearTargetingAndDetectiongStatuses': () {
+          store.dispatch(SetScanningStatus(false));
           store.dispatch(SetTargetingStatus(false));
-          store.dispatch(SetDetectingStatus(false));
         },
         'classifyingStatus': store.state.classifyingStatus,
         'setObjectToClassify': (DetectedObject objectToClassify) =>
@@ -55,11 +55,10 @@ class InfoBox extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTapDown: (details) {
-                  props['setTargetingStatus'](true);
+                  props['setScanningStatus'](true);
                 },
                 onTapUp: (details) {
-                  props['setTargetingStatus'](false);
-                  props['setDetectingStatus'](false);
+                  props['setScanningStatus'](false);
                 },
                 child: Card(
                   color: Colors.blue,

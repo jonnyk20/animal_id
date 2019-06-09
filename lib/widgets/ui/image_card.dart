@@ -12,7 +12,7 @@ class ImageCard extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(4.0),
             image: DecorationImage(
               fit: BoxFit.fill,
               image: AssetImage(imagePath),

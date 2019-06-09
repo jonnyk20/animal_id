@@ -1,6 +1,33 @@
 import 'dart:math' as math;
 import 'package:animal_id/models/detection_model.dart';
 
+final List<String> validClasses = ['dog', 'cat'];
+final String generalClass = 'dog';
+
+List<Detection> filterAndGeneralizeDetections(List<Detection> detections) {
+  List<Detection> filteredAndGeneralizedDetections = List<Detection>();
+  detections.forEach((Detection detection) {
+    String detectedClass = detection.detectedClass;
+    if (validClasses.contains(detectedClass)) {
+      Detection generalizedDetection = Detection(
+        detectedClass: generalClass,
+        left: detection.left,
+        top: detection.top,
+        width: detection.width,
+        height: detection.height,
+        confidenceInClass: detection.confidenceInClass,
+        isTarget: detection.isTarget,
+        rawLeft: detection.rawLeft,
+        rawTop: detection.rawTop,
+        rawHeight: detection.rawHeight,
+        rawWidth: detection.rawWidth,
+      );
+      filteredAndGeneralizedDetections.add(generalizedDetection);
+    }
+  });
+  return filteredAndGeneralizedDetections;
+}
+
 formatDetections(
   detections,
   previewH,
@@ -66,7 +93,6 @@ formatDetections(
       detectedClass: re["detectedClass"],
       confidenceInClass: re["confidenceInClass"],
       isTarget: isTarget,
-      isRelevant: true, // Todo Filter by class names (JK)
       rawLeft: _x,
       rawTop: _y,
       rawHeight: _h,
@@ -76,5 +102,5 @@ formatDetections(
   if (smallestTarget.isNotEmpty) {
     formattedDetectionsList[smallestTarget["index"]].isTarget = true;
   }
-  return formattedDetectionsList;
+  return filterAndGeneralizeDetections(formattedDetectionsList);
 }

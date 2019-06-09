@@ -6,7 +6,6 @@ class Detection {
   final String detectedClass;
   final double confidenceInClass;
   bool isTarget;
-  final bool isRelevant;
   final double rawLeft;
   final double rawTop;
   final double rawWidth;
@@ -20,7 +19,6 @@ class Detection {
     this.detectedClass,
     this.confidenceInClass,
     this.isTarget,
-    this.isRelevant = true,
     this.rawLeft,
     this.rawTop,
     this.rawWidth,

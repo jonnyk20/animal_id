@@ -24,14 +24,12 @@ class RecordView extends StatelessWidget {
             ),
           ),
           VerticalSpace(40.0),
-          ImageCard(200, 'assets/images/dogs/adult.jpg'),
+          ImageCard(200.0, 'assets/images/dogs/adult.jpg'),
           VerticalSpace(40.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Card(
-                child: ImageCard(100, 'assets/images/dogs/puppy.jpg'),
-              ),
+              ImageCard(100.0, 'assets/images/dogs/puppy.jpg'),
               Container(
                 margin: EdgeInsets.all(10.0),
                 width: 50.0,
@@ -42,9 +40,7 @@ class RecordView extends StatelessWidget {
                   size: 48.0,
                 ),
               ),
-              Card(
-                child: ImageCard(100, 'assets/images/dogs/adult.jpg'),
-              ),
+              ImageCard(100.0, 'assets/images/dogs/adult.jpg'),
             ],
           ),
         ],

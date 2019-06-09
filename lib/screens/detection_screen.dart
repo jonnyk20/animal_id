@@ -84,7 +84,7 @@ class DetectionScreen extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: InfoBox(
+              child: DetectionLabelContainer(
                   targetDetectionFrames: props['targetDetectionFrames']),
             ),
             (props['classifyingStatus'] != ClassificationStatuses.classifying)

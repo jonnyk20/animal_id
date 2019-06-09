@@ -7,10 +7,10 @@ import 'package:animal_id/actions/actions.dart';
 import 'package:animal_id/constants/constants.dart';
 import 'package:animal_id/widgets/detection/detections_list.dart';
 
-class InfoBox extends StatelessWidget {
+class DetectionLabelContainer extends StatelessWidget {
   final List<TargetDetectionFrame> targetDetectionFrames;
 
-  InfoBox({
+  DetectionLabelContainer({
     this.targetDetectionFrames,
   });
 
@@ -43,8 +43,17 @@ class InfoBox extends StatelessWidget {
         'classifyingStatus': store.state.classifyingStatus,
         'setObjectToClassify': (DetectedObject objectToClassify) =>
             store.dispatch(SetObjectToClassify(objectToClassify)),
+        'isTargeting': store.state.isTargeting,
+        'isScanning': store.state.isScanning,
       };
     }, builder: (context, props) {
+      bool isTargeting = props['isTargeting'];
+      bool isScanning = props['isScanning'];
+      MaterialColor buttonColor = Colors.blue;
+      String buttonText = isTargeting && isScanning
+          ? 'Scanning...'
+          : isTargeting ? 'Hold To Scan' : 'No Dogs in Sight';
+
       return Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0),
         child: Column(
@@ -61,13 +70,13 @@ class InfoBox extends StatelessWidget {
                   props['setScanningStatus'](false);
                 },
                 child: Card(
-                  color: Colors.blue,
+                  color: buttonColor,
                   child: Container(
                     alignment: Alignment.center,
                     height: 50.0,
-                    width: 100.0,
+                    width: 150.0,
                     child: Text(
-                      'Find a Dog',
+                      buttonText,
                       style: TextStyle(
                         color: Colors.white,
                       ),

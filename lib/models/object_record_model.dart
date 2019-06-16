@@ -1,11 +1,11 @@
 class ObjectRecord {
   final String name;
-  final String info;
   bool isFound;
+  final int number;
 
   ObjectRecord({
     this.name,
-    this.info,
     this.isFound = false,
+    this.number,
   });
 }

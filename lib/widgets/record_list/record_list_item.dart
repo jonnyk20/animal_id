@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/object_record_model.dart';
+import 'package:animal_id/utils/text_utils.dart';
 
 BorderRadiusGeometry roundedTop = BorderRadius.only(
   topLeft: Radius.circular(5.0),
@@ -42,6 +43,9 @@ class RecordListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isFound = objectRecord.isFound;
     Function onTap = isFound ? onSelectObjectRecord : (context) {};
+    String filePath = isFound
+        ? getImagePath(objectRecord)
+        : 'assets/images/misc/silhouette.png';
 
     return GestureDetector(
       onTap: () {
@@ -61,7 +65,7 @@ class RecordListItem extends StatelessWidget {
                         image: DecorationImage(
                           fit: BoxFit.fill,
                           image: AssetImage(
-                            'assets/images/dogs/adult.jpg',
+                            filePath,
                           ),
                         ),
                       ),
@@ -75,11 +79,12 @@ class RecordListItem extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(5.0),
                   child: Text(
-                    "${objectRecord.name}",
+                    toTitleCase(objectRecord.name),
                     style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 8.0),
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 8.0,
+                    ),
                   ),
                 ),
               )

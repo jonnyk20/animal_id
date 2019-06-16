@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/widgets/ui/image_card.dart';
 import 'package:animal_id/widgets/ui/space.dart';
+import 'package:animal_id/utils/text_utils.dart';
 
 class RecordView extends StatelessWidget {
   final ObjectRecord objectRecord;
@@ -12,10 +13,10 @@ class RecordView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          VerticalSpace(20.0),
+          VerticalSpace(40.0),
           Container(
             child: Text(
-              objectRecord.name,
+              toTitleCase(objectRecord.name),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
@@ -23,26 +24,8 @@ class RecordView extends StatelessWidget {
               ),
             ),
           ),
-          VerticalSpace(40.0),
-          ImageCard(200.0, 'assets/images/dogs/adult.jpg'),
-          VerticalSpace(40.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ImageCard(100.0, 'assets/images/dogs/puppy.jpg'),
-              Container(
-                margin: EdgeInsets.all(10.0),
-                width: 50.0,
-                height: 50.0,
-                child: Icon(
-                  Icons.forward,
-                  color: Colors.blue,
-                  size: 48.0,
-                ),
-              ),
-              ImageCard(100.0, 'assets/images/dogs/adult.jpg'),
-            ],
-          ),
+          VerticalSpace(20.0),
+          ImageCard(300.0, getImagePath(objectRecord)),
         ],
       ),
     );

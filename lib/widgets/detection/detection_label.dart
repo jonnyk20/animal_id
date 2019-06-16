@@ -2,12 +2,17 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 
+// (JK), catchObject shoudn't be fired from in here
 class DetectionLabel extends StatelessWidget {
   final DetectedObject detectedObject;
   final Function catchObject;
   final bool canSave;
 
-  DetectionLabel({this.detectedObject, this.catchObject, this.canSave});
+  DetectionLabel({
+    this.detectedObject,
+    this.catchObject,
+    this.canSave,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +42,13 @@ class DetectionLabel extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 200,
+                  width: 250,
                   child: LinearProgressIndicator(
                     valueColor: AlwaysStoppedAnimation(Colors.green),
                     value: progress,
                   ),
                 )
               ],
-            ),
-            RaisedButton(
-              child: Text('catch'),
-              color: Colors.green,
-              onPressed: (canSave && (detectedObject.count >= 10))
-                  ? () => catchObject(detectedObject)
-                  : null,
             )
           ],
         ),

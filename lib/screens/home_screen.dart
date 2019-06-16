@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:animal_id/widgets/ui/image_container.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,10 +14,11 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ImageContainer(300.0, 'assets/images/misc/kennel.png'),
             RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text('Open Detector'),
+              child: Text('Find Dogs'),
               onPressed: () {
                 Navigator.pushNamed(context, '/detection');
               },
@@ -24,7 +26,7 @@ class _HomeState extends State<Home> {
             RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,
-              child: Text('See Saved Detections'),
+              child: Text('Saved Dogs'),
               onPressed: () {
                 Navigator.pushNamed(context, '/record-list-screen');
               },

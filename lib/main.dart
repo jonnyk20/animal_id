@@ -9,23 +9,25 @@ import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/reducers/reducers.dart';
 
+Set foundAnimals = Set.from([0, 1, 2, 3, 4, 5]);
+
 List<CameraDescription> cameras;
 Map<String, ObjectRecord> objectsInfo;
 
 Future<Map<String, ObjectRecord>> loadObjectInfo() async {
   var file =
-      await rootBundle.loadString('assets/models/classification/info.txt');
+      await rootBundle.loadString('assets/models/classification/dogs.txt');
   var objectsInfo = Map<String, ObjectRecord>();
 
-  file.split('\n').forEach((str) {
+  file.split('\n').asMap().forEach((index, str) {
     var name = str.trim().toLowerCase();
+    int i = index + 1;
     if (name.isNotEmpty) {
-      var isFound = name == "pug";
-      var info = 'This is info about $name';
+      var isFound = foundAnimals.contains(i);
       var record = ObjectRecord(
         name: name,
-        info: info,
         isFound: isFound,
+        number: i,
       );
       objectsInfo[name] = record;
     }

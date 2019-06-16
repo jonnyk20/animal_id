@@ -19,6 +19,7 @@ Future classifyImage(File image, Function setClassificationResult) async {
     setClassificationResult(ClassificationResult(name: '', score: 0));
   } else {
     var topRecognition = recognitions[0];
+    print('TOP: ${topRecognition['label']}');
     setClassificationResult(ClassificationResult(
         name: topRecognition['label'], score: topRecognition['confidence']));
   }

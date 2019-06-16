@@ -32,7 +32,7 @@ class BoundingBox extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "${detection.detectedClass} ${(detection.confidenceInClass * 100).toStringAsFixed(0)}%",
+                "${detection.detectedClass} ${(detection.confidenceInClass * 100).toStringAsFixed(2)}%",
                 style: TextStyle(
                   color: color,
                   fontSize: 14.0,

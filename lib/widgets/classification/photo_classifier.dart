@@ -127,6 +127,7 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
         builder: (context) {
           return AlertDialog(
             content: Container(
+              height: 400.0,
               child: PhotoPreview(),
               // child: ClassificationResults(),
             ),

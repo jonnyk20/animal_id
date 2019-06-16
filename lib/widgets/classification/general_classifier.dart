@@ -36,9 +36,11 @@ class GeneralClassifier extends StatelessWidget {
               return store.dispatch(
                   SetClassificationResult(ClassificationResult.empty));
             }
-            store.dispatch(SetClassificationResult(result));
+            ClassificationResult resultWithRecord =
+                ClassificationResult.withRecord(result, record);
+            store.dispatch(SetClassificationResult(resultWithRecord));
             if (!record.isFound) {
-              store.dispatch(SaveClassificationResult(result));
+              store.dispatch(SaveClassificationResult(resultWithRecord));
             }
           },
           'clearClassificationResult': () {

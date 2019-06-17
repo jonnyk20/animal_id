@@ -7,6 +7,7 @@ import 'package:animal_id/screens/home_screen.dart';
 import 'package:animal_id/screens/detection_screen.dart';
 import 'package:animal_id/screens/record_list_screen.dart';
 import 'package:animal_id/screens/record_screen.dart';
+import 'package:animal_id/screens/settings_screen.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
@@ -28,21 +29,23 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
         store: store,
-        child: StoreBuilder<AppState>(
-            onInit: (store) => startTimer(store),
-            builder: (context, store) {
-              return MaterialApp(
-                title: 'animal id',
-                // theme: ThemeData(
-                //   brightness: Brightness.dark,
-                // ),
-                routes: {
-                  '/': (context) => Home(),
-                  '/detection': (context) => DetectionScreen(camera),
-                  '/record-list-screen': (context) => RecordListScreen(),
-                  '/record-screen': (context) => RecordScreen(),
-                },
-              );
-            }));
+        child: StoreBuilder<AppState>(onInit: (store) {
+          startTimer(store);
+          store.dispatch(RetrieveRecordsFromStorage());
+        }, builder: (context, store) {
+          return MaterialApp(
+            title: 'animal id',
+            // theme: ThemeData(
+            //   brightness: Brightness.dark,
+            // ),
+            routes: {
+              '/': (context) => Home(),
+              '/detection': (context) => DetectionScreen(camera),
+              '/record-list-screen': (context) => RecordListScreen(),
+              '/record-screen': (context) => RecordScreen(),
+              '/settings-screen': (context) => SettingsScreen(),
+            },
+          );
+        }));
   }
 }

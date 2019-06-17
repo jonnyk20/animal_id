@@ -79,3 +79,12 @@ class SetImagePreview {
   final ImagePreview imagePreview;
   SetImagePreview(this.imagePreview);
 }
+
+class RetrieveRecordsFromStorage {}
+
+class LoadSavedRecords {
+  final List<int> savedRecordNumbers;
+  LoadSavedRecords(this.savedRecordNumbers);
+}
+
+class ClearSavedRecords {}

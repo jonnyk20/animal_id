@@ -31,6 +31,14 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, '/record-list-screen');
               },
             ),
+            RaisedButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: Text('Settings'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings-screen');
+              },
+            ),
           ],
         ),
       ),

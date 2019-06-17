@@ -41,4 +41,12 @@ class AppState {
         objectRecords: objectInfo,
         targetDetectionFrames: [],
       );
+
+  List<int> savedRecordNumbers() {
+    return objectRecords.values
+        .where((record) => record.isFound)
+        .map<int>((ObjectRecord record) {
+      return record.number;
+    }).toList();
+  }
 }

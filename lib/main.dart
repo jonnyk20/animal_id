@@ -8,8 +8,9 @@ import 'package:animal_id/app.dart';
 import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/models/object_record_model.dart';
 import 'package:animal_id/reducers/reducers.dart';
+import 'package:animal_id/middleware/saved_records_middleware.dart';
 
-Set foundAnimals = Set.from([0, 1, 2, 3, 4, 5]);
+Set foundAnimals = Set.from([1]);
 
 List<CameraDescription> cameras;
 Map<String, ObjectRecord> objectsInfo;
@@ -23,7 +24,8 @@ Future<Map<String, ObjectRecord>> loadObjectInfo() async {
     var name = str.trim().toLowerCase();
     int i = index + 1;
     if (name.isNotEmpty) {
-      var isFound = foundAnimals.contains(i);
+      var isFound = false;
+      foundAnimals.contains(i);
       var record = ObjectRecord(
         name: name,
         isFound: isFound,
@@ -49,6 +51,7 @@ Future<void> main() async {
   await loadModel(MlModels.detection);
   objectsInfo = await loadObjectInfo();
   final store = Store<AppState>(appReducers,
-      initialState: AppState.initial(objectsInfo), middleware: []);
+      initialState: AppState.initial(objectsInfo),
+      middleware: [savedRecordsMiddlware]);
   runApp(App(store, cameras[0]));
 }

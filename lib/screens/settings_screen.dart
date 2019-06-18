@@ -9,19 +9,9 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Map<String, dynamic>>(
       converter: (store) => {
-        'addSavedRecord': () {
-          ClassificationResult result = ClassificationResult(
-            name: 'pug',
-            score: 0.9,
-            record: store.state.objectRecords['pug'],
-          );
-
-          store.dispatch(SaveClassificationResult(result));
-        },
         'clearSavedRecords': () => store.dispatch(ClearSavedRecords()),
       },
       builder: (context, Map<String, dynamic> props) {
-        Function addSavedRecord = props['addSavedRecord'];
         Function clearSavedRecords = props['clearSavedRecords'];
         return Scaffold(
           appBar: AppBar(title: Text('Settings')),
@@ -35,13 +25,6 @@ class SettingsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                  // (JK) Remove this
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  onPressed: addSavedRecord,
-                  child: Text('TEST'),
-                ),
                 RaisedButton(
                   color: Colors.blue,
                   textColor: Colors.white,

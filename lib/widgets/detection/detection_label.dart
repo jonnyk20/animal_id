@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/detected_object_model.dart';
 
+const int maxCount = 10;
+
 // (JK), catchObject shoudn't be fired from in here
 class DetectionLabel extends StatelessWidget {
   final DetectedObject detectedObject;
@@ -16,8 +18,8 @@ class DetectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var progress = math.min((detectedObject.count) / 10, 1).toDouble();
-    if (canSave && (detectedObject.count == 10)) {
+    var progress = math.min((detectedObject.count) / maxCount, 1).toDouble();
+    if (canSave && (detectedObject.count == maxCount)) {
       catchObject(detectedObject);
     }
     return Card(

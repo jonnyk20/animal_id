@@ -14,7 +14,7 @@ class PhotoPreview extends StatelessWidget {
       return Text('Classifying...');
     }
     if (result.name.isEmpty) {
-      return Text('Nothing Found');
+      return Text('Dog Species Unknown');
     }
     return Column(
       children: <Widget>[

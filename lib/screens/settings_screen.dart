@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:animal_id/models/app_state_model.dart';
-import 'package:animal_id/models/classification_result_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
 class SettingsScreen extends StatelessWidget {

@@ -1,10 +1,20 @@
 import 'dart:math' as math;
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:animal_id/utils/detection_utils.dart';
 import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
+
+Timer _debounce;
+
+// debouncer() {
+//   if (_debounce?.isActive ?? false) _debounce.cancel();
+//   _debounce = Timer(const Duration(milliseconds: 500), () {
+//     // do something with _searchQuery.text
+//   });
+// }
 
 class Detector extends StatefulWidget {
   final CameraDescription camera;
@@ -67,56 +77,10 @@ class _DetectorState extends State<Detector> {
         ResolutionPreset.medium,
       );
       controller.initialize().then((_) {
-        if (!mounted) {
-          return;
-        }
-        setState(() {});
-
-        controller.startImageStream((CameraImage img) {
-          if (!_isDetectorActive) {
-            _isDetectorActive = true;
-
-            var bytesList = img.planes.map((plane) {
-              return plane.bytes;
-            }).toList();
-
-            Tflite.detectObjectOnFrame(
-              bytesList: bytesList,
-              model: "SSDMobileNet",
-              imageHeight: img.height,
-              imageWidth: img.width,
-              imageMean: 127.5,
-              imageStd: 127.5,
-              numResultsPerClass: 1,
-              threshold: 0.4,
-            ).then((recognitions) {
-              List<Detection> formattedDetections = formatDetections(
-                recognitions,
-                math.max(img.height, img.width),
-                math.min(img.height, img.width),
-                screenHeight,
-                screenWidth,
-              );
-              Detection detectedObject = formattedDetections.firstWhere(
-                  (detection) => detection.isTarget,
-                  orElse: () => null);
-              bool isTargeting = detectedObject != null;
-              setTargetingStatus(isTargeting);
-              setRecognitions(
-                formattedDetections,
-              );
-              if (isTargeting) {
-                var targetDetectionFrame = TargetDetectionFrame(
-                  detectionName: detectedObject.detectedClass,
-                  bytesList: bytesList,
-                  height: img.height,
-                  width: img.width,
-                );
-                addTargetDetectionFrame(targetDetectionFrame);
-              }
-              _isDetectorActive = false;
-            });
-          }
+        if (_debounce?.isActive ?? false) _debounce.cancel();
+        _debounce = Timer(const Duration(milliseconds: 500), () {
+          runDetector();
+          // do something with _searchQuery.text
         });
       });
     }
@@ -126,6 +90,60 @@ class _DetectorState extends State<Detector> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  runDetector() {
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+
+    controller.startImageStream((CameraImage img) {
+      if (!_isDetectorActive) {
+        _isDetectorActive = true;
+
+        var bytesList = img.planes.map((plane) {
+          return plane.bytes;
+        }).toList();
+
+        Tflite.detectObjectOnFrame(
+          bytesList: bytesList,
+          model: "SSDMobileNet",
+          imageHeight: img.height,
+          imageWidth: img.width,
+          imageMean: 127.5,
+          imageStd: 127.5,
+          numResultsPerClass: 1,
+          threshold: 0.4,
+        ).then((recognitions) {
+          List<Detection> formattedDetections = formatDetections(
+            recognitions,
+            math.max(img.height, img.width),
+            math.min(img.height, img.width),
+            screenHeight,
+            screenWidth,
+          );
+          Detection detectedObject = formattedDetections.firstWhere(
+              (detection) => detection.isTarget,
+              orElse: () => null);
+          bool isTargeting = detectedObject != null;
+          setTargetingStatus(isTargeting);
+          setRecognitions(
+            formattedDetections,
+          );
+          if (isTargeting) {
+            var targetDetectionFrame = TargetDetectionFrame(
+              detectionName: detectedObject.detectedClass,
+              bytesList: bytesList,
+              height: img.height,
+              width: img.width,
+            );
+            addTargetDetectionFrame(targetDetectionFrame);
+          }
+          _isDetectorActive = false;
+        });
+      }
+    });
   }
 
   Widget build(BuildContext context) {

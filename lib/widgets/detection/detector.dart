@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:io' show Platform;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -8,13 +9,7 @@ import 'package:animal_id/models/detection_model.dart';
 import 'package:animal_id/models/target_detection_frame_model.dart';
 
 Timer _debounce;
-
-// debouncer() {
-//   if (_debounce?.isActive ?? false) _debounce.cancel();
-//   _debounce = Timer(const Duration(milliseconds: 500), () {
-//     // do something with _searchQuery.text
-//   });
-// }
+Duration debounceDuration = Duration(milliseconds: 500);
 
 class Detector extends StatefulWidget {
   final CameraDescription camera;
@@ -79,7 +74,7 @@ class _DetectorState extends State<Detector> {
       controller.initialize().then((_) {
         if (_debounce?.isActive ?? false) _debounce.cancel();
         _debounce = Timer(const Duration(milliseconds: 500), () {
-          runDetector();
+          startDetector();
           // do something with _searchQuery.text
         });
       });
@@ -88,61 +83,77 @@ class _DetectorState extends State<Detector> {
 
   @override
   void dispose() {
+    print('DISPISING DETECTOR CAMERA CONTROLLER');
     controller?.dispose();
     super.dispose();
   }
 
-  runDetector() {
+  runDetector(CameraImage img) {
+    if (!_isDetectorActive) {
+      _isDetectorActive = true;
+
+      var bytesList = img.planes.map((plane) {
+        return plane.bytes;
+      }).toList();
+
+      Tflite.detectObjectOnFrame(
+        bytesList: bytesList,
+        model: "SSDMobileNet",
+        imageHeight: img.height,
+        imageWidth: img.width,
+        imageMean: 127.5,
+        imageStd: 127.5,
+        numResultsPerClass: 1,
+        threshold: 0.4,
+      ).then((recognitions) {
+        List<Detection> formattedDetections = formatDetections(
+          recognitions,
+          math.max(img.height, img.width),
+          math.min(img.height, img.width),
+          screenHeight,
+          screenWidth,
+        );
+        Detection detectedObject = formattedDetections
+            .firstWhere((detection) => detection.isTarget, orElse: () => null);
+        bool isTargeting = detectedObject != null;
+        setTargetingStatus(isTargeting);
+        setRecognitions(
+          formattedDetections,
+        );
+        if (isTargeting) {
+          var targetDetectionFrame = TargetDetectionFrame(
+            detectionName: detectedObject.detectedClass,
+            bytesList: bytesList,
+            height: img.height,
+            width: img.width,
+          );
+          addTargetDetectionFrame(targetDetectionFrame);
+        }
+        _isDetectorActive = false;
+      });
+    }
+  }
+
+  debounceDetector(CameraImage img) {
+    bool isTimerRunning = (_debounce?.isActive ?? false);
+    if (!isTimerRunning) {
+      _debounce = Timer(debounceDuration, () {
+        runDetector(img);
+      });
+    }
+  }
+
+  startDetector() {
     if (!mounted) {
       return;
     }
     setState(() {});
 
     controller.startImageStream((CameraImage img) {
-      if (!_isDetectorActive) {
-        _isDetectorActive = true;
-
-        var bytesList = img.planes.map((plane) {
-          return plane.bytes;
-        }).toList();
-
-        Tflite.detectObjectOnFrame(
-          bytesList: bytesList,
-          model: "SSDMobileNet",
-          imageHeight: img.height,
-          imageWidth: img.width,
-          imageMean: 127.5,
-          imageStd: 127.5,
-          numResultsPerClass: 1,
-          threshold: 0.4,
-        ).then((recognitions) {
-          List<Detection> formattedDetections = formatDetections(
-            recognitions,
-            math.max(img.height, img.width),
-            math.min(img.height, img.width),
-            screenHeight,
-            screenWidth,
-          );
-          Detection detectedObject = formattedDetections.firstWhere(
-              (detection) => detection.isTarget,
-              orElse: () => null);
-          bool isTargeting = detectedObject != null;
-          setTargetingStatus(isTargeting);
-          setRecognitions(
-            formattedDetections,
-          );
-          if (isTargeting) {
-            var targetDetectionFrame = TargetDetectionFrame(
-              detectionName: detectedObject.detectedClass,
-              bytesList: bytesList,
-              height: img.height,
-              width: img.width,
-            );
-            addTargetDetectionFrame(targetDetectionFrame);
-          }
-          _isDetectorActive = false;
-        });
+      if (Platform.isAndroid) {
+        return debounceDetector(img);
       }
+      runDetector(img);
     });
   }
 

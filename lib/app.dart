@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -12,10 +13,11 @@ import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
 var interval;
-const oneSec = const Duration(milliseconds: 500);
+int milliseconds = Platform.isAndroid ? 1000 : 500;
+Duration detectionGapDuration = Duration(milliseconds: milliseconds);
 
 startTimer(store) {
-  interval = Timer.periodic(oneSec, (Timer t) {
+  interval = Timer.periodic(detectionGapDuration, (Timer t) {
     store.dispatch(ReduceObjecDetectionCounts());
   });
 }

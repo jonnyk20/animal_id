@@ -55,7 +55,6 @@ class PhotoPreview extends StatelessWidget {
       },
       builder: (context, props) {
         ImagePreview imagePreview = props['imagePreview'];
-        print('PREVIEW -> ${imagePreview != null}');
         ClassificationResult classificationResult =
             props['classificationResult'];
         bool waitingForResult = classificationResult == null;

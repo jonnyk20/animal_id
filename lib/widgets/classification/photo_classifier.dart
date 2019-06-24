@@ -78,6 +78,7 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
 
   @override
   void dispose() {
+    print('DISPISING CLASSIFIER CAMERA CONTROLLER');
     controller?.dispose();
     super.dispose();
   }
@@ -95,6 +96,11 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
     await Directory(dirPath).create(recursive: true);
     final String filePath =
         '$dirPath/delete-this.jpg'; // '$dirPath/${timestamp()}.jpg';
+
+    File existingFile = File(filePath);
+    if (await existingFile.exists()) {
+      await existingFile.delete(recursive: true);
+    }
 
     if (controller.value.isTakingPicture) {
       // A capture is already pending, do nothing.
@@ -144,12 +150,13 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
   }
 
   closeClassifier(context) {
+    print('CLOSING CLASSIFIER');
     // await reset model
     loadModel(MlModels.detection);
     // clear states
     setClassificationStatus(ClassificationStatuses.not_classifying);
     clearClassificationResult();
-    Navigator.of(context).pushReplacementNamed('/');
+    Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
   }
 
   Widget build(BuildContext context) {

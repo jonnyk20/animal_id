@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' show Platform, File, Directory;
 import 'package:path_provider/path_provider.dart';
 import 'package:animal_id/utils/model_loader.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +56,7 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
 
   @override
   void initState() {
+    print('INITIATING PHOTO CLASSIFIER');
     super.initState();
     if (camera == null) {
       print('No camera found');
@@ -78,8 +79,9 @@ class _PhotoClassifierState extends State<PhotoClassifier> {
 
   @override
   void dispose() {
-    print('DISPISING CLASSIFIER CAMERA CONTROLLER');
-    controller?.dispose();
+    if (!Platform.isAndroid) {
+      controller?.dispose(); // Todo (JK) investigate app crash
+    }
     super.dispose();
   }
 

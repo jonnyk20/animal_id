@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:animal_id/models/detected_object_model.dart';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 
-int maxCount = Platform.isAndroid ? 5 : 10;
+int maxCount = 10; // Platform.isAndroid ? 5 : 10;
 
 // (JK), catchObject shoudn't be fired from in here
 class DetectionLabel extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -150,9 +150,9 @@ class _DetectorState extends State<Detector> {
     setState(() {});
 
     controller.startImageStream((CameraImage img) {
-      if (Platform.isAndroid) {
-        return debounceDetector(img);
-      }
+      // if (Platform.isAndroid) {
+      //   return debounceDetector(img);
+      // }
       runDetector(img);
     });
   }

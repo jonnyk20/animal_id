@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -13,7 +13,7 @@ import 'package:animal_id/models/app_state_model.dart';
 import 'package:animal_id/actions/actions.dart';
 
 var interval;
-int milliseconds = Platform.isAndroid ? 1000 : 500;
+int milliseconds = 500; // Platform.isAndroid ? 1000 : 500;
 Duration detectionGapDuration = Duration(milliseconds: milliseconds);
 
 startTimer(store) {
